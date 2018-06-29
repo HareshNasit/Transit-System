@@ -25,9 +25,18 @@ public class Stop {
     return id;
   }
   
-  public boolean tap(Card card) {
-    //TODO: implement tap function
+  //Return true if successful, false otherwise.
+  public boolean tapOn(Card card) {
+    //TODO: implement tap functionality
+    if (card.getBalance() >= 0) {
+      card.charge(2);
+      return true;
+    }
     return false;
+  }
+  
+  public boolean tapOff(Card card) {
+    return true;
   }
   
 }
