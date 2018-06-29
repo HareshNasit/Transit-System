@@ -1,13 +1,12 @@
 package transitNetwork;
 
-import java.util.ArrayList;
+import user.Card;
 
 public class Stop {
   
   private static int counter = 0;
   private final int id;
   private String name;
-  private ArrayList<Stop> adjacentStops = new ArrayList<Stop>();
   
   public Stop(String name) {
     id = counter++;
@@ -26,16 +25,9 @@ public class Stop {
     return id;
   }
   
-  public ArrayList<Stop> getAdjacentStops(){
-    return adjacentStops;
+  public boolean tap(Card card) {
+    //TODO: implement tap function
+    return false;
   }
   
-  public void addAdjacentStop(Stop stop) {
-    adjacentStops.add(stop);
-  }
-  
-  public void removeAdjacentStop(Stop stop) {
-    if (adjacentStops.contains(stop)) adjacentStops.remove(stop);
-  }
-
 }
