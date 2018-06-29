@@ -18,6 +18,12 @@ public class Route {
         return id;
     }
 
+    public int getDistance(Stop initialStop, Stop finalStop){
+        int start = route.indexOf(initialStop);
+        int end = route.indexOf(finalStop);
+        return end - start;
+    }
+
     public static void main(String[] args) {
         Route trial = new Route("NorthBound");
         ArrayList<Stop> stops = new ArrayList<>();
