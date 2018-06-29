@@ -4,25 +4,18 @@ import java.util.ArrayList;
 
 public class Route {
     private String id;
-    private Stop initialStop;
-    private Stop finalStop;
+    private ArrayList<Stop> route;
 
     Route(String id){
         this.id = id;
     }
 
     public void createRoute(ArrayList<Stop> stops){
-        this.initialStop = stops.get(0);
-        Stop curr = initialStop;
-        Stop previous = null;
-        this.finalStop = stops.get(stops.size() -1);
-        for(int i=1;i<stops.size();i++){
-            curr.setNext(stops.get(i));
-            curr.setPrevious(previous);
-            previous = curr;
-            curr = curr.getNext();
-        }
-        finalStop.setPrevious(previous);
+        this.route = stops;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public static void main(String[] args) {
@@ -38,8 +31,5 @@ public class Route {
         stops.add(station2);
         stops.add(station3);
         stops.add(station4);
-        trial.createRoute(stops);
-        System.out.println(station2.getNext().getName());
-        System.out.println(station4.getPrevious().getName());
     }
 }
