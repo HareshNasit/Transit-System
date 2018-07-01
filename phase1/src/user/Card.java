@@ -1,17 +1,24 @@
 package user;
 
+import java.util.ArrayList;
 import transitNetwork.Stop;
 
 public class Card {
   private double balance;
   private double charged;
   private boolean suspended;
-  //TODO: trip tracking
-  private Object currentTrip;
+  
+  private Stop firstTap;
+  private ArrayList<Stop>[] lastThreeTrips;
+  private ArrayList<Stop> currentTrip;
+  
+  //TODO: Track last known route user was on
   
   public Card() {
     balance = 19;
     suspended = false;
+    currentTrip = new ArrayList<Stop>();
+    lastThreeTrips = new ArrayList[3];
   }
   
   protected void suspend() {
@@ -42,18 +49,30 @@ public class Card {
   
   public void endTrip() {
     balance -= charged;
-    //currentTrip.empty();
+    addTrip(currentTrip);
+    currentTrip.clear();
+  }
+  
+  private void addTrip(ArrayList<Stop> trip) {
+    lastThreeTrips[2] = lastThreeTrips[1];
+    lastThreeTrips[1] = lastThreeTrips[0];
+    lastThreeTrips[0] = trip;
+  }
+  
+  public ArrayList<Stop> getTrip(int trip){
+    if (trip <= 2 && trip >= 0) return lastThreeTrips[trip];
+    return null;
   }
   
   // TODO: tap functionality
   // Return true if successful, false otherwise.
   public boolean tapOn(Stop stop) {
-    //currentTrip.add(stop);
+    currentTrip.add(stop);
     return stop.tapOn(this);
   }
   
   public boolean tapOff(Stop stop) {
-    //currentTrip.add(stop);
+    currentTrip.add(stop);
     return stop.tapOff(this);
   }
 }
