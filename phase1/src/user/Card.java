@@ -1,8 +1,13 @@
 package user;
 
+import transitNetwork.Stop;
+
 public class Card {
   private double balance;
+  private double charged;
   private boolean suspended;
+  //TODO: trip tracking
+  private Object currentTrip;
   
   public Card() {
     balance = 19;
@@ -30,9 +35,25 @@ public class Card {
     return balance;
   }
   
+  public void charge(double amt) {
+    if (balance - charged > 0) charged += amt;
+    if (charged > 6) charged = 6;
+  }
+  
+  public void endTrip() {
+    balance -= charged;
+    //currentTrip.empty();
+  }
+  
   // TODO: tap functionality
   // Return true if successful, false otherwise.
-  public boolean tap() {
-    return false;
+  public boolean tapOn(Stop stop) {
+    //currentTrip.add(stop);
+    return stop.tapOn(this);
+  }
+  
+  public boolean tapOff(Stop stop) {
+    //currentTrip.add(stop);
+    return stop.tapOff(this);
   }
 }

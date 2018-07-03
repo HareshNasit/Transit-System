@@ -10,13 +10,10 @@ public class User {
   public User(String name, String email) {
     this.name = name;
     this.email = email;
-    Admin.addUser(this);
   }
   
-  public void addCard() {
-    Card card = new Card();
+  public void addCard(Card card) {
     cards.add(card);
-    Admin.addCard(card);
   }
   
   public boolean removeCard(Card card) {
