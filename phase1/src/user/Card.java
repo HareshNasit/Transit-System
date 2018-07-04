@@ -6,19 +6,17 @@ import transitNetwork.Stop;
 
 public class Card {
   private double balance;
-  private double charged;
   private boolean suspended;
   
-  private Stop firstTap;
-  private ArrayList<Trip> trips;
-  private Trip currentTrip;
+  private Trip[] trips;
   
   //TODO: Track last known route user was on
   
   public Card() {
     balance = 19;
     suspended = false;
-    trips = new ArrayList<Trip>();
+    trips = new Trip[3];
+    newTrip();
   }
   
   protected void suspend() {
@@ -31,27 +29,35 @@ public class Card {
   
   /* Returns true if the add balance action was successful and false otherwise.*/
   protected boolean addBalance(int amount) {
-    if (amount == 10 || amount == 20 || amount == 50) {
+    if ((amount == 10 || amount == 20 || amount == 50) && !suspended) {
       balance += amount;
       return true;
     }
     return false;
   }
   
+  /* Returns the available balance on the card. */
   public double getBalance() {
-    return balance;
+    return balance - trips[0].getValue();
   }
   
-  public void charge(double amt) {
-    if (balance - charged > 0) charged += amt;
-    if (charged > 6) charged = 6;
-  }
-
-  
-  private void addTrip(Trip trip) {
-    trips.add(trip);
+  /* Ensures that when a card is charged, the value is added to the current trip's total. */
+  public void charge(double amount) {
+    if (!suspended) trips[0].charge(amount);
   }
   
+  public void newTrip() {
+    if (!suspended) {
+      if (trips[0] != null) balance -= trips[0].getValue();
+      trips[2] = trips[1];
+      trips[1] = trips[0];
+      trips[0] = new Trip();
+    }
+  }
+  
+  public Trip getCurrentTrip() {
+    return trips[0];
+  }
 
   // TODO: tap functionality
   // Return true if successful, false otherwise.

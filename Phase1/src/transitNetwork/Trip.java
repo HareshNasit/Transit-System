@@ -1,9 +1,35 @@
 package transitNetwork;
 
+import java.util.ArrayList;
 
 public class Trip {
-    private Stop initialStop;
-    private Stop finalStop;
+    private ArrayList<Stop> stops;
+    
+    //TODO: time tracking
     private long initialTime;
-    private long finalTime;
+    
+    private double tripValue = 0;
+    
+    public Trip() {
+      stops = new ArrayList<Stop>();
+    }
+    
+    public void charge(double amount) {
+      tripValue += amount;
+      if (tripValue > 6) {
+        tripValue = 6;
+      }
+    }
+    
+    public double getValue() {
+      return tripValue;
+    }
+    
+    public Stop getLastStop() {
+      return stops.get(stops.size());
+    }
+    
+    public void addStop(Stop stop) {
+      stops.add(stop);
+    }
 }
