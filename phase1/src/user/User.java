@@ -23,6 +23,14 @@ public class User {
     }
     return false;
   }
+
+  public boolean suspendCard(Card card) {
+    if (cards.contains(card)) {
+      card.suspend();
+      return true;
+    }
+    return false;
+  }
   
   public boolean loadCard(Card card, int value) {
     if (cards.contains(card)) {
