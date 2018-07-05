@@ -16,7 +16,6 @@ public class Card {
     balance = 19;
     suspended = false;
     trips = new Trip[3];
-    newTrip();
   }
   
   protected void suspend() {
@@ -46,12 +45,12 @@ public class Card {
     if (!suspended) trips[0].charge(amount);
   }
   
-  public void newTrip() {
+  public void newTrip(Stop initialStop, int timestamp) {
     if (!suspended) {
       if (trips[0] != null) balance -= trips[0].getValue();
       trips[2] = trips[1];
       trips[1] = trips[0];
-      trips[0] = new Trip();
+      trips[0] = new Trip(initialStop, timestamp);
     }
   }
   

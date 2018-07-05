@@ -10,8 +10,10 @@ public class Trip {
     
     private double tripValue = 0;
     
-    public Trip() {
+    public Trip(Stop initialStop, int timestamp) {
       stops = new ArrayList<Stop>();
+      stops.add(initialStop);
+      initialTime = timestamp;
     }
     
     public void charge(double amount) {
