@@ -2,7 +2,7 @@ package transitNetwork;
 
 import user.Card;
 
-public class Stop {
+public abstract class Stop {
   
   private static int counter = 0;
   private final int id;
@@ -24,19 +24,7 @@ public class Stop {
   public int getID() {
     return id;
   }
-  
-  //Return true if successful, false otherwise.
-  public boolean tapOn(Card card) {
-    //TODO: implement tap functionality
-    if (card.getBalance() >= 0) {
-      card.charge(2);
-      return true;
-    }
-    return false;
-  }
-  
-  public boolean tapOff(Card card) {
-    return true;
-  }
-  
+
+  public abstract boolean tapOff(Card card);
+  public abstract boolean tapOn(Card card);
 }
