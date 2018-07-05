@@ -9,7 +9,9 @@ public class Station extends Stop{
     }
     
     public boolean tapOn(Card card) {
-      return true;
+        //TODO: Add detection for disjointed trips
+        if (card.getBalance() > 0) card.getCurrentTrip().addStop(this);
+        return true;
     }
     
     public boolean tapOff(Card card) {

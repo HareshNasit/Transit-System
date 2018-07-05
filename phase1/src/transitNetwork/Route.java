@@ -21,7 +21,7 @@ public class Route {
     public int getDistance(Stop initialStop, Stop finalStop){
         int start = route.indexOf(initialStop);
         int end = route.indexOf(finalStop);
-        return end - start;
+        return Math.abs(end - start);
     }
 
     public static void main(String[] args) {

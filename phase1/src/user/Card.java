@@ -7,6 +7,7 @@ import transitNetwork.Stop;
 public class Card {
   private double balance;
   private boolean suspended;
+  private double totalSpending;
   
   private Trip[] trips;
   
@@ -47,7 +48,10 @@ public class Card {
   
   public void newTrip(Stop initialStop, int timestamp) {
     if (!suspended) {
-      if (trips[0] != null) balance -= trips[0].getValue();
+      if (trips[0] != null) {
+          balance -= trips[0].getValue();
+          totalSpending += trips[0].getValue();
+      }
       trips[2] = trips[1];
       trips[1] = trips[0];
       trips[0] = new Trip(initialStop, timestamp);
@@ -66,5 +70,9 @@ public class Card {
   
   public boolean tapOff(Stop stop) {
     return stop.tapOff(this);
+  }
+
+  protected double getTotalSpending(){
+      return totalSpending;
   }
 }
