@@ -4,7 +4,7 @@ import user.Card;
 
 public class Station extends Stop{
 
-    Station(String name){
+    public Station(String name){
         super(name);
     }
     

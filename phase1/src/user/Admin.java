@@ -1,7 +1,5 @@
 package user;
 
-import transitNetwork.Trip;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -34,6 +32,7 @@ public class Admin {
       while (cardIterator.hasNext()){
           revenue += cardIterator.next().getTotalSpending();
       }
+      return revenue;
   }
 
 }
