@@ -1,5 +1,6 @@
 package user;
 
+import transitNetwork.Route;
 import transitNetwork.Trip;
 import java.util.ArrayList;
 import transitNetwork.Stop;
@@ -64,12 +65,12 @@ public class Card {
 
   // TODO: tap functionality
   // Return true if successful, false otherwise.
-  public boolean tapOn(Stop stop) {
-    return stop.tapOn(this);
+  public boolean tapOn(Route route, Stop stop) {
+    return stop.tapOn(route,this);
   }
   
-  public boolean tapOff(Stop stop) {
-    return stop.tapOff(this);
+  public boolean tapOff(Route route, Stop stop) {
+    return stop.tapOff(route,this);
   }
 
   protected double getTotalSpending(){

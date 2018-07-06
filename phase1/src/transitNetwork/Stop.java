@@ -25,6 +25,6 @@ public abstract class Stop {
     return id;
   }
 
-  public abstract boolean tapOff(Card card);
-  public abstract boolean tapOn(Card card);
+  public abstract boolean tapOff(Route route, Card card);
+  public abstract boolean tapOn(Route route, Card card);
 }

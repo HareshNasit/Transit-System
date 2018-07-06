@@ -9,7 +9,7 @@ public class BusStop extends Stop{
     }
 
     //Return true if successful, false otherwise.
-    public boolean tapOn(Card card) {
+    public boolean tapOn(Route route, Card card) {
         //TODO: Add detection for disjointed trips
         if (card.getBalance() >= 0) {
             card.charge(2);
@@ -19,7 +19,7 @@ public class BusStop extends Stop{
         return false;
     }
 
-    public boolean tapOff(Card card) {
+    public boolean tapOff(Route route, Card card) {
         //TODO: Add detection for disjointed trips
         card.getCurrentTrip().addStop(this);
         return true;
