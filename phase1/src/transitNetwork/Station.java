@@ -4,10 +4,17 @@ import user.Card;
 
 public class Station extends Stop{
 
-    public Station(String name){
+    private BusStop connectBusStop;
+
+    public Station(String name, BusStop connectingBusStop){
         super(name);
+        this.connectBusStop = connectingBusStop;
     }
-    
+
+    public BusStop getConnectBusStop() {
+        return connectBusStop;
+    }
+
     public boolean tapOn(Route route, Card card) {
         //TODO: Add detection for disjointed trips
         if (card.getBalance() > 0) card.getCurrentTrip().addStop(this);
