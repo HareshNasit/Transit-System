@@ -17,6 +17,9 @@ public class Station extends Stop{
     public boolean tapOff(Route route, Card card) {
       //TODO: Use route.getDistance() to calculate value of trip
       //card.charge(route.getDistance() * 0.50)
+        card.getCurrentTrip().addStop(this);
+        int distance = route.getDistance(card.getCurrentTrip().getInitialStop(),this);
+        card.charge(distance*0.5);
       return true;
     }
 }

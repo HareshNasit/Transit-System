@@ -9,11 +9,12 @@ public class Card {
   private double balance;
   private boolean suspended;
   private double totalSpending;
-  
+
   private Trip[] trips;
   
   //TODO: Track last known route user was on
-  
+  private Route lastRoute;
+
   public Card() {
     balance = 19;
     suspended = false;
