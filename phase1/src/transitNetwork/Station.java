@@ -2,9 +2,12 @@ package transitNetwork;
 
 import user.Card;
 
+import java.util.ArrayList;
+
 public class Station extends Stop{
 
     private BusStop connectBusStop;
+    private ArrayList<Stop> connectingStations;
 
     public Station(String name, BusStop connectingBusStop){
         super(name);
