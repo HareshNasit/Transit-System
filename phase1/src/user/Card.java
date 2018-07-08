@@ -29,7 +29,7 @@ public class Card {
     return suspended;
   }
   
-  protected boolean addBalance(int amount) {
+  protected void addBalance(int amount) {
       balance += amount;
   }
   
