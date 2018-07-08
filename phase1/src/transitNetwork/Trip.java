@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Trip {
     private ArrayList<Stop> stops;
+    private Station lastSubwayTap = null;
     
     //TODO: time tracking
     private long initialTime;
@@ -34,7 +35,12 @@ public class Trip {
       return stops.get(stops.size());
     }
     
+    public Station getLastSubwayTap() {
+      return lastSubwayTap;
+    }
+    
     public void addStop(Stop stop) {
       stops.add(stop);
+      if (stop instanceof Station) lastSubwayTap = (Station) stop;
     }
 }

@@ -1,8 +1,9 @@
 package transitNetwork;
 
 import user.Card;
-
+import java.util.Queue;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Station extends Stop{
 
@@ -59,14 +60,36 @@ public class Station extends Stop{
     
     public boolean tapOff(Route route, Card card) {
       //TODO: Use initialStation.getDistance()*0.5 to calculate value of trip
+        Station tripStart = card.getCurrentTrip().getLastSubwayTap();
         card.getCurrentTrip().addStop(this);
-        int distance = route.getDistance(card.getCurrentTrip().getInitialStop(),this);
+        int distance = getDistance(tripStart);
         card.charge(distance*0.5);
       return true;
     }
 
-    int getDistance(Stop finalStop){
-        //TODO: Add a recursive method to get the distance between initial and final Stations.
-        return 0;
+    /* Breadth-first search
+     * null values in the queue separate depth values
+     * max out at depth of 12 ($6 charge) 
+     * Arraylist prevents re-visiting nodes */
+    private int getDistance(Stop lastStop){
+        ArrayList<Station> visitedNodes = new ArrayList<Station>();
+        Queue<Station> queue = new LinkedList<Station>();
+        Station currentNode = null;
+        int depth = 0;
+        queue.add(this);
+        queue.add(null);
+        
+        while (currentNode != lastStop && depth < 12) {
+          currentNode = queue.remove();
+          if (currentNode == null) {
+            depth++;
+            queue.add(null);
+          }
+          else if (!visitedNodes.contains(currentNode)) {
+            visitedNodes.add(currentNode);
+            queue.addAll(currentNode.getConnectedStations());
+          }
+        }
+        return depth;
     }
 }
