@@ -59,7 +59,6 @@ public class Station extends Stop{
     }
     
     public boolean tapOff(Route route, Card card) {
-      //TODO: Use initialStation.getDistance()*0.5 to calculate value of trip
         Station tripStart = card.getCurrentTrip().getLastSubwayTap();
         card.getCurrentTrip().addStop(this);
         int distance = getDistance(tripStart);

@@ -33,8 +33,9 @@ public class User {
   }
   
   public boolean loadCard(Card card, int value) {
-    if (cards.contains(card)) {
-      return card.addBalance(value);
+    if (cards.contains(card) && (value == 10 || value == 20 || value == 50) && !card.isSuspended()) {
+      card.addBalance(value);
+      return true;
     }
     return false;
   }
