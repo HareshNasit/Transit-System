@@ -6,17 +6,49 @@ import java.util.ArrayList;
 
 public class Station extends Stop{
 
-    private BusStop connectBusStop;
-    private ArrayList<Stop> connectingStations;
+    private BusStop connectedBusStop = null;
+    private ArrayList<Station> connectingStations;
 
-    public Station(String name, BusStop connectingBusStop, ArrayList<Stop> connectingStations){
+    /* Create a station with a pre-connected bus stop */
+    public Station(String name, BusStop connectingBusStop){
         super(name);
-        this.connectBusStop = connectingBusStop;
-        this.connectingStations = connectingStations;
+        this.connectedBusStop = connectingBusStop;
+        connectedBusStop.connectStation(this);
+    }
+    
+    public Station(String name){
+      super(name);
+    }
+    
+    /* Connect a single station to this one */
+    public void connectStation(Station station) {
+      connectingStations.add(station);
+      if (!station.getConnectedStations().contains(this)) {
+        station.connectStation(this);
+      }
+    }
+    
+    /* Connect an arraylist of stations to this station */
+    public void connectStation(ArrayList<Station> stations) {
+      connectingStations.addAll(stations);
+      for (Station station : stations) {
+        if (!station.getConnectedStations().contains(this)) {
+          station.connectStation(this);
+        }
+      }
+    }
+    
+    public void connectBusStop(BusStop stop) {
+      connectedBusStop = stop;
+      connectedBusStop.connectStation(this);
     }
 
     public BusStop getConnectBusStop() {
-        return connectBusStop;
+        return connectedBusStop;
+    }
+    
+    public ArrayList<Station> getConnectedStations() {
+      return connectingStations;
     }
 
     public boolean tapOn(Route route, Card card) {
