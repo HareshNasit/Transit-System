@@ -3,6 +3,8 @@ package transitNetwork;
 import user.Card;
 
 public class BusStop extends Stop{
+  
+  private Station connectedStation = null;
 
     public BusStop(String name){
         super(name);
@@ -23,5 +25,13 @@ public class BusStop extends Stop{
         //TODO: Add detection for disjointed trips
         card.getCurrentTrip().addStop(this);
         return true;
+    }
+    
+    protected void connectStation(Station station) {
+      connectedStation = station;
+    }
+    
+    public Station getConnectedStation() {
+      return connectedStation;
     }
 }

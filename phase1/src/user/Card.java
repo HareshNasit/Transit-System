@@ -29,13 +29,8 @@ public class Card {
     return suspended;
   }
   
-  /* Returns true if the add balance action was successful and false otherwise.*/
-  protected boolean addBalance(int amount) {
-    if ((amount == 10 || amount == 20 || amount == 50) && !suspended) {
+  protected void addBalance(int amount) {
       balance += amount;
-      return true;
-    }
-    return false;
   }
   
   /* Returns the available balance on the card. */
