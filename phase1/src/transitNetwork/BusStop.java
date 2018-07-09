@@ -14,7 +14,7 @@ public class BusStop extends Stop{
     public boolean tapOn(Route route, Card card) {
         //TODO: Add detection for disjointed trips
         if(card.getCurrentTrip() == null){
-            if (card.getBalance() >= 0) {
+            if (card.getBalance() > 0) {
                 card.newTrip(this,0); //TODO: NEED TO REPLACE 0 WITH THE TIME STAMP.
                 card.charge(2);
                 card.getCurrentTrip().addStop(this);
@@ -28,7 +28,7 @@ public class BusStop extends Stop{
                 return true;
             }
         }
-        else if(card.getBalance() >=0) {
+        else if(card.getBalance() >0) {
             card.newTrip(this, 0); //TODO: REPLACE 0 WITH THE TIME STAMP.
             card.getCurrentTrip().addStop(this);
             card.charge(2);
