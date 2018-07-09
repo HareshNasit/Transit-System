@@ -24,6 +24,10 @@ public class Trip {
       }
     }
 
+    public long getInitialTime() {
+        return initialTime;
+    }
+
     public Stop getInitialStop(){
         return stops.get(0);
     }

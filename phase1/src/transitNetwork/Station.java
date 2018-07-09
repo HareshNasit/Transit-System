@@ -29,7 +29,7 @@ public class Station extends Stop{
       }
     }
     
-    /* Connect an arraylist of stations to this station */
+    /* Connect an arrayList of stations to this station */
     public void connectStation(ArrayList<Station> stations) {
       connectingStations.addAll(stations);
       for (Station station : stations) {
@@ -54,6 +54,7 @@ public class Station extends Stop{
 
     public boolean tapOn(Route route, Card card) {
         //TODO: Add detection for disjointed trips
+        
         if (card.getBalance() > 0) card.getCurrentTrip().addStop(this);
         return true;
     }
@@ -69,7 +70,7 @@ public class Station extends Stop{
     /* Breadth-first search
      * null values in the queue separate depth values
      * max out at depth of 12 ($6 charge) 
-     * Arraylist prevents re-visiting nodes */
+     * ArrayList prevents re-visiting nodes */
     private int getDistance(Stop lastStop){
         ArrayList<Station> visitedNodes = new ArrayList<Station>();
         Queue<Station> queue = new LinkedList<Station>();
