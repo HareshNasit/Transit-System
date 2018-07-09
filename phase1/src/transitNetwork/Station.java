@@ -54,9 +54,13 @@ public class Station extends Stop{
 
     public boolean tapOn(Route route, Card card, int timestamp) {
         //TODO: Add detection for disjointed trips
-        
-        if (card.getBalance() > 0) card.getCurrentTrip().addStop(this);
-        return true;
+
+        if (card.getBalance() > 0){
+            card.newTrip(this,0); //TODO: ADD TIME STAMP.
+            card.getCurrentTrip().addStop(this);
+            return true;
+        }
+        return false;
     }
     
     public boolean tapOff(Route route, Card card, int timestamp) {
