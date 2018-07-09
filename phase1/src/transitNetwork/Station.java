@@ -56,7 +56,7 @@ public class Station extends Stop{
         //TODO: Add detection for disjointed trips
 
         if (card.getBalance() > 0){
-            card.newTrip(this,0); //TODO: ADD TIME STAMP.
+            card.newTrip(this,timestamp); //TODO: ADD TIME STAMP.
             card.getCurrentTrip().addStop(this);
             return true;
         }

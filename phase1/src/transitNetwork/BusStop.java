@@ -15,13 +15,13 @@ public class BusStop extends Stop{
         //TODO: Add detection for disjointed trips
         if(card.getCurrentTrip() == null){
             if (card.getBalance() > 0) {
-                card.newTrip(this,0); //TODO: NEED TO REPLACE 0 WITH THE TIME STAMP.
+                card.newTrip(this,timestamp); //TODO: NEED TO REPLACE 0 WITH THE TIME STAMP.
                 card.charge(2);
                 card.getCurrentTrip().addStop(this);
                 return true;
             }
         }
-        else if(card.getCurrentTrip().getInitialTime() < 120){ //TODO: Implement - current time.
+        else if(card.getCurrentTrip().getInitialTime() - timestamp < 120){ //TODO: Implement - current time.
             if(card.getCurrentTrip().getLastStop().getName().equals(this.getName())){
                 card.getCurrentTrip().addStop(this);
                 card.charge(0); // Free ride.
@@ -29,7 +29,7 @@ public class BusStop extends Stop{
             }
         }
         else if(card.getBalance() >0) {
-            card.newTrip(this, 0); //TODO: REPLACE 0 WITH THE TIME STAMP.
+            card.newTrip(this, timestamp); //TODO: REPLACE 0 WITH THE TIME STAMP.
             card.getCurrentTrip().addStop(this);
             card.charge(2);
             return true;
