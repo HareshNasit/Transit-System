@@ -61,12 +61,12 @@ public class Card {
 
   // TODO: tap functionality
   // Return true if successful, false otherwise.
-  public boolean tapOn(Route route, Stop stop) {
-    return stop.tapOn(route,this);
+  public boolean tapOn(Route route, Stop stop, int timestamp) {
+    return stop.tapOn(route, this, timestamp);
   }
   
-  public boolean tapOff(Route route, Stop stop) {
-    return stop.tapOff(route,this);
+  public boolean tapOff(Route route, Stop stop, int timestamp) {
+    return stop.tapOff(route, this, timestamp);
   }
 
   protected double getTotalSpending(){

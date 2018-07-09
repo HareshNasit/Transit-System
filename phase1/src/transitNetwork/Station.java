@@ -52,14 +52,14 @@ public class Station extends Stop{
       return connectingStations;
     }
 
-    public boolean tapOn(Route route, Card card) {
+    public boolean tapOn(Route route, Card card, int timestamp) {
         //TODO: Add detection for disjointed trips
         
         if (card.getBalance() > 0) card.getCurrentTrip().addStop(this);
         return true;
     }
     
-    public boolean tapOff(Route route, Card card) {
+    public boolean tapOff(Route route, Card card, int timestamp) {
         Station tripStart = card.getCurrentTrip().getLastSubwayTap();
         card.getCurrentTrip().addStop(this);
         int distance = getDistance(tripStart);
