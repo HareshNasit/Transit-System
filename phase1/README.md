@@ -7,6 +7,7 @@ $ git clone https://bitbucket.org/hotcupsofjava/transitnetworkmanager.git
 ```
 
 ### Configuration
+All files must be in the `config` folder.
 Files are explained in order of execution.
 
 #### stops.txt
