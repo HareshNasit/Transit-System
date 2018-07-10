@@ -8,20 +8,22 @@ import java.util.LinkedList;
 
 public class Station extends Stop{
 
-    private BusStop connectedBusStop = null;
+    private BusStop connectedStop = null;
     private ArrayList<Station> connectingStations;
+    private static int stationCount;
 
-    public Station(String id, String name){
+    public Station(String id, String name, int stationCount){
         super(id, name);
         this.connectingStations = new ArrayList<>();
+        this.stationCount = stationCount;
     }
 
     /* Create a station with a pre-connected bus stop */
     public Station(String id, String name, BusStop connectingBusStop){
         super(id, name);
         this.connectingStations = new ArrayList<>();
-        this.connectedBusStop = connectingBusStop;
-        connectedBusStop.connectStation(this);
+        this.connectedStop = connectingBusStop;
+        connectedStop.connectStation(this);
     }
     
     /* Connect a single station to this one */
@@ -43,12 +45,12 @@ public class Station extends Stop{
     }
     
     public void connectBusStop(BusStop stop) {
-      connectedBusStop = stop;
-      connectedBusStop.connectStation(this);
+      connectedStop = stop;
+      connectedStop.connectStation(this);
     }
 
     public BusStop getConnectedBusStop() {
-        return connectedBusStop;
+        return connectedStop;
     }
     
     public ArrayList<Station> getConnectedStations() {
@@ -57,9 +59,10 @@ public class Station extends Stop{
 
     public boolean tapOn(Route route, Card card, int timestamp) {
       if (card.getBalance() > 0) {
-          boolean isNew = card.getCurrentTrip() == null; //If the user starts a new trip or no.
+          Stop lastStop = card.getCurrentTrip().getLastStop();
+          boolean isNew = card.getCurrentTrip() == null || card.getCurrentTrip().isEnded(); //If the user starts a new trip or no.
           // If the trip is not continuous, start a new trip.
-          boolean isNotContinuousTrip = !card.getCurrentTrip().getLastStop().getName().equals(getName());
+          boolean isNotContinuousTrip = lastStop != this && lastStop != this.connectedStop;
           // If the the continuous trip is over 2 hrs, start a new trip.
           boolean isNotWithinTwoHrs = timestamp - card.getCurrentTrip().getInitialTime() > 120;
           if (( isNew || isNotContinuousTrip || isNotWithinTwoHrs )) {
@@ -76,23 +79,30 @@ public class Station extends Stop{
     public boolean tapOff(Route route, Card card, int timestamp) {
         // If the user had entered illegally and jst taps off without tapping on, the user is charged
         // max $6.
-        if(card.getCurrentTrip() == null){
-            card.charge(6);
-            Logger.log(card.toString() + " illegally entered and got out at" + getName() + " at timestamp " + timestamp);
+        if(card.getCurrentTrip() == null || card.getCurrentTrip().isEnded()){
+            card.chargeFine(6);
+            Logger.log(card.toString() + " charged for illegal exit of subway station " + getName() + " at timestamp " + timestamp);
         }
         else {
             Station tripStart = card.getCurrentTrip().getLastSubwayTap();
             card.getCurrentTrip().addStop(this);
             int distance = getDistance(tripStart);
-            card.charge(distance * 0.5);
-            Logger.log(card.toString() + " tapped off of subway station " + getName() + " at timestamp " + timestamp);
+            if (distance > 0) {
+              card.charge(distance * 0.5);
+              Logger.log(card.toString() + " tapped off of subway station " + getName() + " at timestamp " + timestamp);
+            }
+            else {
+              card.chargeFine(6);
+              card.getCurrentTrip().endTrip();
+              Logger.log(card.toString() + " charged for illegal exit of subway station " + getName() + "at timestamp " + timestamp);
+            }
         }
       return true;
     }
 
     /* Breadth-first search
      * null values in the queue separate depth values
-     * max out at depth of 12 ($6 charge) 
+     * max depth is the number of existing stations
      * ArrayList prevents re-visiting nodes */
     private int getDistance(Stop lastStop){
         ArrayList<Station> visitedNodes = new ArrayList<Station>();
@@ -102,7 +112,7 @@ public class Station extends Stop{
         queue.add(this);
         queue.add(null);
         
-        while (currentNode != lastStop && depth < 12) {
+        while (currentNode != lastStop && depth < stationCount) {
           currentNode = queue.remove();
           if (currentNode == null) {
             depth++;
@@ -112,6 +122,10 @@ public class Station extends Stop{
             visitedNodes.add(currentNode);
             queue.addAll(currentNode.getConnectedStations());
           }
+        }
+        if (currentNode != lastStop) {
+          //Illegal exit!
+          return -1;
         }
         return depth;
     }

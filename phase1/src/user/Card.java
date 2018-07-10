@@ -10,6 +10,7 @@ public class Card {
   private double balance;
   private boolean suspended;
   private double totalSpending;
+  private double totalFines;
   
   private String id;
   private User user;
@@ -55,6 +56,11 @@ public class Card {
     return false;
   }
   
+  public void chargeFine(double amount) {
+    balance -= amount;
+    totalFines += amount;
+  }
+  
   public void newTrip(Stop initialStop, int timestamp) {
     if (!suspended) {
       if (trips[0] != null) {
@@ -84,6 +90,10 @@ public class Card {
 
   protected double getTotalSpending(){
       return totalSpending;
+  }
+  
+  protected double getTotalFines() {
+      return totalFines;
   }
 
   public String getId() {

@@ -11,6 +11,7 @@ public class RouteManager {
     private HashMap<String, Route> routes;
     private HashMap<String, Station> stations;
     private Station lastStation;
+    private int stationCount = 0;
 
     public RouteManager(IDManager idManager) {
         this.idManager = idManager;
@@ -26,7 +27,7 @@ public class RouteManager {
 
     public void addStation(String id, String name) {
         idManager.addId(id);
-        Station station = new Station(id, name);
+        Station station = new Station(id, name, stationCount++);
         if (lastStation == null) {
             lastStation = station;
         } else {

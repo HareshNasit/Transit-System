@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Logger {
   private static ArrayList<String> logs = new ArrayList<String>();
   private static ArrayList<String> stats = new ArrayList<String>();
-  private static int day = 0;
   
   public static void log(String logString) {
     logs.add(logString);
@@ -17,7 +16,7 @@ public class Logger {
     stats.add(statString);
   }
   
-  protected static void endDay() {
+  protected static void endDay(int day) {
     try {
       PrintWriter writer = new PrintWriter("logs/Day_" + day + ".txt");
       writer.write("Day: " + day + "\n");
@@ -38,6 +37,5 @@ public class Logger {
     } catch (FileNotFoundException e) {
       System.out.println("Failed to write log file: " + e.getMessage());
     }
-    day++;
   }
 }

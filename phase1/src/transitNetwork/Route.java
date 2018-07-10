@@ -22,6 +22,10 @@ public class Route {
     public String getId() {
         return id;
     }
+    
+    public boolean contains(BusStop stop) {
+      return route.contains(stop);
+    }
 
     public int getDistance(BusStop initialStop, BusStop finalStop){
         int start = route.indexOf(initialStop);
