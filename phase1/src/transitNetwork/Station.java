@@ -33,7 +33,7 @@ public class Station extends Stop{
     }
     
     /* Connect an arrayList of stations to this station */
-    public void connectStation(ArrayList<Station> stations) {
+    public void connectStations(ArrayList<Station> stations) {
       connectingStations.addAll(stations);
       for (Station station : stations) {
         if (!station.getConnectedStations().contains(this)) {
