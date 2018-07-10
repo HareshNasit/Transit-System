@@ -4,12 +4,11 @@ import user.Card;
 
 public abstract class Stop {
   
-  private static int counter = 0;
-  private final int id;
+  private final String id;
   private String name;
   
-  public Stop(String name) {
-    id = counter++;
+  public Stop(String id, String name) {
+    this.id = id;
     this.name = name;
   }
   
@@ -21,7 +20,7 @@ public abstract class Stop {
     this.name = name;
   }
   
-  public int getID() {
+  public String getID() {
     return id;
   }
 

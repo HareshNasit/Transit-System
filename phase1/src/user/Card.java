@@ -11,8 +11,7 @@ public class Card {
   private boolean suspended;
   private double totalSpending;
   
-  private static int counter = 0;
-  private int id;
+  private String id;
   private User user;
 
   private Trip[] trips;
@@ -20,13 +19,12 @@ public class Card {
   //TODO: Track last known route user was on
   private Route lastRoute;
 
-  public Card(User user) {
+  public Card(String id, User user) {
     balance = 19;
     suspended = false;
     trips = new Trip[3];
     this.user = user;
-    this.id = counter;
-    counter++;
+    this.id = id;
   }
   
   protected void suspend() {
@@ -87,7 +85,10 @@ public class Card {
   protected double getTotalSpending(){
       return totalSpending;
   }
-  
+
+  public String getId() {
+    return id;
+  }
   public String toString() {
     return "Card " + id + " owned by user " + user.getName();
   }

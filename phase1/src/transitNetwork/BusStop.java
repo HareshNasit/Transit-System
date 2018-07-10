@@ -7,8 +7,8 @@ public class BusStop extends Stop{
   
   private Station connectedStation = null;
 
-    public BusStop(String name){
-        super(name);
+    public BusStop(String id, String name){
+        super(id, name);
     }
 
     //Return true if successful, false otherwise.

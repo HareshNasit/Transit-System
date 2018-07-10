@@ -11,15 +11,17 @@ public class Station extends Stop{
     private BusStop connectedBusStop = null;
     private ArrayList<Station> connectingStations;
 
+    public Station(String id, String name){
+        super(id, name);
+        this.connectingStations = new ArrayList<>();
+    }
+
     /* Create a station with a pre-connected bus stop */
-    public Station(String name, BusStop connectingBusStop){
-        super(name);
+    public Station(String id, String name, BusStop connectingBusStop){
+        super(id, name);
+        this.connectingStations = new ArrayList<>();
         this.connectedBusStop = connectingBusStop;
         connectedBusStop.connectStation(this);
-    }
-    
-    public Station(String name){
-      super(name);
     }
     
     /* Connect a single station to this one */
@@ -45,7 +47,7 @@ public class Station extends Stop{
       connectedBusStop.connectStation(this);
     }
 
-    public BusStop getConnectBusStop() {
+    public BusStop getConnectedBusStop() {
         return connectedBusStop;
     }
     

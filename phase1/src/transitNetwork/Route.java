@@ -4,13 +4,18 @@ import java.util.ArrayList;
 
 public class Route {
     private String id;
-    private ArrayList<Stop> route;
+    private ArrayList<BusStop> route;
 
     Route(String id){
         this.id = id;
     }
 
-    public void createRoute(ArrayList<Stop> stops){
+    Route(String id, ArrayList<BusStop> stops) {
+        this.id = id;
+        this.route = stops;
+    }
+
+    public void createRoute(ArrayList<BusStop> stops){
         this.route = stops;
     }
 
@@ -18,7 +23,7 @@ public class Route {
         return id;
     }
 
-    public int getDistance(Stop initialStop, Stop finalStop){
+    public int getDistance(BusStop initialStop, BusStop finalStop){
         int start = route.indexOf(initialStop);
         int end = route.indexOf(finalStop);
         return Math.abs(end - start);

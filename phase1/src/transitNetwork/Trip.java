@@ -31,6 +31,7 @@ public class Trip {
     public Stop getInitialStop(){
         return stops.get(0);
     }
+
     public double getValue() {
       return tripValue;
     }
