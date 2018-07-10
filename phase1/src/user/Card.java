@@ -51,6 +51,7 @@ public class Card {
   public boolean charge(double amount) {
     if (!suspended && getBalance() > 0) {
       trips[0].charge(amount);
+      Logger.log(toString() + " charged $" + amount + ".");
       return true;
     }
     return false;

@@ -22,15 +22,16 @@ public class BusStop extends Stop{
         //Under the conditions where a new trip has been created, it is always possible to tap onto at least one stop
         if (card.charge(2)) {
           card.getCurrentTrip().addStop(this);
-          Logger.log(card.toString() + " tapped on to station " + getName());
+          Logger.log(card.toString() + " tapped on to bus stop " + getName() + " at timestamp " + timestamp);
           return true;
         }
-        Logger.log(card.toString() + " failed to tap on to station " + getName());
+        Logger.log(card.toString() + " failed to tap on to bus stop " + getName() + " at timestamp " + timestamp);
         return false;
     }
 
     public boolean tapOff(Route route, Card card, int timestamp) {
         //TODO: Add detection for disjointed trips
+      Logger.log(card.toString() + " tapped off of bus stop " + getName() + " at timestamp " + timestamp);
         card.getCurrentTrip().addStop(this);
         return true;
     }

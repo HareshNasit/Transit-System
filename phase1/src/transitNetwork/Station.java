@@ -2,6 +2,7 @@ package transitNetwork;
 
 import user.Card;
 import java.util.Queue;
+import main.Logger;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -53,21 +54,17 @@ public class Station extends Stop{
     }
 
     public boolean tapOn(Route route, Card card, int timestamp) {
-        //TODO: Add detection for disjointed trips
-        if(card.getCurrentTrip() == null) {
-            if (card.getBalance() > 0) {
-                card.newTrip(this, timestamp);
-                card.getCurrentTrip().addStop(this);
-                return true;
-            }
+      if (card.getBalance() > 0) {
+        if ((card.getCurrentTrip() == null || !card.getCurrentTrip().getLastStop().getName().equals(getName()) 
+            || timestamp - card.getCurrentTrip().getInitialTime() > 120 )) {
+          card.newTrip(this, timestamp);
         }
-        else if(card.getCurrentTrip().getValue() < 6){
-            if(card.getBalance()>0) {
-                card.getCurrentTrip().addStop(this);
-                return true;
-            }
-        }
-        return false;
+        card.getCurrentTrip().addStop(this);
+        Logger.log(card.toString() + " tapped on to subway station " + getName() + " at timestamp " + timestamp);
+        return true;
+      }
+      Logger.log(card.toString() + " failed to tap on to subway station " + getName() + " at timestamp " + timestamp);
+      return false;
     }
     
     public boolean tapOff(Route route, Card card, int timestamp) {
@@ -75,6 +72,7 @@ public class Station extends Stop{
         card.getCurrentTrip().addStop(this);
         int distance = getDistance(tripStart);
         card.charge(distance*0.5);
+        Logger.log(card.toString() + " tapped off of subway station " + getName() + " at timestamp " + timestamp);
       return true;
     }
 
