@@ -22,6 +22,14 @@ public class UserManager {
         }
         return revenue;
     }
+    
+    public double calculateFines() {
+        int fines = 0;
+        for (Card card : cards.values()) {
+            fines += card.getTotalFines();
+        }
+        return fines;
+    }
 
     public void addUser(String id, String name, String email) {
         idManager.addId(id);

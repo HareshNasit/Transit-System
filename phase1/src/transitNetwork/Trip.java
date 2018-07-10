@@ -6,7 +6,8 @@ public class Trip {
     private ArrayList<Stop> stops;
     private Station lastSubwayTap = null;
     
-    //TODO: time tracking
+    private boolean tripEnded = false;
+    
     private long initialTime;
     
     private double tripValue = 0;
@@ -22,6 +23,14 @@ public class Trip {
       if (tripValue > 6) {
         tripValue = 6;
       }
+    }
+    
+    public void endTrip() {
+      tripEnded = true;
+    }
+    
+    public boolean isEnded() {
+      return tripEnded;
     }
 
     public long getInitialTime() {
