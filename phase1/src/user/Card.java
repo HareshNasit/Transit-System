@@ -3,22 +3,30 @@ package user;
 import transitNetwork.Route;
 import transitNetwork.Trip;
 import java.util.ArrayList;
+import main.Logger;
 import transitNetwork.Stop;
 
 public class Card {
   private double balance;
   private boolean suspended;
   private double totalSpending;
+  
+  private static int counter = 0;
+  private int id;
+  private User user;
 
   private Trip[] trips;
   
   //TODO: Track last known route user was on
   private Route lastRoute;
 
-  public Card() {
+  public Card(User user) {
     balance = 19;
     suspended = false;
     trips = new Trip[3];
+    this.user = user;
+    this.id = counter;
+    counter++;
   }
   
   protected void suspend() {
@@ -35,12 +43,17 @@ public class Card {
   
   /* Returns the available balance on the card. */
   public double getBalance() {
-    return balance - trips[0].getValue();
+    if (trips[0] != null) return balance - trips[0].getValue();
+    else return balance;
   }
   
   /* Ensures that when a card is charged, the value is added to the current trip's total. */
-  public void charge(double amount) {
-    if (!suspended) trips[0].charge(amount);
+  public boolean charge(double amount) {
+    if (!suspended && getBalance() > 0) {
+      trips[0].charge(amount);
+      return true;
+    }
+    return false;
   }
   
   public void newTrip(Stop initialStop, int timestamp) {
@@ -52,6 +65,7 @@ public class Card {
       trips[2] = trips[1];
       trips[1] = trips[0];
       trips[0] = new Trip(initialStop, timestamp);
+      Logger.log(toString() + " started a new trip!");
     }
   }
   
@@ -71,5 +85,9 @@ public class Card {
 
   protected double getTotalSpending(){
       return totalSpending;
+  }
+  
+  public String toString() {
+    return "Card " + id + " owned by user " + user.getName();
   }
 }

@@ -1,5 +1,6 @@
 package transitNetwork;
 
+import main.Logger;
 import user.Card;
 
 public class BusStop extends Stop{
@@ -12,34 +13,19 @@ public class BusStop extends Stop{
 
     //Return true if successful, false otherwise.
     public boolean tapOn(Route route, Card card, int timestamp) {
-        if(card.getCurrentTrip() == null){
-            if (card.getBalance() > 0) {
-                card.newTrip(this,timestamp);
-                card.charge(2);
-                card.getCurrentTrip().addStop(this);
-                return true;
-            }
+        //Test for conditions to start a new trip
+        if ((card.getCurrentTrip() == null || !card.getCurrentTrip().getLastStop().getName().equals(getName()) 
+            || timestamp - card.getCurrentTrip().getInitialTime() > 120 ) && card.getBalance() > 0) {
+          card.newTrip(this, timestamp);
         }
-        else if(card.getCurrentTrip().getLastStop().getName().equals(this.getName())){
-            if(card.getCurrentTrip().getValue()<6){
-                if(card.getBalance()>0){
-                    card.getCurrentTrip().addStop(this);
-                    card.charge(2);
-                    return true;
-                }
-            }
-            else if(card.getCurrentTrip().getInitialTime() - timestamp < 120){
-                card.getCurrentTrip().addStop(this);
-                card.charge(0); //Free Trip
-                return true;
-            }
+        //If the card can be charged, finish tapping onto the stop
+        //Under the conditions where a new trip has been created, it is always possible to tap onto at least one stop
+        if (card.charge(2)) {
+          card.getCurrentTrip().addStop(this);
+          Logger.log(card.toString() + " tapped on to station " + getName());
+          return true;
         }
-        else if (card.getBalance() > 0) {
-                card.newTrip(this, timestamp);
-                card.charge(2);
-                card.getCurrentTrip().addStop(this);
-                return true;
-        }
+        Logger.log(card.toString() + " failed to tap on to station " + getName());
         return false;
     }
 

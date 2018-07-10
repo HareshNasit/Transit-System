@@ -16,7 +16,7 @@ public class Admin {
   }
   
   public void addCard(User user) {
-	Card card = new Card();
+	Card card = new Card(user);
 	user.addCard(card);
     cardList.add(card);
   }
