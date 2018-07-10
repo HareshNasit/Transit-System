@@ -15,8 +15,12 @@ public class Route {
         this.route = stops;
     }
 
-    public void createRoute(ArrayList<BusStop> stops){
-        this.route = stops;
+    public void addStops(ArrayList<BusStop> stops){
+        this.route.addAll(stops);
+    }
+
+    public void addStops(ArrayList<BusStop> stops, int index) {
+        this.route.addAll(index, stops);
     }
 
     public String getId() {
