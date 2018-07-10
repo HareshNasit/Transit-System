@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import transitNetwork.BusStop;
 import transitNetwork.RouteManager;
+import user.User;
 import user.UserManager;
 
 /* This class will perform initial setup upon launch. */
@@ -21,8 +22,8 @@ public class TransitManager {
 
 	private static String[] extractArgs(String str) {
         // id content pattern
-        Pattern stopSyntax = Pattern.compile("(\\S+)\\s(.+)");
-        Matcher tokenize = stopSyntax.matcher(str);
+        Pattern itemSyntax = Pattern.compile("(\\S+)\\s+(.+)");
+        Matcher tokenize = itemSyntax.matcher(str);
 
         if (!tokenize.find()) return null;
         else {
@@ -95,7 +96,7 @@ public class TransitManager {
 
               else {
                   ArrayList<BusStop> stops = new ArrayList<>();
-                  for (String stopId : tokenize[1].split(" ")) {
+                  for (String stopId : tokenize[1].split("\\s+")) {
                       if (!routeManager.hasStop(stopId)) {
                           throw new RuntimeException(String.format("Invalid BusStop id (%s) provided for route creation: %s", stopId, fileRead));
                       }
@@ -114,7 +115,17 @@ public class TransitManager {
           br = new BufferedReader(new FileReader("config/users.txt"));
           fileRead = br.readLine();
 
+          // userId email@example.com name
           while (fileRead != null) {
+              Pattern userSyntax = Pattern.compile("(\\S+)\\s+(\\S+@\\S+\\.\\S+)\\s+(.+)");
+              Matcher tokenize = userSyntax.matcher(fileRead);
+
+              if (!tokenize.find()) {
+                  throw new RuntimeException("Invalid user syntax; was the email formatted properly?: " + fileRead);
+              }
+
+              userManager.addUser(tokenize.group(1), tokenize.group(3), tokenize.group(2));
+
               fileRead = br.readLine();
           }
 
@@ -124,7 +135,21 @@ public class TransitManager {
           br = new BufferedReader(new FileReader("config/cards.txt"));
           fileRead = br.readLine();
 
+          // userId cardIds...
           while (fileRead != null) {
+              String[] tokenize = extractArgs(fileRead);
+
+              if (tokenize != null) {
+                  String userId = tokenize[0];
+                  if (!userManager.hasUser(userId))
+                      throw new RuntimeException("Invalid User id provided when adding cards: " + fileRead);
+                  User user = userManager.getUser(userId);
+
+                  for (String cardId : tokenize[1].split("\\s+")) {
+                      userManager.addCard(user, cardId);
+                  }
+              }
+
               fileRead = br.readLine();
           }
 
