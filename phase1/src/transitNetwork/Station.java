@@ -57,24 +57,36 @@ public class Station extends Stop{
 
     public boolean tapOn(Route route, Card card, int timestamp) {
       if (card.getBalance() > 0) {
-        if ((card.getCurrentTrip() == null || !card.getCurrentTrip().getLastStop().getName().equals(getName()) 
-            || timestamp - card.getCurrentTrip().getInitialTime() > 120 )) {
-          card.newTrip(this, timestamp);
-        }
-        card.getCurrentTrip().addStop(this);
-        Logger.log(card.toString() + " tapped on to subway station " + getName() + " at timestamp " + timestamp);
-        return true;
+          boolean isNew = card.getCurrentTrip() == null; //If the user starts a new trip or no.
+          // If the trip is not continuous, start a new trip.
+          boolean isNotContinuousTrip = !card.getCurrentTrip().getLastStop().getName().equals(getName());
+          // If the the continuous trip is over 2 hrs, start a new trip.
+          boolean isNotWithinTwoHrs = timestamp - card.getCurrentTrip().getInitialTime() > 120;
+          if (( isNew || isNotContinuousTrip || isNotWithinTwoHrs )) {
+            card.newTrip(this, timestamp);
+          }
+          card.getCurrentTrip().addStop(this);
+          Logger.log(card.toString() + " tapped on to subway station " + getName() + " at timestamp " + timestamp);
+          return true;
       }
       Logger.log(card.toString() + " failed to tap on to subway station " + getName() + " at timestamp " + timestamp);
       return false;
     }
     
     public boolean tapOff(Route route, Card card, int timestamp) {
-        Station tripStart = card.getCurrentTrip().getLastSubwayTap();
-        card.getCurrentTrip().addStop(this);
-        int distance = getDistance(tripStart);
-        card.charge(distance*0.5);
-        Logger.log(card.toString() + " tapped off of subway station " + getName() + " at timestamp " + timestamp);
+        // If the user had entered illegally and jst taps off without tapping on, the user is charged
+        // max $6.
+        if(card.getCurrentTrip() == null){
+            card.charge(6);
+            Logger.log(card.toString() + " illegally entered and got out at" + getName() + " at timestamp " + timestamp);
+        }
+        else {
+            Station tripStart = card.getCurrentTrip().getLastSubwayTap();
+            card.getCurrentTrip().addStop(this);
+            int distance = getDistance(tripStart);
+            card.charge(distance * 0.5);
+            Logger.log(card.toString() + " tapped off of subway station " + getName() + " at timestamp " + timestamp);
+        }
       return true;
     }
 
