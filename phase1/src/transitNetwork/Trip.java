@@ -3,23 +3,35 @@ package transitNetwork;
 import java.util.ArrayList;
 
 public class Trip {
-    private ArrayList<Stop> stops;
+    private ArrayList<TripLocation> stops;
     private Station lastSubwayTap = null;
     
-    private boolean tripEnded = false;
+    private boolean tripEnded;
     
     private long initialTime;
     
-    private double tripValue = 0;
-    
-    public Trip(Stop initialStop, int timestamp) {
-      stops = new ArrayList<Stop>();
-      stops.add(initialStop);
+    private double tripValue;
+    private double trueValue = 0;
+
+    public Trip(long timestamp, BusStop busStop, Route route) {
+        stops = new ArrayList<>();
+        addStop(timestamp, true, busStop, route);
+        initialTime = timestamp;
+        tripEnded = false;
+        tripValue = 0;
+    }
+
+    public Trip(long timestamp, Station initialStation) {
+      stops = new ArrayList<>();
+      addStop(timestamp, true, initialStation);
       initialTime = timestamp;
+        tripEnded = false;
+        tripValue = 0;
     }
     
     public void charge(double amount) {
       tripValue += amount;
+      trueValue += amount;
       if (tripValue > 6) {
         tripValue = 6;
       }
@@ -38,23 +50,36 @@ public class Trip {
     }
 
     public Stop getInitialStop(){
-        return stops.get(0);
+        return stops.get(0).getStop();
     }
 
     public double getValue() {
       return tripValue;
     }
+
+    public double getTrueValue() {
+        return trueValue;
+    }
     
     public Stop getLastStop() {
-      return stops.get(stops.size());
+      return stops.get(stops.size() - 1).getStop();
     }
     
     public Station getLastSubwayTap() {
       return lastSubwayTap;
     }
     
-    public void addStop(Stop stop) {
-      stops.add(stop);
-      if (stop instanceof Station) lastSubwayTap = (Station) stop;
+    public void addStop(long timestamp, boolean tapType, BusStop stop, Route route) {
+      stops.add(new TripLocation(timestamp, tapType, stop, route));
+    }
+
+    public void addStop(long timestamp, boolean tapType, Station station) {
+        stops.add(new TripLocation(timestamp, tapType, station));
+        lastSubwayTap = station;
+    }
+
+    public String toString() {
+        StringBuilder details = new StringBuilder();
+        return details.toString();
     }
 }
