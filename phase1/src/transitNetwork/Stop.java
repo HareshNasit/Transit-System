@@ -39,6 +39,8 @@ public abstract class Stop {
     return connectedStop;
   }
 
-  public abstract boolean tapOff(Route route, Card card, int timestamp);
-  public abstract boolean tapOn(Route route, Card card, int timestamp);
+  public abstract boolean tapOn(Card card, int timestamp);
+  public abstract boolean tapOff(Card card, int timestamp);
+  public abstract boolean tapOn(Card card, int timestamp, Route route);
+  public abstract boolean tapOff(Card card, int timestamp, Route route);
 }
