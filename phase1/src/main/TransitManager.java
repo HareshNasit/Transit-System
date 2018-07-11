@@ -175,6 +175,9 @@ public class TransitManager {
           // user userId newCard cardId
           // user userId viewRecentTrips cardId
           // user userId changeName newName
+          // admin getRevenue
+          // admin getNumFines
+          // admin totalStops
           while (fileRead != null) {
               String[] tokenize = extractArgs(fileRead);
               String[] eventArgs = tokenize[1].split("\\s+");
@@ -230,7 +233,17 @@ public class TransitManager {
                           throw new RuntimeException("User does not exist in the system: " + fileRead);
                       }
                       break;
-
+                  case "admin":
+                      if (eventArgs[1].equals("getRevenue")){
+                          System.out.println("Total revenue collected is:");
+                          System.out.println(userManager.calculateRevenue());
+                      }
+                      else if(eventArgs[1].equals("getNumFines")){
+                          System.out.println("Total fines by users: " + userManager.calculateFines());
+                      }
+                      else if(eventArgs[1].equals("totalStops")){
+                          System.out.println(userManager); //TODO call calculate total stops method.
+                      }
                   default:
                       throw new RuntimeException("Unrecognized event in events.");
               }
