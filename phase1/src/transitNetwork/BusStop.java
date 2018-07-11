@@ -4,10 +4,8 @@ import main.Logger;
 import user.Card;
 
 public class BusStop extends Stop{
-  
-  private Station connectedStop = null;
 
-    public BusStop(String id, String name){
+    BusStop(String id, String name){
         super(id, name);
     }
 
@@ -16,7 +14,7 @@ public class BusStop extends Stop{
         //Test for conditions to start a new trip
         Trip trip = card.getCurrentTrip();
         Stop lastStop = trip.getLastStop();
-        if ((trip == null || (lastStop != this && lastStop != this.connectedStop) || trip.isEnded()
+        if ((trip == null || (lastStop != this && lastStop != this.getConnectedStop()) || trip.isEnded()
             || timestamp - trip.getInitialTime() > 120) && card.getBalance() > 0) {
           card.newTrip(this, timestamp);
         }
@@ -44,12 +42,19 @@ public class BusStop extends Stop{
         }
         return true;
     }
-    
-    protected void connectStation(Station station) {
-      connectedStop = station;
+
+    @Override
+    void connectStop(Stop stop) {
+        if (!(stop instanceof Station)) throw new RuntimeException("BusStop connected with BusStop instead of Station");
+        Station station = (Station) stop;
+        super.connectStop(station);
     }
-    
-    public Station getConnectedStation() {
-      return connectedStop;
+
+    void connectStation(Station station) {
+        connectStop(station);
+    }
+
+    Station getConnectedStation() {
+        return (Station) this.getConnectedStop();
     }
 }

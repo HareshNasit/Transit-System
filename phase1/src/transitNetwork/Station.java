@@ -8,7 +8,6 @@ import java.util.LinkedList;
 
 public class Station extends Stop{
 
-    private BusStop connectedStop = null;
     private ArrayList<Station> connectingStations;
     private static int stationCount;
 
@@ -22,8 +21,8 @@ public class Station extends Stop{
     public Station(String id, String name, BusStop connectingBusStop){
         super(id, name);
         this.connectingStations = new ArrayList<>();
-        this.connectedStop = connectingBusStop;
-        connectedStop.connectStation(this);
+        this.connectStop(connectingBusStop);
+        connectingBusStop.connectStation(this);
     }
     
     /* Connect a single station to this one */
@@ -43,16 +42,23 @@ public class Station extends Stop{
         }
       }
     }
-    
-    public void connectBusStop(BusStop stop) {
-      connectedStop = stop;
-      connectedStop.connectStation(this);
+
+    @Override
+    void connectStop(Stop stop) {
+        if (!(stop instanceof BusStop)) throw new RuntimeException("Station connected with Station when supposed to be BusStop");
+        BusStop busStop = (BusStop) stop;
+        super.connectStop(busStop);
+        busStop.connectStop(this);
     }
 
-    public BusStop getConnectedBusStop() {
-        return connectedStop;
+    void connectBusStop(BusStop busStop) {
+        connectStop(busStop);
     }
-    
+
+    BusStop getConnectedBusStop() {
+        return (BusStop) this.getConnectedStop();
+    }
+
     public ArrayList<Station> getConnectedStations() {
       return connectingStations;
     }
@@ -62,7 +68,7 @@ public class Station extends Stop{
           Stop lastStop = card.getCurrentTrip().getLastStop();
           boolean isNew = card.getCurrentTrip() == null || card.getCurrentTrip().isEnded(); //If the user starts a new trip or no.
           // If the trip is not continuous, start a new trip.
-          boolean isNotContinuousTrip = lastStop != this && lastStop != this.connectedStop;
+          boolean isNotContinuousTrip = lastStop != this && lastStop != this.getConnectedStop();
           // If the the continuous trip is over 2 hrs, start a new trip.
           boolean isNotWithinTwoHrs = timestamp - card.getCurrentTrip().getInitialTime() > 120;
           if (( isNew || isNotContinuousTrip || isNotWithinTwoHrs )) {

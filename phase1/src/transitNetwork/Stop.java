@@ -6,10 +6,17 @@ public abstract class Stop {
   
   private final String id;
   private String name;
+  private Stop connectedStop = null;
   
-  public Stop(String id, String name) {
+  Stop(String id, String name) {
     this.id = id;
     this.name = name;
+  }
+
+  Stop(String id, String name, Stop stop) {
+    this.id = id;
+    this.name = name;
+    this.connectedStop = stop;
   }
   
   public String getName() {
@@ -22,6 +29,14 @@ public abstract class Stop {
   
   public String getID() {
     return id;
+  }
+
+  void connectStop(Stop stop) {
+    connectedStop = stop;
+  }
+
+  Stop getConnectedStop() {
+    return connectedStop;
   }
 
   public abstract boolean tapOff(Route route, Card card, int timestamp);
