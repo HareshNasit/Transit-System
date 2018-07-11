@@ -171,6 +171,8 @@ public class TransitManager {
           // user userId load cardId amount
           // user userId suspend cardId
           // user userId newCard cardId
+          // user userId viewRecentTrips cardId
+          // user userId changeName newName
           while (fileRead != null) {
               String[] tokenize = extractArgs(fileRead);
               String[] eventArgs = tokenize[1].split("\\s+");
@@ -188,25 +190,35 @@ public class TransitManager {
                       }
                       break;
                   case "card":
-                      if (eventArgs[1].equals("tapOn")){
-                          userManager.getCard(eventArgs[0]).tapOn(routeManager.getRoute());
-                      }
-                      else if(eventArgs[1].equals("tapOff")){
-                          userManager.getCard(eventArgs[0]).tapOff();
-                      }
+                      if (userManager.hasCard(eventArgs[0])) {
+                          if (eventArgs[1].equals("tapOn")) {
+                             userManager.getCard(eventArgs[0]).tapOn(routeManager.getRoute());
+                          }
+                          else if (eventArgs[1].equals("tapOff")) {
+                              userManager.getCard(eventArgs[0]).tapOff();
+                          }
+                      else{
+                              throw new RuntimeException("Unrecognized card");
+                          }
                       break;
+                  }
                   case "user":
-                      if (eventArgs[1].equals("load")){
-                          userManager.getUser(eventArgs[0]).loadCard(userManager.getCard(eventArgs[2]),
-                                  Integer.valueOf(eventArgs[3]));
-                      }
-                      else if (eventArgs[1].equals("suspend")){
-                          userManager.getUser(eventArgs[0]).suspendCard(userManager.getCard(eventArgs[2]));
-                      }
-                      else if (eventArgs[1].equals("newCard")){
-                          userManager.addCard(userManager.getUser(eventArgs[0]),eventArgs[2]);
+                      if (userManager.hasUser(eventArgs[0])) {
+                          if (eventArgs[1].equals("load")) {
+                              userManager.getUser(eventArgs[0]).loadCard(userManager.getCard(eventArgs[2]),
+                                      Integer.valueOf(eventArgs[3]));
+                          } else if (eventArgs[1].equals("suspend")) {
+                              userManager.getUser(eventArgs[0]).suspendCard(userManager.getCard(eventArgs[2]));
+                          } else if (eventArgs[1].equals("newCard")) {
+                              userManager.addCard(userManager.getUser(eventArgs[0]), eventArgs[2]);
+                          } else if (eventArgs[1].equals("viewRecentTrips")) {
+                              System.out.println(userManager.getUser(eventArgs[0]).viewTrips(userManager.getCard(eventArgs[2])));
+                          } else if (eventArgs[1].equals("changeName")) {
+                              userManager.getUser(eventArgs[0]).setName(eventArgs[2]);
+                          }
                       }
                       break;
+
                   default:
                       throw new RuntimeException("Unrecognized event in events.");
               }

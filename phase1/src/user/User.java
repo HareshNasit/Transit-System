@@ -2,6 +2,7 @@ package user;
 
 
 import main.Logger;
+import transitNetwork.Trip;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,10 @@ public class User {
     }
     Logger.log("Failed to load $" + value + " to the " + card.toString());
     return false;
+  }
+
+  public Trip[] viewTrips(Card card){
+      return card.getTrips();
   }
 
   public String getId() {
