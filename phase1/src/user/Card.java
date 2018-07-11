@@ -21,8 +21,12 @@ public class Card {
     this.user = user;
     this.id = id;
   }
-  
-  protected void suspend() {
+
+    public Trip[] getTrips() {
+        return trips;
+    }
+
+    protected void suspend() {
     suspended = true;
   }
   

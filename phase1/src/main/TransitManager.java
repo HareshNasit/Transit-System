@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import transitNetwork.Trip;
+import user.Card;
 import transitNetwork.BusStop;
 import transitNetwork.RouteManager;
 import user.User;
@@ -166,27 +168,94 @@ public class TransitManager {
           // system stop
           // card id tapOn station stationId
           // card id tapOff station stationId
-          // card id tapOn stop stopId routeId
-          // card id tapOff stop stopId routeid
+          // card id tapOn busStop stopId routeId
+          // card id tapOff busStop stopId routeid
           // user userId load cardId amount
           // user userId suspend cardId
+          // user userId newCard cardId
+          // user userId viewRecentTrips cardId
+          // user userId changeName newName
+          // admin getRevenue
+          // admin getNumFines
+          // admin totalStops
+          String[] extractTimestamp = extractArgs(fileRead);
+          long timestamp = Long.parseLong( extractTimestamp[0]);
           while (fileRead != null) {
-              String[] tokenize = extractArgs(fileRead);
+              String[] tokenize = extractArgs(extractTimestamp[1]);
               String[] eventArgs = tokenize[1].split("\\s+");
 
               switch (tokenize[0]) {
                   case "system":
-                      if (eventArgs[0] == "start") {
+                      if (eventArgs[0].equals("start")) {
                           Logger.startDay(eventArgs[1]);
                       }
-                      else if (eventArgs[0] == "stop") {
+                      else if (eventArgs[0].equals("stop")) {
                           Logger.endDay();
                       }
                       else {
                           throw new RuntimeException("Invalid argument passed to system.");
                       }
                       break;
-
+                  case "card":
+                      if (userManager.hasCard(eventArgs[0])) {
+                          Card card = userManager.getCard(eventArgs[0]);
+                          if (eventArgs[1].equals("tapOn")) {
+                              if (eventArgs[2].equals("station")){
+                                  card.tapOn(timestamp,routeManager.getStation(eventArgs[3]));
+                              }
+                              else if(eventArgs[2].equals("busStop")) {
+                                  card.tapOn(timestamp,routeManager.getStop(eventArgs[3]),routeManager.getRoute(eventArgs[4]));
+                              }
+                          }
+                          else if (eventArgs[1].equals("tapOff")) {
+                              if (eventArgs[2].equals("station")){
+                                  card.tapOff(timestamp,routeManager.getStation(eventArgs[3]));
+                              }
+                              else if(eventArgs[2].equals("busStop")) {
+                                  card.tapOff(timestamp,routeManager.getStop(eventArgs[3]),routeManager.getRoute(eventArgs[4]));
+                              }
+                          }
+                      else{
+                              throw new RuntimeException("Unrecognized card");
+                          }
+                      break;
+                  }
+                  case "user":
+                      if (userManager.hasUser(eventArgs[0])) {
+                          User user = userManager.getUser(eventArgs[0]);
+                          if (eventArgs[1].equals("load")) {
+                              user.loadCard(userManager.getCard(eventArgs[2]),
+                                      Integer.valueOf(eventArgs[3]));
+                          } else if (eventArgs[1].equals("suspend")) {
+                              user.suspendCard(userManager.getCard(eventArgs[2]));
+                          } else if (eventArgs[1].equals("newCard")) {
+                              userManager.addCard(user, eventArgs[2]);
+                          } else if (eventArgs[1].equals("viewRecentTrips")) {
+                              Card card = userManager.getCard(eventArgs[2]);
+                              System.out.println(card + "'s 3 recent trips:");
+                              for(Trip trip: user.viewTrips(card)){
+                                  System.out.println(trip);
+                              }
+                          } else if (eventArgs[1].equals("changeName")) {
+                              String newName = fileRead.split("\\s+changeName\\s+")[1];
+                              user.setName(newName);
+                          }
+                      }
+                      else{
+                          throw new RuntimeException("User does not exist in the system: " + fileRead);
+                      }
+                      break;
+                  case "admin":
+                      if (eventArgs[1].equals("getRevenue")){
+                          System.out.println("Total revenue collected is:");
+                          System.out.println(userManager.calculateRevenue());
+                      }
+                      else if(eventArgs[1].equals("getNumFines")){
+                          System.out.println("Total fines by users: " + userManager.calculateFines());
+                      }
+                      else if(eventArgs[1].equals("totalStops")){
+                          System.out.println(userManager); //TODO call calculate total stops method.
+                      }
                   default:
                       throw new RuntimeException("Unrecognized event in events.");
               }
