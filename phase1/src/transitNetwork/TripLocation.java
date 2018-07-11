@@ -1,27 +1,28 @@
 package transitNetwork;
 
 public class TripLocation {
-    private boolean tapType;
+    // true: tap on, false: tap off
+    private boolean tappingOn;
     private Stop stop;
     private Route route;
     private long timestamp;
 
-    TripLocation(long timestamp, boolean tapType, BusStop stop, Route route) {
-        this.tapType = tapType;
+    TripLocation(long timestamp, boolean tappingOn, BusStop stop, Route route) {
+        this.tappingOn = tappingOn;
         this.stop = stop;
         this.route = route;
         this.timestamp = timestamp;
     }
 
-    TripLocation(long timestamp, boolean tapType, Station station) {
-        this.tapType = tapType;
+    TripLocation(long timestamp, boolean tappingOn, Station station) {
+        this.tappingOn = tappingOn;
         this.stop = station;
         this.route = null;
         this.timestamp = timestamp;
     }
 
-    public boolean getTapType() {
-        return this.tapType;
+    public boolean isTapOn() {
+        return this.tappingOn;
     }
 
     public Stop getStop() {
