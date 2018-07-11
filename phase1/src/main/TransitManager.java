@@ -178,8 +178,10 @@ public class TransitManager {
           // admin getRevenue
           // admin getNumFines
           // admin totalStops
+          String[] extractTimestamp = extractArgs(fileRead);
+          long timestamp = Long.parseLong( extractTimestamp[0]);
           while (fileRead != null) {
-              String[] tokenize = extractArgs(fileRead);
+              String[] tokenize = extractArgs(extractTimestamp[1]);
               String[] eventArgs = tokenize[1].split("\\s+");
 
               switch (tokenize[0]) {
