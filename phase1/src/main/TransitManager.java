@@ -216,11 +216,13 @@ public class TransitManager {
                           } else if (eventArgs[1].equals("newCard")) {
                               userManager.addCard(user, eventArgs[2]);
                           } else if (eventArgs[1].equals("viewRecentTrips")) {
-                              for(Trip trip: user.viewTrips(userManager.getCard(eventArgs[2]))){
+                              Card card = userManager.getCard(eventArgs[2]);
+                              System.out.println(card + "'s 3 recent trips:");
+                              for(Trip trip: user.viewTrips(card)){
                                   System.out.println(trip);
                               }
                           } else if (eventArgs[1].equals("changeName")) {
-                              String newName = eventArgs[2];
+                              String newName = fileRead.split("\\s+changeName\\s+")[1];
                               user.setName(newName);
                           }
                       }
