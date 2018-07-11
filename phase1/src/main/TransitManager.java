@@ -159,17 +159,37 @@ public class TransitManager {
           br = new BufferedReader(new FileReader("config/events.txt"));
           fileRead = br.readLine();
 
-          // startup DATE
-          if (!fileRead.startsWith("startup")) throw new RuntimeException("No date provided on startup");
-          String date = fileRead.split(" ")[1];
-          BufferedWriter bw = new BufferedWriter(new FileWriter(date + ".txt"));
+          // system start day
+          if (!fileRead.startsWith("system start")) throw new RuntimeException("No date provided on startup");
 
-          // tapOn
-          // tapOff
-          // load
-          // suspend
+          // system start day
+          // system stop
+          // card id tapOn station stationId
+          // card id tapOff station stationId
+          // card id tapOn stop stopId routeId
+          // card id tapOff stop stopId routeid
+          // user userId load cardId amount
+          // user userId suspend cardId
           while (fileRead != null) {
-              String[] tokenize = fileRead.split(" ");
+              String[] tokenize = extractArgs(fileRead);
+              String[] eventArgs = tokenize[1].split("\\s+");
+
+              switch (tokenize[0]) {
+                  case "system":
+                      if (eventArgs[0] == "start") {
+                          Logger.startDay(eventArgs[1]);
+                      }
+                      else if (eventArgs[0] == "stop") {
+                          Logger.endDay();
+                      }
+                      else {
+                          throw new RuntimeException("Invalid argument passed to system.");
+                      }
+                      break;
+
+                  default:
+                      throw new RuntimeException("Unrecognized event in events.");
+              }
 
               fileRead = br.readLine();
           }
