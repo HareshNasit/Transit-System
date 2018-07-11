@@ -9,6 +9,7 @@ public class Logger {
   private static boolean active = false;
   private static ArrayList<String> logs;
   private static ArrayList<String> stats;
+  private static int stopsVisited = 0;
 
   public static void log(String logString) {
     if (!active) throw new RuntimeException("Attempted logging when non-active day");
@@ -18,6 +19,10 @@ public class Logger {
   public static void logStats(String statString) {
     if (!active) throw new RuntimeException("Attempted logging when non-active day");
     stats.add(statString);
+  }
+  
+  public static void logStops(int numStops) {
+    stopsVisited += numStops;
   }
 
   static void startDay(String day) {
@@ -41,12 +46,15 @@ public class Logger {
       
       writer.write("==================\n\n\n");
       writer.write("Day " + day + "'s aggregated statistics:\n");
-      
+      writer.write("Stops visited: " + stopsVisited);
       for (String line : stats) {
         writer.write(line + "\n");
       }
       
       writer.close();
+      logs.clear();
+      stats.clear();
+      stopsVisited = 0;
     } catch (FileNotFoundException e) {
       System.out.println("Failed to write log file: " + e.getMessage());
     }

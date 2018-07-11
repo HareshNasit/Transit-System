@@ -161,6 +161,7 @@ public class Station extends Stop{
             int distance = getDistance(tripStart);
             if (distance > 0) {
               card.charge(distance * 0.5);
+              Logger.logStops(distance);
               Logger.log(card.toString() + " tapped off of subway station " + getName() + " at timestamp " + timestamp);
             }
             else {

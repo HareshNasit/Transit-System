@@ -73,6 +73,8 @@ public class BusStop extends Stop{
           card.chargeFine(6);
           card.getCurrentTrip().endTrip();
           Logger.log(card.toString() + " charged for illegal exit of bus stop " + getName() + " at timestamp " + timestamp);
+        } else if (lastStop instanceof BusStop && route.contains((BusStop)lastStop)) {
+          Logger.logStops(route.getDistance((BusStop)lastStop, this));
         }
         return true;
     }
