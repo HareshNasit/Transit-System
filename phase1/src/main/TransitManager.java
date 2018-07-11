@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import transitNetwork.Trip;
+import user.Card;
 import transitNetwork.BusStop;
 import transitNetwork.RouteManager;
 import user.User;
@@ -191,11 +193,12 @@ public class TransitManager {
                       break;
                   case "card":
                       if (userManager.hasCard(eventArgs[0])) {
+                          Card card = userManager.getCard(eventArgs[0]);
                           if (eventArgs[1].equals("tapOn")) {
-                             userManager.getCard(eventArgs[0]).tapOn(routeManager.getRoute());
+                             card.tapOn(routeManager.getRoute());
                           }
                           else if (eventArgs[1].equals("tapOff")) {
-                              userManager.getCard(eventArgs[0]).tapOff();
+                              card.tapOff();
                           }
                       else{
                               throw new RuntimeException("Unrecognized card");
@@ -204,18 +207,25 @@ public class TransitManager {
                   }
                   case "user":
                       if (userManager.hasUser(eventArgs[0])) {
+                          User user = userManager.getUser(eventArgs[0]);
                           if (eventArgs[1].equals("load")) {
-                              userManager.getUser(eventArgs[0]).loadCard(userManager.getCard(eventArgs[2]),
+                              user.loadCard(userManager.getCard(eventArgs[2]),
                                       Integer.valueOf(eventArgs[3]));
                           } else if (eventArgs[1].equals("suspend")) {
-                              userManager.getUser(eventArgs[0]).suspendCard(userManager.getCard(eventArgs[2]));
+                              user.suspendCard(userManager.getCard(eventArgs[2]));
                           } else if (eventArgs[1].equals("newCard")) {
-                              userManager.addCard(userManager.getUser(eventArgs[0]), eventArgs[2]);
+                              userManager.addCard(user, eventArgs[2]);
                           } else if (eventArgs[1].equals("viewRecentTrips")) {
-                              System.out.println(userManager.getUser(eventArgs[0]).viewTrips(userManager.getCard(eventArgs[2])));
+                              for(Trip trip: user.viewTrips(userManager.getCard(eventArgs[2]))){
+                                  System.out.println(trip);
+                              }
                           } else if (eventArgs[1].equals("changeName")) {
-                              userManager.getUser(eventArgs[0]).setName(eventArgs[2]);
+                              String newName = eventArgs[2];
+                              user.setName(newName);
                           }
+                      }
+                      else{
+                          throw new RuntimeException("User does not exist in the system: " + fileRead);
                       }
                       break;
 
