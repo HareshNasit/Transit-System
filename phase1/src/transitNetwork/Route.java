@@ -61,6 +61,10 @@ public class Route {
     public boolean contains(BusStop stop) {
       return route.contains(stop);
     }
+
+    public boolean containsBoth(BusStop stop1, BusStop stop2) {
+        return route.contains(stop1) && route.contains(stop2);
+    }
     /**
      * Returns the distance between the first stop and the last stop of this Route.
      * Or, the amount of stops that this Route has.
