@@ -1,10 +1,7 @@
 package user;
 
-import transitNetwork.Route;
-import transitNetwork.Trip;
-import java.util.ArrayList;
+import transitNetwork.*;
 import main.Logger;
-import transitNetwork.Stop;
 
 public class Card {
   private double balance;
@@ -16,9 +13,6 @@ public class Card {
   private User user;
 
   private Trip[] trips;
-  
-  //TODO: Track last known route user was on
-  private Route lastRoute;
 
   public Card(String id, User user) {
     balance = 19;
@@ -59,33 +53,125 @@ public class Card {
   public void chargeFine(double amount) {
     balance -= amount;
     totalFines += amount;
+    Logger.log(String.format("%s was charged a fine of $%.2f.", toString(), amount));
   }
-  
-  public void newTrip(Stop initialStop, int timestamp) {
+
+  private void newTrip(Trip trip) {
     if (!suspended) {
-      if (trips[0] != null) {
-          balance -= trips[0].getValue();
-          totalSpending += trips[0].getValue();
+      Trip previousTrip = getCurrentTrip();
+      if (previousTrip != null) {
+        balance -= previousTrip.getValue();
+        totalSpending += previousTrip.getValue();
+        previousTrip.endTrip();
       }
       trips[2] = trips[1];
       trips[1] = trips[0];
-      trips[0] = new Trip(initialStop, timestamp);
-      Logger.log(toString() + " started a new trip!");
+      trips[0] = trip;
+      Logger.log(toString() + " started a new trip.");
     }
   }
-  
+
   public Trip getCurrentTrip() {
     return trips[0];
   }
 
-  // TODO: tap functionality
-  // Return true if successful, false otherwise.
-  public boolean tapOn(Route route, Stop stop, int timestamp) {
-    return stop.tapOn(route, this, timestamp);
+  private boolean tapOnHandler(long timestamp, Stop stop) {
+    Trip trip = getCurrentTrip();
+    Stop lastStop = trip.getLastStop();
+    if (trip != null) {
+      // if the last location was a tap on and a station, charge fine
+      // of $6 and end the previous trip as it is now invalid.
+      TripLocation lastLocation = trip.getLastLocation();
+      if (lastLocation.isTapOn() && lastLocation.isStation()) {
+        chargeFine(6);
+        trip.endTrip();
+      }
+    }
+    boolean activeTrip = trip != null && !(trip.isEnded() || timestamp - trip.getInitialTime() > 120);
+    boolean disconnectedTrip = lastStop != stop && lastStop.getConnectedStop() != stop;
+    return activeTrip && !disconnectedTrip;
   }
-  
-  public boolean tapOff(Route route, Stop stop, int timestamp) {
-    return stop.tapOff(route, this, timestamp);
+
+  /**
+   * General things that need to be done for tap off.
+   * @param stop transit system stop
+   * @return     true if there was abnormal tapping, false otherwise
+   */
+  private boolean tapOffHandler(Stop stop) {
+    Trip trip = getCurrentTrip();
+    boolean isStation = stop instanceof Station;
+    boolean chargeStation = false;
+    boolean chargeBus = false;
+    if (trip == null || trip.isEnded()) {
+      if (isStation) chargeStation = true;
+      else chargeBus = true;
+    }
+    else if (trip.getLastStop() instanceof BusStop &&
+            !trip.getLastRoute().containsBoth((BusStop) trip.getLastStop(), (BusStop) stop)){
+      chargeBus = true;
+    }
+    if (chargeStation) {
+        chargeFine(6);
+    } else if (chargeBus) {
+      charge(2);
+    }
+
+    return chargeBus || chargeStation;
+  }
+
+  public void tapOn(long timestamp, Station station) {
+      boolean continuousTrip = tapOnHandler(timestamp, station);
+      if (balance > 0 && !suspended) {
+        if (!continuousTrip) newTrip(new Trip(timestamp, station));
+        else getCurrentTrip().addLocation(timestamp, true, station, false);
+        Logger.log(String.format("%s tapped on at subway station %s at %d",
+                toString(), station.getName(), timestamp));
+      }
+      else {
+        Logger.log(String.format("%s failed to tap on at subway station %s at %d",
+                toString(), station.getName(), timestamp));
+      }
+  }
+
+  public void tapOff(long timestamp, Station station) {
+    boolean chargedFine = tapOffHandler(station);
+    if (chargedFine) {
+      if (getCurrentTrip() != null) {
+        getCurrentTrip().addLocation(timestamp, false, station, chargedFine);
+        getCurrentTrip().endTrip();
+      }
+      Logger.log(String.format("%s tapped off illegally at subway station %s at %d",
+              toString(), station.getName(), timestamp));
+    }
+
+    else {
+      getCurrentTrip().addLocation(timestamp, false, station, chargedFine);
+      if (timestamp - getCurrentTrip().getInitialTime() > 120) {
+        getCurrentTrip().endTrip();
+      }
+      Logger.log(String.format("%s tapped off at subway station %s at %d",
+              toString(), station.getName(), timestamp));
+    }
+  }
+
+  public void tapOn(long timestamp, BusStop busStop, Route route) {
+    boolean continousTrip = tapOnHandler(timestamp, busStop);
+    if (balance > 0 && !suspended) {
+      if (!continousTrip) newTrip(new Trip(timestamp, busStop, route));
+      else getCurrentTrip().addLocation(timestamp, true, busStop, route, false);
+      Logger.log(String.format("%s tapped on at bus stop %s on route %s at %d",
+              toString(), busStop.getName(), route.getId(), timestamp));
+    } else {
+      Logger.log(String.format("%s failed to tap on at bus stop %s on route %s at %d",
+              toString(), busStop.getName(), route.getId(), timestamp));
+    }
+  }
+
+  public void tapOff(long timestamp, BusStop busStop, Route route) {
+      boolean abnormalTap = tapOffHandler(busStop);
+      Logger.log(String.format("%s tapped off at bus stop %s on route %s at %d",
+              toString(), busStop.getName(), route.getId(), timestamp));
+      getCurrentTrip().addLocation(timestamp, false, busStop, route, abnormalTap);
   }
 
   protected double getTotalSpending(){
