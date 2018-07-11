@@ -170,23 +170,43 @@ public class TransitManager {
           // card id tapOff stop stopId routeid
           // user userId load cardId amount
           // user userId suspend cardId
+          // user userId newCard cardId
           while (fileRead != null) {
               String[] tokenize = extractArgs(fileRead);
               String[] eventArgs = tokenize[1].split("\\s+");
 
               switch (tokenize[0]) {
                   case "system":
-                      if (eventArgs[0] == "start") {
+                      if (eventArgs[0].equals("start")) {
                           Logger.startDay(eventArgs[1]);
                       }
-                      else if (eventArgs[0] == "stop") {
+                      else if (eventArgs[0].equals("stop")) {
                           Logger.endDay();
                       }
                       else {
                           throw new RuntimeException("Invalid argument passed to system.");
                       }
                       break;
-
+                  case "card":
+                      if (eventArgs[1].equals("tapOn")){
+                          userManager.getCard(eventArgs[0]).tapOn(routeManager.getRoute());
+                      }
+                      else if(eventArgs[1].equals("tapOff")){
+                          userManager.getCard(eventArgs[0]).tapOff();
+                      }
+                      break;
+                  case "user":
+                      if (eventArgs[1].equals("load")){
+                          userManager.getUser(eventArgs[0]).loadCard(userManager.getCard(eventArgs[2]),
+                                  Integer.valueOf(eventArgs[3]));
+                      }
+                      else if (eventArgs[1].equals("suspend")){
+                          userManager.getUser(eventArgs[0]).suspendCard(userManager.getCard(eventArgs[2]));
+                      }
+                      else if (eventArgs[1].equals("newCard")){
+                          userManager.addCard(userManager.getUser(eventArgs[0]),eventArgs[2]);
+                      }
+                      break;
                   default:
                       throw new RuntimeException("Unrecognized event in events.");
               }
