@@ -168,8 +168,8 @@ public class TransitManager {
           // system stop
           // card id tapOn station stationId
           // card id tapOff station stationId
-          // card id tapOn stop stopId routeId
-          // card id tapOff stop stopId routeid
+          // card id tapOn busStop stopId routeId
+          // card id tapOff busStop stopId routeid
           // user userId load cardId amount
           // user userId suspend cardId
           // user userId newCard cardId
@@ -200,10 +200,20 @@ public class TransitManager {
                       if (userManager.hasCard(eventArgs[0])) {
                           Card card = userManager.getCard(eventArgs[0]);
                           if (eventArgs[1].equals("tapOn")) {
-                             card.tapOn(routeManager.getRoute());
+                              if (eventArgs[2].equals("station")){
+                                  card.tapOn(timestamp,routeManager.getStation(eventArgs[3]));
+                              }
+                              else if(eventArgs[2].equals("busStop")) {
+                                  card.tapOn(timestamp,routeManager.getStop(eventArgs[3]),routeManager.getRoute(eventArgs[4]));
+                              }
                           }
                           else if (eventArgs[1].equals("tapOff")) {
-                              card.tapOff();
+                              if (eventArgs[2].equals("station")){
+                                  card.tapOff(timestamp,routeManager.getStation(eventArgs[3]));
+                              }
+                              else if(eventArgs[2].equals("busStop")) {
+                                  card.tapOff(timestamp,routeManager.getStop(eventArgs[3]),routeManager.getRoute(eventArgs[4]));
+                              }
                           }
                       else{
                               throw new RuntimeException("Unrecognized card");
