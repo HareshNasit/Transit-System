@@ -20,6 +20,13 @@ public class Trip {
     private double tripValue;
     private double trueValue = 0;
 
+    /**
+     * The constructor for Trip to track Card Trips
+     *
+     * @param timestamp the time of the initial timeStamp
+     * @param busStop   the busStop that this Trip is being initialized
+     * @param route     the Route that the Card is on
+     */
     public Trip(long timestamp, BusStop busStop, Route route) {
         locations = new ArrayList<>();
         addLocation(timestamp, true, busStop, route, false);
@@ -29,6 +36,11 @@ public class Trip {
         distanceTravelled = 0;
     }
 
+    /**
+     *
+     * @param timestamp
+     * @param initialStation
+     */
     public Trip(long timestamp, Station initialStation) {
         locations = new ArrayList<>();
         addLocation(timestamp, true, initialStation, false);
@@ -93,14 +105,26 @@ public class Trip {
         return getLastLocation().getStop();
     }
 
+    /**
+     * Returns last Route that the Trip was on
+     * @return last Route that Trip was on
+     */
     public Route getLastRoute() {
         return getLastLocation().getRoute();
     }
 
+    /**
+     * Returns true if the last Tap was a TapOn function
+     * @return true if last Tap was tapOn, false otherwise
+     */
     public boolean lastWasTapOn() {
         return getLastLocation().isTapOn();
     }
 
+    /**
+     * Returns last TripLocation of this Trip
+     * @return
+     */
     public TripLocation getLastLocation() {
         return locations.get(locations.size() - 1);
     }
@@ -114,14 +138,31 @@ public class Trip {
         return tripValue;
     }
 
+    /**
+     * Return double of the true value of the Trip, the amount the Trip costs total
+     * @return Return double of the true value of the Trip
+     */
     public double getTrueValue() {
         return trueValue;
     }
 
+    /**
+     * Return last Station that was Tapped
+     *
+     * @return last Station that was Tapped On/Off
+     */
     public Station getLastSubwayTap() {
         return lastSubwayTap;
     }
 
+    /**
+     * Adds additional TripLocation on this Trip
+     * @param timestamp the time that the tap was
+     * @param tappingOn whether it was tap on or tap off
+     * @param stop      the stop location that the tap was located
+     * @param route     the route of the tap
+     * @param fined     whether the Trip is going to have fines
+     */
     public void addLocation(long timestamp, boolean tappingOn, BusStop stop, Route route, boolean fined) {
         if (!tappingOn && !fined) {
             distanceTravelled += route.getDistance((BusStop) getLastStop(), stop);
@@ -129,6 +170,14 @@ public class Trip {
         locations.add(new TripLocation(timestamp, tappingOn, stop, route));
     }
 
+    /**
+     * Adds additional TripLocation on this Trip
+     *
+     * @param timestamp the time that the tap was
+     * @param tappingOn true if tap on, false otherwise
+     * @param station   the station that the tap was located
+     * @param fined     true if Trip has fines, false otherwise
+     */
     public void addLocation(long timestamp, boolean tappingOn, Station station, boolean fined) {
         if (!tappingOn && !fined) {
             distanceTravelled += station.getDistance((Station) getLastStop());
@@ -137,6 +186,13 @@ public class Trip {
         lastSubwayTap = station;
     }
 
+    /**
+     * Returns the toString representation of this Trip. This shows the Taps, Locations of tap
+     * , routes taken, the value of the Trip, the timeStamps.
+     *
+     *
+     * @return toString representation
+     */
     public String toString() {
         StringBuilder details = new StringBuilder();
         details.append("Trip Details\n");
