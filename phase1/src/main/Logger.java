@@ -16,6 +16,7 @@ public class Logger {
     public static void log(String logString) {
         if (!active) throw new RuntimeException("Attempted logging when non-active day");
         logs.add(logString);
+        System.out.println(logString);
     }
 
     public static void logStats(String statString) {

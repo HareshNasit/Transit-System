@@ -158,7 +158,7 @@ public class TransitManager {
             fileRead = br.readLine();
 
             // system start day
-            if (!fileRead.startsWith("system start")) throw new RuntimeException("No date provided on startup");
+            if (!fileRead.contains("system start")) throw new RuntimeException("No date provided on startup");
 
             // system start day
             // system stop
@@ -171,9 +171,9 @@ public class TransitManager {
             // user userId newCard cardId
             // user userId viewRecentTrips cardId
             // user userId changeName newName
-            String[] extractTimestamp = extractArgs(fileRead);
-            long timestamp = Long.parseLong(extractTimestamp[0]);
             while (fileRead != null) {
+                String[] extractTimestamp = extractArgs(fileRead);
+                long timestamp = Long.parseLong(extractTimestamp[0]);
                 String[] tokenize = extractArgs(extractTimestamp[1]);
                 String[] eventArgs = tokenize[1].split("\\s+");
 
