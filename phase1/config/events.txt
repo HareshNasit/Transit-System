@@ -1,4 +1,4 @@
-system start
+0 system start 0
 0 card C1 tapOn station STA1
 10 card C4 tapOn station STA4
 20 card C5 tapOn busStop STO4 R1

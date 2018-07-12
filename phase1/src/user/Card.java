@@ -82,7 +82,7 @@ public class Card {
 
     private boolean tapOnHandler(long timestamp, Stop stop) {
         Trip trip = getCurrentTrip();
-        Stop lastStop = trip.getLastStop();
+        boolean disconnectedTrip = false;
         if (trip != null) {
             // if the last location was a tap on and a station, charge fine
             // of $6 and end the previous trip as it is now invalid.
@@ -91,9 +91,9 @@ public class Card {
                 chargeFine(6);
                 trip.endTrip();
             }
+            disconnectedTrip = trip.getLastStop() != stop && trip.getLastStop().getConnectedStop() != stop;
         }
         boolean activeTrip = trip != null && !(trip.isEnded() || timestamp - trip.getInitialTime() > 120);
-        boolean disconnectedTrip = lastStop != stop && lastStop.getConnectedStop() != stop;
         return activeTrip && !disconnectedTrip;
     }
 
