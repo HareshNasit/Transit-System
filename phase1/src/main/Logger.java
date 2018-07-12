@@ -2,6 +2,7 @@ package main;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.io.File;
 import java.util.ArrayList;
 
 public class Logger {
@@ -46,6 +47,7 @@ public class Logger {
 
     static void endDay() {
         if (!active) throw new RuntimeException("Day ended before day started.");
+        new File("logs/").mkdirs();
         try {
             PrintWriter writer = new PrintWriter("logs/Day_" + day + ".txt");
             writer.write("Day: " + day + "\n");
