@@ -190,6 +190,8 @@ public class TransitManager {
                     case "card":
                         if (userManager.hasCard(eventArgs[0])) {
                             Card card = userManager.getCard(eventArgs[0]);
+                            if (eventArgs[2].equals("station") && eventArgs.length != 4) throw new RuntimeException("Not enough args given to station tap: " + fileRead);
+                            if (eventArgs[2].equals("busStop") && eventArgs.length != 5) throw new RuntimeException("Not enough args given to station tap: " + fileRead);
                             if (eventArgs[1].equals("tapOn")) {
                                 if (eventArgs[2].equals("station")) {
                                     card.tapOn(timestamp, routeManager.getStation(eventArgs[3]));
