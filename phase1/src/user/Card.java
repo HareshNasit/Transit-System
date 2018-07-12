@@ -66,6 +66,7 @@ public class Card {
             if (previousTrip != null) {
                 balance -= previousTrip.getValue();
                 totalSpending += previousTrip.getValue();
+                Logger.logRevenue(previousTrip.getValue(), previousTrip.getTrueValue());
                 previousTrip.endTrip();
             }
             trips[2] = trips[1];

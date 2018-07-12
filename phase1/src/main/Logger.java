@@ -9,7 +9,9 @@ public class Logger {
     private static boolean active = false;
     private static ArrayList<String> logs;
     private static ArrayList<String> stats;
-    private static int stopsVisited = 0;
+    private static int stopsVisited;
+    private static int revenue;
+    private static int trueValue;
 
     public static void log(String logString) {
         if (!active) throw new RuntimeException("Attempted logging when non-active day");
@@ -25,12 +27,20 @@ public class Logger {
         stopsVisited += numStops;
     }
 
+    public static void logRevenue(double revenue, double trueValue) {
+        Logger.revenue += revenue;
+        Logger.trueValue += trueValue;
+    }
+
     static void startDay(String day) {
         if (active) throw new RuntimeException("New day started before previous day ended.");
         Logger.day = day;
         active = true;
         logs = new ArrayList<>();
         stats = new ArrayList<>();
+        stopsVisited = 0;
+        revenue = 0;
+        trueValue = 0;
     }
 
     static void endDay() {
@@ -46,7 +56,9 @@ public class Logger {
 
             writer.write("==================\n\n\n");
             writer.write("Day " + day + "'s aggregated statistics:\n");
-            writer.write("Stops visited: " + stopsVisited + "\n");
+            writer.write("Stops visited:       " + stopsVisited + "\n");
+            writer.write("Revenue collected:   " + revenue + "\n");
+            writer.write("True Value of Trips: " + trueValue + "\n");
 
             for (String line : stats) {
                 writer.write(line + "\n");

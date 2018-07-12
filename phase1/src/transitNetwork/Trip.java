@@ -1,5 +1,7 @@
 package transitNetwork;
 
+import main.Logger;
+
 import java.util.ArrayList;
 
 public class Trip {
@@ -42,6 +44,7 @@ public class Trip {
 
     public void endTrip() {
         tripEnded = true;
+        Logger.logStops(distanceTravelled);
     }
 
     public boolean isEnded() {
