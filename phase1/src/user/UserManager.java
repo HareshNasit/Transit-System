@@ -15,14 +15,14 @@ public class UserManager {
         cards = new HashMap<>();
     }
 
-    public double calculateRevenue(){
+    public double calculateRevenue() {
         int revenue = 0;
         for (Card card : cards.values()) {
             revenue += card.getTotalSpending();
         }
         return revenue;
     }
-    
+
     public double calculateFines() {
         int fines = 0;
         for (Card card : cards.values()) {
