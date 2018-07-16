@@ -1,4 +1,4 @@
-package main;
+package hotcupsofjava.transitsystemmanager.managers;
 
 import java.util.HashMap;
 

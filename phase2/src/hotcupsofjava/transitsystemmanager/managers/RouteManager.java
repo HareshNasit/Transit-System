@@ -1,6 +1,8 @@
-package transitNetwork;
+package hotcupsofjava.transitsystemmanager.managers;
 
-import main.IDManager;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 
 import java.util.ArrayList;
 import java.util.HashMap;

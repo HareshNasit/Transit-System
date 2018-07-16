@@ -1,7 +1,4 @@
-package transitNetwork;
-
-import main.Logger;
-import user.Card;
+package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
 /**
  * @author

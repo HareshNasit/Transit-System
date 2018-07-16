@@ -1,8 +1,7 @@
-package user;
+package hotcupsofjava.transitsystemmanager.objects.userobjects;
 
 
-import main.Logger;
-import transitNetwork.Trip;
+import hotcupsofjava.transitsystemmanager.Logger;
 
 import java.util.ArrayList;
 

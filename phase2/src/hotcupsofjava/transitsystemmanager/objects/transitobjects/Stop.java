@@ -1,6 +1,5 @@
-package transitNetwork;
+package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
-import user.Card;
 /**
  * @author
  * @version 1.0

@@ -1,7 +1,10 @@
-package user;
+package hotcupsofjava.transitsystemmanager.objects.userobjects;
 
-import transitNetwork.*;
-import main.Logger;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
+import hotcupsofjava.transitsystemmanager.Logger;
 
 public class Card {
     private double balance;

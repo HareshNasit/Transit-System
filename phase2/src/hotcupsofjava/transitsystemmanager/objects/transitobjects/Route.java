@@ -1,4 +1,4 @@
-package transitNetwork;
+package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
 import java.util.ArrayList;
 

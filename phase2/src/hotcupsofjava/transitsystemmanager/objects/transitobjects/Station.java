@@ -1,10 +1,6 @@
-package transitNetwork;
-
-import user.Card;
+package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
 import java.util.Queue;
-
-import main.Logger;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

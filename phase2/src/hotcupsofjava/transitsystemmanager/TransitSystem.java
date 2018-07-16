@@ -1,4 +1,4 @@
-package main;
+package hotcupsofjava.transitsystemmanager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,15 +6,17 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import transitNetwork.Trip;
-import user.Card;
-import transitNetwork.BusStop;
-import transitNetwork.RouteManager;
-import user.User;
-import user.UserManager;
+import hotcupsofjava.transitsystemmanager.Logger;
+import hotcupsofjava.transitsystemmanager.managers.IDManager;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.managers.RouteManager;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
+import hotcupsofjava.transitsystemmanager.managers.UserManager;
 
 /* This class will perform initial setup upon launch. */
-public class TransitManager {
+public class TransitSystem {
 
     private static final IDManager idManager = new IDManager();
     private static final UserManager userManager = new UserManager(idManager);

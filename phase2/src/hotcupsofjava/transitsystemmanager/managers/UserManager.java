@@ -1,6 +1,7 @@
-package user;
+package hotcupsofjava.transitsystemmanager.managers;
 
-import main.IDManager;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 
 import java.util.HashMap;
 

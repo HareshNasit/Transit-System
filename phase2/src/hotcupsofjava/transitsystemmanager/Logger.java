@@ -1,4 +1,4 @@
-package main;
+package hotcupsofjava.transitsystemmanager;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

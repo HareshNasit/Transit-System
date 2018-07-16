@@ -1,4 +1,9 @@
-package transitNetwork;
+package hotcupsofjava.transitsystemmanager.objects.userobjects;
+
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 
 public class TripLocation {
     // true: tap on, false: tap off
