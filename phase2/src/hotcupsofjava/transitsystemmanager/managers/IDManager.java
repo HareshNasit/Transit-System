@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class IDManager {
     private HashMap<String, Boolean> ids;
 
-    IDManager() {
+    public IDManager() {
         ids = new HashMap<>();
     }
 

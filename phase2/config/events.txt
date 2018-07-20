@@ -12,8 +12,8 @@
 150 user U1 suspend C1
 170 card C4 tapOff busStop STO2 R1
 200 user U2 load C4 20
-400 card C4 tapOn station STA04
+400 card C4 tapOn station STA4
 420 card C4 tapOff station STA6
 430 user U2 viewRecentTrips C4
-450 card C7 tapOff busStop STA1 R1
-system stop
+450 card C7 tapOff busStop STO1 R1
+470 system stop 470
