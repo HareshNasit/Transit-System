@@ -14,7 +14,7 @@ public class BusStop extends Stop {
      * @param name the name of the bus stop
      * @see Stop
      */
-    BusStop(String id, String name) {
+    public BusStop(String id, String name) {
         super(id, name);
     }
 

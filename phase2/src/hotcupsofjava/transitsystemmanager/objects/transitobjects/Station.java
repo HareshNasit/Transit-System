@@ -127,7 +127,7 @@ public class Station extends Stop {
      * null values in the queue separate depth values
      * max depth is the number of existing stations
      * ArrayList prevents re-visiting nodes */
-    int getDistance(Station lastStop) {
+    public int getDistance(Station lastStop) {
         ArrayList<Station> visitedNodes = new ArrayList<>();
         Queue<Station> queue = new LinkedList<>();
         Station currentNode = null;

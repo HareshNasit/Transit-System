@@ -1,5 +1,11 @@
 package hotcupsofjava.transitsystemmanager.objects.userobjects;
 
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
+import hotcupsofjava.transitsystemmanager.Logger;
+
 public class Card {
     private double balance;
     private boolean suspended;
@@ -169,11 +175,11 @@ public class Card {
         getCurrentTrip().addLocation(timestamp, false, busStop, route, abnormalTap);
     }
 
-    protected double getTotalSpending() {
+    public double getTotalSpending() {
         return totalSpending;
     }
 
-    protected double getTotalFines() {
+    public double getTotalFines() {
         return totalFines;
     }
 

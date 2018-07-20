@@ -15,7 +15,7 @@ public class Route {
      *
      * @param id an id that specifies which route this is
      */
-    Route(String id) {
+    public Route(String id) {
         this.id = id;
     }
 
@@ -25,7 +25,7 @@ public class Route {
      * @param id    an id that specifies which route this is
      * @param stops a list of BusStops that this route is connected to
      */
-    Route(String id, ArrayList<BusStop> stops) {
+    public Route(String id, ArrayList<BusStop> stops) {
         this.id = id;
         this.route = stops;
     }
