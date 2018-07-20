@@ -235,6 +235,13 @@ public class TransitSystem {
                             throw new RuntimeException("User does not exist in the system: " + fileRead);
                         }
                         break;
+                    case "admin":
+                        if (eventArgs[0].equals("calculateRevenue")) {
+                            System.out.println(userManager.calculateRevenue());
+                        } else if (eventArgs[0].equals("calculateFines")) {
+                            System.out.println(userManager.calculateFines());
+                        }
+                        break;
                     default:
                         throw new RuntimeException("Unrecognized event in events.");
                 }

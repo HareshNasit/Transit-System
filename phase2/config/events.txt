@@ -16,4 +16,6 @@
 420 card C4 tapOff station STA6
 430 user U2 viewRecentTrips C4
 450 card C7 tapOff busStop STO1 R1
+460 admin calculateRevenue
+460 admin calculateFines
 470 system stop 470

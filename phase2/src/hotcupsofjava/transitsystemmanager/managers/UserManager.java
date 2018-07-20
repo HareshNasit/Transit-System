@@ -1,5 +1,6 @@
 package hotcupsofjava.transitsystemmanager.managers;
 
+import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 
@@ -21,6 +22,7 @@ public class UserManager {
         for (Card card : cards.values()) {
             revenue += card.getTotalSpending();
         }
+        Logger.logRevenue(revenue,0);
         return revenue;
     }
 
