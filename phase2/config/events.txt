@@ -8,6 +8,7 @@
 90 card C4 tapOff station STA1
 100 card C1 tapOff station STA7
 110 card C4 tapOn busStop STO8 R1
+120 card C5 tapOff busStop STO8 R1
 130 card C7 tapOn busStop STO10 R1
 150 user U1 suspend C1
 170 card C4 tapOff busStop STO2 R1

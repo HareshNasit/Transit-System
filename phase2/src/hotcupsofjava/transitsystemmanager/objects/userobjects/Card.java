@@ -25,6 +25,15 @@ public class Card {
         this.id = id;
     }
 
+    public void setTotalSpending(double totalSpending) {
+        this.totalSpending = totalSpending;
+    }
+
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
     public Trip[] getTrips() {
         return trips;
     }
@@ -43,14 +52,13 @@ public class Card {
 
     /* Returns the available balance on the card. */
     public double getBalance() {
-        if (trips[0] != null) return balance - trips[0].getValue();
-        else return balance;
+        return balance;
     }
 
     /* Ensures that when a card is charged, the value is added to the current trip's total. */
     public boolean charge(double amount) {
         if (!suspended && getBalance() > 0) {
-            trips[0].charge(amount);
+            trips[0].charge(amount,this);
             return true;
         }
         return false;
@@ -65,8 +73,8 @@ public class Card {
         if (!suspended) {
             Trip previousTrip = getCurrentTrip();
             if (previousTrip != null) {
-                balance -= previousTrip.getValue();
-                totalSpending += previousTrip.getValue();
+//                balance -= previousTrip.getValue();
+//                totalSpending += previousTrip.getValue();
                 previousTrip.endTrip();
             }
             trips[2] = trips[1];

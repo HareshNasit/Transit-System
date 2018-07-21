@@ -11,8 +11,8 @@ public class Logger {
     private static ArrayList<String> logs;
     private static ArrayList<String> stats;
     private static int stopsVisited;
-    private static int revenue;
-    private static int trueValue;
+    private static long revenue;
+    private static long trueValue;
 
     public static void log(String logString) {
         if (!active) throw new RuntimeException("Attempted logging when non-active day");

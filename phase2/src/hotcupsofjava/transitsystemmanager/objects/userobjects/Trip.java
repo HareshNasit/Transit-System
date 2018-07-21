@@ -60,12 +60,17 @@ public class Trip {
      *
      * @param amount The amount charge added onto this Trip.
      */
-    public void charge(double amount) {
+    public void charge(double amount, Card card) {
         tripValue += amount;
         trueValue += amount;
         if (tripValue > 6) {
             tripValue = 6;
         }
+        if(tripValue<6){
+            card.setBalance(card.getBalance()-amount);
+            card.setTotalSpending(card.getTotalSpending()+amount);
+        }
+        System.out.println(amount);
     }
 
     public void endTrip() {
