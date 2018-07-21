@@ -18,7 +18,7 @@ public class UserManager {
     }
 
     public double calculateRevenue() {
-        int revenue = 0;
+        double revenue = 0;
         for (Card card : cards.values()) {
             revenue += card.getTotalSpending();
         }
