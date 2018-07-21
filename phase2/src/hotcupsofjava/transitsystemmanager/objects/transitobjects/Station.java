@@ -40,7 +40,7 @@ public class Station extends Stop {
      * @param connectingBusStop the BusStop that this Station is connected to
      * @see Stop
      */
-    public Station(String id, String name, BusStop connectingBusStop) {
+    public Station(String id, String name, BusStop connectingBusStop, int stationCount) {
         super(id, name);
         this.connectingStations = new ArrayList<>();
         this.connectStop(connectingBusStop);

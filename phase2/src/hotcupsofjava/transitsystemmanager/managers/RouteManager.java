@@ -17,7 +17,7 @@ public class RouteManager {
     private HashMap<String, Route> routes;
     private HashMap<String, Station> stations;
     private Station lastStation;
-    private int stationCount = 0;
+    private int stationCount = 1;
 
     /**
      * The constructor for RouteManager, which manages all the stops, stations, and routes of the
@@ -76,7 +76,7 @@ public class RouteManager {
      */
     public void addStation(String id, String name, BusStop connectedBusStop) {
         idManager.addId(id);
-        Station station = new Station(id, name, connectedBusStop);
+        Station station = new Station(id, name, connectedBusStop, stationCount++);
         if (lastStation == null) {
             lastStation = station;
         } else {

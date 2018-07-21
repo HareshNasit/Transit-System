@@ -146,6 +146,7 @@ public class Card {
             Logger.log(String.format("%s tapped off illegally at subway station %s at %d",
                     toString(), station.getName(), timestamp));
         } else {
+            charge(.5 * station.getDistance(getCurrentTrip().getLastSubwayTap()));
             getCurrentTrip().addLocation(timestamp, false, station, chargedFine);
             if (timestamp - getCurrentTrip().getInitialTime() > 120) {
                 getCurrentTrip().endTrip();
@@ -162,6 +163,7 @@ public class Card {
             else getCurrentTrip().addLocation(timestamp, true, busStop, route, false);
             Logger.log(String.format("%s tapped on at bus stop %s on route %s at %d",
                     toString(), busStop.getName(), route.getId(), timestamp));
+            charge(2);
         } else {
             Logger.log(String.format("%s failed to tap on at bus stop %s on route %s at %d",
                     toString(), busStop.getName(), route.getId(), timestamp));
