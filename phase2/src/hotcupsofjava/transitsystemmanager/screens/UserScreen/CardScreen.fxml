@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="hotcupsofjava.transitsystemmanager.screens.UserScreen.CardScreen"
-            prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TabPane prefHeight="407.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Card Information">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+          <Tab text="Travel">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="14.0" layoutY="69.0" prefHeight="200.0" prefWidth="250.0">
+                          <columns>
+                            <TableColumn prefWidth="153.0" text="Station Name" />
+                            <TableColumn minWidth="0.0" prefWidth="96.0" text="Line" />
+                          </columns>
+                        </TableView>
+                        <TableView layoutX="330.0" layoutY="69.0" prefHeight="200.0" prefWidth="200.0">
+                          <columns>
+                            <TableColumn prefWidth="110.0" text="Stop Name" />
+                            <TableColumn prefWidth="89.0" text="Route" />
+                          </columns>
+                        </TableView>
+                        <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subway Stations:" wrappingWidth="157.03125">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="330.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bus Stops:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Button layoutX="166.0" layoutY="303.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="82.0" text="Tap On" />
+                        <Button layoutX="291.0" layoutY="303.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="87.0" text="Tap Off" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</VBox>
