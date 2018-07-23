@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="hotcupsofjava.transitsystemmanager.screens.UserScreen.UserStartScreen"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotcupsofjava.transitsystemmanager.screens.UserScreen.UserStartScreen">
+   <children>
+      <TableView layoutX="124.0" layoutY="127.0" prefHeight="200.0" prefWidth="261.0">
+        <columns>
+          <TableColumn prefWidth="72.0" text="Card ID" />
+          <TableColumn prefWidth="98.0" text="Card Name" />
+            <TableColumn prefWidth="90.0" text="Balance" />
+        </columns>
+      </TableView>
+      <Text layoutX="107.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cards:" textAlignment="CENTER" wrappingWidth="119.21875">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Text>
+      <Text fx:id="name" layoutX="41.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="110.21875" />
+      <Text fx:id="email" layoutX="41.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Button fx:id="editBtn" layoutX="168.0" layoutY="29.0" mnemonicParsing="false" text="Edit" />
+   </children>
 </AnchorPane>
