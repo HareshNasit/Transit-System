@@ -13,7 +13,12 @@
         <tabs>
           <Tab text="System">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="600.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="600.0">
+                     <children>
+                        <Button layoutX="183.0" layoutY="66.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="142.0" text="Start Day" />
+                        <Button layoutX="183.0" layoutY="151.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="141.0" text="End Day" />
+                     </children>
+                  </AnchorPane>
             </content>
           </Tab>
           <Tab text="Transit Information">

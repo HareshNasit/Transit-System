@@ -18,6 +18,10 @@ public class User extends TransitSystemObject {
         this.cards = new ArrayList<>();
     }
 
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
     public void addCard(Card card) {
         cards.add(card);
     }

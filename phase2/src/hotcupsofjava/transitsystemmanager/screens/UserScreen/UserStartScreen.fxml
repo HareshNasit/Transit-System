@@ -10,11 +10,11 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotcupsofjava.transitsystemmanager.screens.UserScreen.UserStartScreen">
    <children>
-      <TableView layoutX="124.0" layoutY="127.0" prefHeight="200.0" prefWidth="261.0">
+      <TableView fx:id="cardsTable" layoutX="124.0" layoutY="127.0" prefHeight="200.0" prefWidth="261.0">
         <columns>
-          <TableColumn prefWidth="72.0" text="Card ID" />
-          <TableColumn prefWidth="98.0" text="Card Name" />
-            <TableColumn prefWidth="90.0" text="Balance" />
+          <TableColumn fx:id="cardIDCol" prefWidth="72.0" text="Card ID" />
+          <TableColumn fx:id="cardNameCol" prefWidth="98.0" text="Card Name" />
+            <TableColumn fx:id="cardBalanceCol" prefWidth="90.0" text="Balance" />
         </columns>
       </TableView>
       <Text layoutX="107.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cards:" textAlignment="CENTER" wrappingWidth="119.21875">
