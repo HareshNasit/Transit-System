@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -65,6 +66,8 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
+                        <Button layoutX="342.0" layoutY="60.0" mnemonicParsing="false" text="Suspend Card" />
+                        <Button layoutX="482.0" layoutY="60.0" mnemonicParsing="false" text="Remove Card" />
                      </children>
                   </AnchorPane>
             </content>
@@ -101,9 +104,30 @@
                   </AnchorPane>
             </content>
           </Tab>
-            <Tab text="Untitled Tab">
+            <Tab text="Load Card">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Text layoutX="27.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Balance:">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="173.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="21.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the amount to be added:" />
+                        <TextField layoutX="255.0" layoutY="126.0" prefHeight="27.0" prefWidth="65.0" />
+                        <Text fill="#00000084" layoutX="58.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(i.e 10, 20 or 50)" wrappingWidth="126.21875" />
+                        <Text layoutX="233.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="15.21875">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
               </content>
             </Tab>
         </tabs>
