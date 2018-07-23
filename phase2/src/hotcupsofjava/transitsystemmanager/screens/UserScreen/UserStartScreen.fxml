@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotcupsofjava.transitsystemmanager.screens.UserScreen.UserStartScreen">
    <children>
-      <TableView fx:id="cardsTable" layoutX="124.0" layoutY="127.0" prefHeight="200.0" prefWidth="261.0">
+      <TableView fx:id="cardsTable" layoutX="122.0" layoutY="127.0" prefHeight="232.0" prefWidth="263.0">
         <columns>
           <TableColumn fx:id="cardIDCol" prefWidth="72.0" text="Card ID" />
           <TableColumn fx:id="cardNameCol" prefWidth="98.0" text="Card Name" />
@@ -22,11 +22,23 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <Text layoutX="34.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="42.0" />
-      <Text layoutX="34.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
-      <Button fx:id="editBtn" layoutX="194.0" layoutY="29.0" mnemonicParsing="false" text="Edit" />
+      <Text layoutX="20.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" wrappingWidth="62.0">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+      <Text layoutX="20.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+      <Button fx:id="editBtn" layoutX="194.0" layoutY="29.0" mnemonicParsing="false" onAction="#changeName" text="Edit" />
       <Button fx:id="addCardBtn" layoutX="469.0" layoutY="58.0" mnemonicParsing="false" text="Add new Card" />
-      <Text fx:id="nameText" layoutX="84.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.21875" />
-      <Text fx:id="emailText" layoutX="84.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.21875" />
+      <Text fx:id="nameText" layoutX="84.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.21875">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
+      <Text fx:id="emailText" layoutX="75.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.21875">
+         <font>
+            <Font size="17.0" />
+         </font></Text>
    </children>
 </AnchorPane>
