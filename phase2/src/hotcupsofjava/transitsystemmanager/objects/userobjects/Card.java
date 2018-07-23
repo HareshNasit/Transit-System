@@ -8,6 +8,8 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
 import hotcupsofjava.transitsystemmanager.Logger;
 
 public class Card extends TransitSystemObject {
+
+    private String cardName;
     private double balance;
     private boolean suspended;
     private double totalSpending;
@@ -18,11 +20,20 @@ public class Card extends TransitSystemObject {
     private Trip[] trips;
 
     public Card(String id, User user) {
+        //TODO: Assign cardName.
         super(id);
         balance = 19;
         suspended = false;
         trips = new Trip[3];
         this.user = user;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public String getCardName() {
+        return cardName;
     }
 
     public void setTotalSpending(double totalSpending) {
