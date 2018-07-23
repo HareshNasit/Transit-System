@@ -1,12 +1,13 @@
 package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
+import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
+
 /**
  * @author
  * @version 1.0
  */
-public abstract class Stop {
+public abstract class Stop extends TransitSystemObject {
 
-    private final String id;
     private String name;
     private Stop connectedStop;
 
@@ -18,7 +19,7 @@ public abstract class Stop {
      * @param name  the name of the Stop
      */
     Stop(String id, String name) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.connectedStop = null;
     }
@@ -30,7 +31,7 @@ public abstract class Stop {
      * @param stop  the connecting Stop to this Stop
      */
     Stop(String id, String name, Stop stop) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.connectedStop = stop;
     }
@@ -50,15 +51,6 @@ public abstract class Stop {
      */
     public void setName(String name) {
         this.name = name;
-    }
-
-    /**
-     * Return String unique id of this Stop
-     *
-     * @return id of this Stop
-     */
-    public String getID() {
-        return id;
     }
 
     /**

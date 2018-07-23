@@ -1,13 +1,14 @@
 package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
+import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
+
 import java.util.ArrayList;
 
 /**
  * @author
  * @version 1.0
  */
-public class Route {
-    private String id;
+public class Route extends TransitSystemObject {
     private ArrayList<BusStop> route;
 
     /**
@@ -16,7 +17,7 @@ public class Route {
      * @param id an id that specifies which route this is
      */
     public Route(String id) {
-        this.id = id;
+        super(id);
     }
 
     /**
@@ -26,7 +27,7 @@ public class Route {
      * @param stops a list of BusStops that this route is connected to
      */
     public Route(String id, ArrayList<BusStop> stops) {
-        this.id = id;
+        super(id);
         this.route = stops;
     }
 
@@ -47,15 +48,6 @@ public class Route {
      */
     public void addStops(ArrayList<BusStop> stops, int index) {
         this.route.addAll(index, stops);
-    }
-
-    /**
-     * Returns a String of the id of this Route.
-     *
-     * @return this Route's id
-     */
-    public String getId() {
-        return id;
     }
 
     /**

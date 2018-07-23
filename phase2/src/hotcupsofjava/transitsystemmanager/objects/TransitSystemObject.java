@@ -7,15 +7,15 @@ public abstract class TransitSystemObject {
     private static IDManager idManager = null;
 
     public static void setIdManager(IDManager m) {
-        if (idManager == null) {
-            idManager = m;
-        }
+        TransitSystemObject.idManager = m;
     }
 
-    private String id;
+    private final String id;
     
     public TransitSystemObject(String id) {
-        this.id = idManager.addId(id); }
+        if (idManager == null) throw new RuntimeException("System was not initialized properly!");
+        this.id = idManager.addId(id);
+    }
 
     public String getId() {
         return this.id;

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.managers.IDManager;
+import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
@@ -17,10 +18,6 @@ import hotcupsofjava.transitsystemmanager.managers.UserManager;
 
 /* This class will perform initial setup upon launch. */
 public class TransitSystem {
-
-    private static final IDManager idManager = new IDManager();
-    private static final UserManager userManager = new UserManager(idManager);
-    private static final RouteManager routeManager = new RouteManager(idManager);
 
     private static String[] extractArgs(String str) {
         // id content pattern
@@ -35,6 +32,10 @@ public class TransitSystem {
     }
 
     public static void main(String[] args) {
+        IDManager idManager = new IDManager();
+        TransitSystemObject.setIdManager(idManager);
+        UserManager userManager = new UserManager();
+        RouteManager routeManager = new RouteManager();
 
         try {
 

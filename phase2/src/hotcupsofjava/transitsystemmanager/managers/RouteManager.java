@@ -12,7 +12,6 @@ import java.util.HashMap;
  * @version 1.0
  */
 public class RouteManager {
-    private IDManager idManager;
     private HashMap<String, BusStop> stops;
     private HashMap<String, Route> routes;
     private HashMap<String, Station> stations;
@@ -24,11 +23,8 @@ public class RouteManager {
      * transitNetwork.
      * There can be many RouteManagers for different transitNetworks existing on the same system,
      * one for each network
-     *
-     * @param idManager the id of this Manager for this transitNetwork.
      */
-    public RouteManager(IDManager idManager) {
-        this.idManager = idManager;
+    public RouteManager() {
         stops = new HashMap<>();
         routes = new HashMap<>();
         stations = new HashMap<>();
@@ -42,8 +38,8 @@ public class RouteManager {
      * @param name  the name of the created BusStop
      */
     public void addStop(String id, String name) {
-        idManager.addId(id);
-        stops.put(id, new BusStop(id, name));
+        BusStop stop = new BusStop(id, name);
+        stops.put(stop.getId(), stop);
     }
 
     /**
@@ -54,7 +50,6 @@ public class RouteManager {
      * @param name  the name of the created Station
      */
     public void addStation(String id, String name) {
-        idManager.addId(id);
         Station station = new Station(id, name, stationCount++);
         if (lastStation == null) {
             lastStation = station;
@@ -62,7 +57,7 @@ public class RouteManager {
             lastStation.connectStation(station);
             lastStation = station;
         }
-        stations.put(id, station);
+        stations.put(station.getId(), station);
     }
 
     /**
@@ -75,7 +70,6 @@ public class RouteManager {
      * @param connectedBusStop  the connected BusStop that is adjacent to this Station
      */
     public void addStation(String id, String name, BusStop connectedBusStop) {
-        idManager.addId(id);
         Station station = new Station(id, name, connectedBusStop, stationCount++);
         if (lastStation == null) {
             lastStation = station;
@@ -83,7 +77,7 @@ public class RouteManager {
             lastStation.connectStation(station);
             lastStation = station;
         }
-        stations.put(id, station);
+        stations.put(station.getId(), station);
     }
 
     /**
@@ -92,8 +86,8 @@ public class RouteManager {
      * @param id the unique id of this Route
      */
     public void addRoute(String id) {
-        idManager.addId(id);
-        routes.put(id, new Route(id));
+        Route route = new Route(id);
+        routes.put(route.getId(), route);
     }
 
     /**
@@ -103,8 +97,8 @@ public class RouteManager {
      * @param stops the list of existing Stops that this Route will be connected to
      */
     public void addRoute(String id, ArrayList<BusStop> stops) {
-        idManager.addId(id);
-        routes.put(id, new Route(id, stops));
+        Route route = new Route(id, stops);
+        routes.put(route.getId(), route);
     }
 
     /**

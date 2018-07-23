@@ -2,17 +2,17 @@ package hotcupsofjava.transitsystemmanager.objects.userobjects;
 
 
 import hotcupsofjava.transitsystemmanager.Logger;
+import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
 
 import java.util.ArrayList;
 
-public class User {
-    private String id;
+public class User extends TransitSystemObject {
     private String name;
     private String email;
     private ArrayList<Card> cards;
 
     public User(String id, String name, String email) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.email = email;
         this.cards = new ArrayList<>();
@@ -53,10 +53,6 @@ public class User {
 
     public Trip[] viewTrips(Card card) {
         return card.getTrips();
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {

@@ -7,12 +7,10 @@ import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 import java.util.HashMap;
 
 public class UserManager {
-    private IDManager idManager;
     private HashMap<String, User> users;
     private HashMap<String, Card> cards;
 
-    public UserManager(IDManager idManager) {
-        this.idManager = idManager;
+    public UserManager() {
         users = new HashMap<>();
         cards = new HashMap<>();
     }
@@ -35,16 +33,14 @@ public class UserManager {
     }
 
     public void addUser(String id, String name, String email) {
-        idManager.addId(id);
         User user = new User(id, name, email);
-        users.put(id, user);
+        users.put(user.getId(), user);
     }
 
     public void addCard(User user, String cardId) {
-        idManager.addId(cardId);
         Card card = new Card(cardId, user);
         user.addCard(card);
-        cards.put(cardId, card);
+        cards.put(card.getId(), card);
     }
 
     public User getUser(String id) {

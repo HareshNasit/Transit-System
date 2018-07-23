@@ -1,34 +1,33 @@
 package hotcupsofjava.transitsystemmanager.objects.userobjects;
 
+import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
 import hotcupsofjava.transitsystemmanager.Logger;
 
-public class Card {
+public class Card extends TransitSystemObject {
     private double balance;
     private boolean suspended;
     private double totalSpending;
     private double totalFines;
 
-    private String id;
     private User user;
 
     private Trip[] trips;
 
     public Card(String id, User user) {
+        super(id);
         balance = 19;
         suspended = false;
         trips = new Trip[3];
         this.user = user;
-        this.id = id;
     }
 
     public void setTotalSpending(double totalSpending) {
         this.totalSpending = totalSpending;
     }
-
 
     public void setBalance(double balance) {
         this.balance = balance;
@@ -193,11 +192,7 @@ public class Card {
         return totalFines;
     }
 
-    public String getId() {
-        return id;
-    }
-
     public String toString() {
-        return "Card " + id + " owned by user " + user.getName();
+        return "Card " + this.getId() + " owned by user " + user.getName();
     }
 }
