@@ -1,9 +1,12 @@
 package hotcupsofjava.transitsystemmanager.screens.UserScreen;
 
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -19,7 +22,7 @@ public class CardScreen implements Initializable {
     public Button removeCardBtn;
     public TableView subwayTable;
     public TableColumn subwayNameCol;
-    public TextField tab3BalenceInput;
+    public TextField tab3BalanceInput;
     public Text tab3Balance;
     public Tab tab3;
     public Button tapOffBtn;
@@ -30,7 +33,10 @@ public class CardScreen implements Initializable {
     public TableColumn BusRouteCol;
     public Tab tab2;
     public Tab tab1;
+    public Button addAmountBtn;
+    public Label tab3resultLbl;
     private RouteManager routeManager;
+    public Card card;
 
 
 //    public CardScreen(){
@@ -47,5 +53,24 @@ public class CardScreen implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("hii");
+    }
+
+    public void addBalance(ActionEvent actionEvent) {
+        String amnt =tab3BalanceInput.getText();
+        if (amnt.equals("10") || amnt.equals("20") || amnt.equals("50")) {
+            int amount = Integer.parseInt(tab3BalanceInput.getText());
+            card.addBalance(amount);
+            updateBalance();
+            tab3resultLbl.setText("Balance of " + amount +" added successfully" );
+            tab3resultLbl.setTextFill(Color.valueOf("Green"));
+        }
+        else{
+            tab3resultLbl.setText("Please enter a valid amount");
+            tab3resultLbl.setTextFill(Color.valueOf("Red"));
+        }
+    }
+    public void updateBalance(){
+        tab1Balance.setText(Double.toString(card.getBalance()));
+        tab3Balance.setText(Double.toString(card.getBalance()));
     }
 }

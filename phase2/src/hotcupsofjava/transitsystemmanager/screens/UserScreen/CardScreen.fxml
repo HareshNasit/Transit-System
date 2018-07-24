@@ -55,7 +55,7 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Text fx:id="cardID" layoutX="92.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                        <Text fx:id="cardID" layoutX="103.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
                            <font>
                               <Font size="17.0" />
                            </font>
@@ -118,13 +118,15 @@
                            </font>
                         </Text>
                         <Text layoutX="21.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the amount to be added:" />
-                        <TextField fx:id="tab3BalenceInput" layoutX="255.0" layoutY="126.0" prefHeight="27.0" prefWidth="65.0" />
+                        <TextField fx:id="tab3BalanceInput" layoutX="255.0" layoutY="126.0" prefHeight="27.0" prefWidth="65.0" />
                         <Text fill="#00000084" layoutX="43.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(i.e $10, $20 or $50)" wrappingWidth="147.21875" />
                         <Text layoutX="233.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="15.21875">
                            <font>
                               <Font size="17.0" />
                            </font>
                         </Text>
+                        <Button fx:id="addAmountBtn" layoutX="338.0" layoutY="126.0" mnemonicParsing="false" onAction="#addBalance" text="Add amount" />
+                        <Label fx:id="tab3resultLbl" layoutX="216.0" layoutY="210.0" prefHeight="26.0" prefWidth="236.0" />
                      </children>
                   </AnchorPane>
               </content>

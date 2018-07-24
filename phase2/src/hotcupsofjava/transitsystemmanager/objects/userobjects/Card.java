@@ -28,6 +28,11 @@ public class Card extends TransitSystemObject {
         this.user = user;
     }
 
+    public Card(String cardName,String id, User user){
+        this(id,user);
+        this.cardName = cardName;
+    }
+
     public void setCardName(String cardName) {
         this.cardName = cardName;
     }
@@ -56,7 +61,7 @@ public class Card extends TransitSystemObject {
         return suspended;
     }
 
-    protected void addBalance(int amount) {
+    public void addBalance(int amount) {
         balance += amount;
     }
 
