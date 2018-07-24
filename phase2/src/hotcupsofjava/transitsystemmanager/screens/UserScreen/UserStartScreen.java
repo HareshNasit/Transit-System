@@ -46,6 +46,7 @@ public class UserStartScreen {
     private void setCardTable(){
         ObservableList<Card> cards = FXCollections.observableArrayList();
         cards.addAll(user.getCards());
+        cardsTable.setItems(cards);
     }
 
     public void changeName(ActionEvent actionEvent) {
