@@ -63,4 +63,13 @@ public class UserManager {
     public boolean hasCard(String id) {
         return cards.containsKey(id);
     }
+
+    public boolean hasUser(String name, String email){
+        for(User user: users.values()){
+            if(user.getName().equals(name)&&user.getEmail().equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
