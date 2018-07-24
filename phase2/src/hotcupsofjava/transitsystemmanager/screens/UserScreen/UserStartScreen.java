@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -13,9 +14,11 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class UserStartScreen {
+public class UserStartScreen implements Initializable {
 
     public Button editBtn;
     public Button addCardBtn;
@@ -25,25 +28,26 @@ public class UserStartScreen {
     public TableColumn cardNameCol;
     public TableColumn cardBalanceCol;
     public TableView cardsTable;
-    private User user;
+    public User user;
 
-    public UserStartScreen(User user){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserStartScreen.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        this.user = user;
-        this.nameText.setText(this.user.getName());
-        this.emailText.setText(this.user.getEmail());
-        initializeTable();
-        setCardTable();
-    }
+//    public UserStartScreen(User user){
+//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserStartScreen.fxml"));
+//        fxmlLoader.setRoot(this);
+//        fxmlLoader.setController(this);
+//        this.user = user;
+//        this.nameText.setText(this.user.getName());
+//        this.emailText.setText(this.user.getEmail());
+//        initializeTable();
+//        setCardTable();
+//    }
 
-    private void initializeTable(){
+    public void initialize(URL location, ResourceBundle resources){
         cardIDCol.setCellValueFactory(new PropertyValueFactory<Card,String>("id"));
         cardNameCol.setCellValueFactory(new PropertyValueFactory<Card,String>("cardName"));
+        cardBalanceCol.setCellValueFactory(new PropertyValueFactory<Card,Double>("balance"));
     }
 
-    private void setCardTable(){
+    public void setCardTable(){
         ObservableList<Card> cards = FXCollections.observableArrayList();
         cards.addAll(user.getCards());
         cardsTable.setItems(cards);
