@@ -41,6 +41,10 @@ public class Card extends TransitSystemObject {
         return cardName;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setTotalSpending(double totalSpending) {
         this.totalSpending = totalSpending;
     }

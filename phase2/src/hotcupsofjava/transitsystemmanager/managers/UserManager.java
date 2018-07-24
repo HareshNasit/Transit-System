@@ -37,6 +37,11 @@ public class UserManager {
         users.put(user.getId(), user);
     }
 
+    public void removeCard(Card card, User user){
+        cards.remove(card.getId());
+        user.removeCard(card);
+    }
+
     public void addCard(User user, String cardId) {
         Card card = new Card(cardId, user);
         user.addCard(card);

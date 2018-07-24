@@ -1,9 +1,11 @@
 package hotcupsofjava.transitsystemmanager.screens.UserScreen;
 
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
+import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,6 +44,7 @@ public class CardScreen implements Initializable {
     public Button addAmountBtn;
     public Label tab3resultLbl;
     private RouteManager routeManager;
+    private UserManager userManager;
     public Card card;
 
 
@@ -91,5 +95,21 @@ public class CardScreen implements Initializable {
     public void updateBalance(){
         tab1Balance.setText(Double.toString(card.getBalance()));
         tab3Balance.setText(Double.toString(card.getBalance()));
+    }
+
+    public void suspendCard(ActionEvent actionEvent) {
+    }
+
+    public void removeCard(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure? This may delete all the information" +
+                " from this card.",
+                ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            User user = card.getUser();
+            userManager.removeCard(card, user);
+            Stage stage = (Stage) removeCardBtn.getScene().getWindow();
+            stage.close();
+        }
     }
 }

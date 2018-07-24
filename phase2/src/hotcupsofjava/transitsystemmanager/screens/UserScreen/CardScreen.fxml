@@ -65,8 +65,8 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Button fx:id="suspendCardBtn" layoutX="342.0" layoutY="60.0" mnemonicParsing="false" text="Suspend Card" />
-                        <Button fx:id="removeCardBtn" layoutX="482.0" layoutY="60.0" mnemonicParsing="false" text="Remove Card" />
+                        <Button fx:id="suspendCardBtn" layoutX="342.0" layoutY="60.0" mnemonicParsing="false" onAction="#suspendCard" text="Suspend Card" />
+                        <Button fx:id="removeCardBtn" layoutX="482.0" layoutY="60.0" mnemonicParsing="false" onAction="#removeCard" text="Remove Card" />
                      </children>
                   </AnchorPane>
             </content>
