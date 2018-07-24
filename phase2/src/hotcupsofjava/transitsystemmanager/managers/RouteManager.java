@@ -160,4 +160,12 @@ public class RouteManager {
     public boolean hasStation(String id) {
         return stations.containsKey(id);
     }
+
+    public HashMap<String, Station> getStations() {
+        return stations;
+    }
+
+    public HashMap<String, BusStop> getStops() {
+        return stops;
+    }
 }

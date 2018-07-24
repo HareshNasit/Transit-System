@@ -1,11 +1,16 @@
 package hotcupsofjava.transitsystemmanager.screens.UserScreen;
 
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -53,8 +58,22 @@ public class CardScreen implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("hii");
+        subwayNameCol.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
+        BusStopNameCol.setCellValueFactory(new PropertyValueFactory<BusStop,String>("name"));
+        //TODO: ADD subwayline and busstop route.
     }
 
+    public void setStationTable(){
+        ObservableList<Station> stations = FXCollections.observableArrayList();
+        stations.addAll(routeManager.getStations().values());
+        subwayTable.setItems(stations);
+    }
+
+    public void setStopsTable(){
+        ObservableList<BusStop> stops = FXCollections.observableArrayList();
+        stops.addAll(routeManager.getStops().values());
+        busStopTable.setItems(stops);
+    }
     public void addBalance(ActionEvent actionEvent) {
         String amnt =tab3BalanceInput.getText();
         if (amnt.equals("10") || amnt.equals("20") || amnt.equals("50")) {
