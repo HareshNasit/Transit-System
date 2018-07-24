@@ -40,5 +40,6 @@
          <font>
             <Font size="17.0" />
          </font></Text>
+      <Button layoutX="469.0" layoutY="256.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="105.0" text="Open Card" />
    </children>
 </AnchorPane>
