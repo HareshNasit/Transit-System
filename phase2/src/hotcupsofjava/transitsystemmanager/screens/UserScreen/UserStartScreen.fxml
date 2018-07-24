@@ -36,7 +36,7 @@
          <font>
             <Font size="17.0" />
          </font></Text>
-      <Text fx:id="emailText" layoutX="75.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.21875">
+      <Text fx:id="emailText" layoutX="75.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="263.0">
          <font>
             <Font size="17.0" />
          </font></Text>
