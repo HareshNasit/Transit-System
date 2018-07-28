@@ -23,13 +23,14 @@ public class UserLoginScreen extends AnchorPane {
     public TextField nameText;
     public UserManager userManager;
 
-    public UserLoginScreen() {
+    public UserLoginScreen(UserManager userManager) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserLoginScreen.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
         try {
             fxmlLoader.load();
+            this.userManager = userManager;
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
