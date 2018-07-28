@@ -83,22 +83,30 @@ public class CardScreen implements Initializable {
         busStopTable.setItems(stops);
     }
     public void addBalance(ActionEvent actionEvent) {
-        String amnt =tab3BalanceInput.getText();
-        if (amnt.equals("")){
-            tab3resultLbl.setText("Please enter a valid amount");
-            tab3resultLbl.setTextFill(Color.valueOf("Red"));
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
         }
         else {
-            try {
-                int amount = Integer.parseInt(tab3BalanceInput.getText());
-                card.getUser().loadCard(card,amount);
-                updateBalance();
-                tab3resultLbl.setText("Balance of " + amount + " added successfully");
-                tab3resultLbl.setTextFill(Color.valueOf("Green"));
-            }
-            catch (RuntimeException e){
+            String amnt = tab3BalanceInput.getText();
+            if (amnt.equals("")) {
                 tab3resultLbl.setText("Please enter a valid amount");
                 tab3resultLbl.setTextFill(Color.valueOf("Red"));
+            }
+            else {
+                try {
+                    int amount = Integer.parseInt(tab3BalanceInput.getText());
+                    card.getUser().loadCard(card, amount);
+                    updateBalance();
+                    tab3resultLbl.setText("Balance of " + amount + " added successfully");
+                    tab3resultLbl.setTextFill(Color.valueOf("Green"));
+                } catch (RuntimeException e) {
+                    tab3resultLbl.setText("Please enter a valid amount");
+                    tab3resultLbl.setTextFill(Color.valueOf("Red"));
+                }
             }
         }
 
@@ -150,38 +158,65 @@ public class CardScreen implements Initializable {
     }
 
     public void addBalanceTen(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $10",
-                ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            card.getUser().loadCard(card, 10);
-            tab3resultLbl.setText("Balance of " + 10 + " added successfully");
-            tab3resultLbl.setTextFill(Color.valueOf("Green"));
-            updateBalance();
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $10",
+                    ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                card.getUser().loadCard(card, 10);
+                tab3resultLbl.setText("Balance of " + 10 + " added successfully");
+                tab3resultLbl.setTextFill(Color.valueOf("Green"));
+                updateBalance();
+            }
         }
     }
 
     public void addBalanceTwenty(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $20",
-                ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            card.getUser().loadCard(card, 20);
-            tab3resultLbl.setText("Balance of " + 20 + " added successfully");
-            tab3resultLbl.setTextFill(Color.valueOf("Green"));
-            updateBalance();
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $20",
+                    ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                card.getUser().loadCard(card, 20);
+                tab3resultLbl.setText("Balance of " + 20 + " added successfully");
+                tab3resultLbl.setTextFill(Color.valueOf("Green"));
+                updateBalance();
+            }
         }
     }
 
     public void addBalanceFifty(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $50",
-                ButtonType.YES, ButtonType.CANCEL);
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.YES) {
-            card.getUser().loadCard(card, 50);
-            tab3resultLbl.setText("Balance of " + 50 + " added successfully");
-            tab3resultLbl.setTextFill(Color.valueOf("Green"));
-            updateBalance();
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $50",
+                    ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                card.getUser().loadCard(card, 50);
+                tab3resultLbl.setText("Balance of " + 50 + " added successfully");
+                tab3resultLbl.setTextFill(Color.valueOf("Green"));
+                updateBalance();
+            }
         }
     }
 }
