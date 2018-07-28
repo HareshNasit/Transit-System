@@ -46,7 +46,7 @@ public class User extends TransitSystemObject {
     }
 
     public boolean loadCard(Card card, int value) {
-        if (cards.contains(card) && (value == 10 || value == 20 || value == 50) && !card.isSuspended()) {
+        if (!card.isSuspended()) {
             card.addBalance(value);
             Logger.log("Successfully added $" + value + " to the " + card.toString());
             return true;

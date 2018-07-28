@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class CardScreen implements Initializable {
@@ -43,8 +44,11 @@ public class CardScreen implements Initializable {
     public Tab tab1;
     public Button addAmountBtn;
     public Label tab3resultLbl;
+    public Button add10Btn;
+    public Button add20Btn;
+    public Button add50Btn;
     private RouteManager routeManager;
-    private UserManager userManager;
+    public UserManager userManager;
     public Card card;
 
 
@@ -80,17 +84,24 @@ public class CardScreen implements Initializable {
     }
     public void addBalance(ActionEvent actionEvent) {
         String amnt =tab3BalanceInput.getText();
-        if (amnt.equals("10") || amnt.equals("20") || amnt.equals("50")) {
-            int amount = Integer.parseInt(tab3BalanceInput.getText());
-            card.addBalance(amount);
-            updateBalance();
-            tab3resultLbl.setText("Balance of " + amount +" added successfully" );
-            tab3resultLbl.setTextFill(Color.valueOf("Green"));
-        }
-        else{
+        if (amnt.equals("")){
             tab3resultLbl.setText("Please enter a valid amount");
             tab3resultLbl.setTextFill(Color.valueOf("Red"));
         }
+        else {
+            try {
+                int amount = Integer.parseInt(tab3BalanceInput.getText());
+                card.getUser().loadCard(card,amount);
+                updateBalance();
+                tab3resultLbl.setText("Balance of " + amount + " added successfully");
+                tab3resultLbl.setTextFill(Color.valueOf("Green"));
+            }
+            catch (RuntimeException e){
+                tab3resultLbl.setText("Please enter a valid amount");
+                tab3resultLbl.setTextFill(Color.valueOf("Red"));
+            }
+        }
+
     }
     public void updateBalance(){
         tab1Balance.setText(Double.toString(card.getBalance()));
@@ -98,6 +109,31 @@ public class CardScreen implements Initializable {
     }
 
     public void suspendCard(ActionEvent actionEvent) {
+        if(card.getBalance() >0 && card.getUser().getCards().size() > 1) {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Suspend Card");
+            dialog.setContentText("Enter the card number you want to transfer this card's balance to");
+            Optional<String> result = dialog.showAndWait();
+            if (result.isPresent() && userManager.hasCard(result.get())) {
+                userManager.getCard(result.get()).addBalance(card.getBalance());
+                card.getUser().suspendCard(card);
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText("You do not have any card with such a card id");
+                alert.setContentText("Please select a card with valid id");
+                alert.showAndWait();
+            }
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to suspend this card?",
+                    ButtonType.YES, ButtonType.CANCEL);
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.YES) {
+                card.getUser().suspendCard(card);
+            }
+        }
     }
 
     public void removeCard(ActionEvent actionEvent) {
@@ -110,6 +146,42 @@ public class CardScreen implements Initializable {
             userManager.removeCard(card, user);
             Stage stage = (Stage) removeCardBtn.getScene().getWindow();
             stage.close();
+        }
+    }
+
+    public void addBalanceTen(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $10",
+                ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            card.getUser().loadCard(card, 10);
+            tab3resultLbl.setText("Balance of " + 10 + " added successfully");
+            tab3resultLbl.setTextFill(Color.valueOf("Green"));
+            updateBalance();
+        }
+    }
+
+    public void addBalanceTwenty(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $20",
+                ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            card.getUser().loadCard(card, 20);
+            tab3resultLbl.setText("Balance of " + 20 + " added successfully");
+            tab3resultLbl.setTextFill(Color.valueOf("Green"));
+            updateBalance();
+        }
+    }
+
+    public void addBalanceFifty(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to add $50",
+                ButtonType.YES, ButtonType.CANCEL);
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.YES) {
+            card.getUser().loadCard(card, 50);
+            tab3resultLbl.setText("Balance of " + 50 + " added successfully");
+            tab3resultLbl.setTextFill(Color.valueOf("Green"));
+            updateBalance();
         }
     }
 }

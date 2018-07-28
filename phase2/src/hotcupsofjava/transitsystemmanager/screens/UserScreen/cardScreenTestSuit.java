@@ -30,6 +30,7 @@ public class cardScreenTestSuit extends Application {
         userManager.addCard(user,"CD1");
         userManager.addCard(user,"CD2");
 //        controller.setCardTable();
+        controller.userManager = userManager;
         controller.card = userManager.getCard("CD1");
         controller.cardID.setText(controller.card.getId());
         controller.cardName.setText(controller.card.getCardName());

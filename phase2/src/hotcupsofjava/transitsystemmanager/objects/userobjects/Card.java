@@ -65,7 +65,7 @@ public class Card extends TransitSystemObject {
         return suspended;
     }
 
-    public void addBalance(int amount) {
+    public void addBalance(double amount) {
         balance += amount;
     }
 
