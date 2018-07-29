@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotcupsofjava.transitsystemmanager.screens.UserScreen.UserStartScreen">
+<fx:root type="javafx.scene.layout.AnchorPane" fx:id="userStartScreenPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TableView fx:id="cardsTable" layoutX="122.0" layoutY="127.0" prefHeight="232.0" prefWidth="263.0">
         <columns>
@@ -42,4 +42,4 @@
          </font></Text>
       <Button layoutX="469.0" layoutY="256.0" mnemonicParsing="false" onAction="#openCard" prefHeight="76.0" prefWidth="105.0" text="Open Card" />
    </children>
-</AnchorPane>
+</fx:root>

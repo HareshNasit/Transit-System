@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -22,7 +23,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CardScreen implements Initializable {
+public class CardScreen extends VBox {
 
     public Text cardName;
     public Text cardID;
@@ -48,24 +49,31 @@ public class CardScreen implements Initializable {
     public Button add20Btn;
     public Button add50Btn;
     private RouteManager routeManager;
-    public UserManager userManager;
-    public Card card;
+    private UserManager userManager;
+    private Card card;
 
 
-//    public CardScreen(){
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserStartScreen.fxml"));
-//        fxmlLoader.setRoot(this);
-//        fxmlLoader.setController(this);
-//        try {
-//            fxmlLoader.load();
-//        }
-//        catch (IOException e){
-//            throw new RuntimeException();
-//        }
-//    }
+    public CardScreen(Card card, UserManager userManager, RouteManager routeManager){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("CardScreen.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+            initializeStops();
+            this.card = card;
+            this.routeManager = routeManager;
+            this.userManager = userManager;
+            setStationTable();
+            setStopsTable();
+            updateBalance();
 
-    public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("hii");
+        }
+        catch (IOException e){
+            throw new RuntimeException();
+        }
+    }
+
+    public void initializeStops() {
         subwayNameCol.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
         BusStopNameCol.setCellValueFactory(new PropertyValueFactory<BusStop,String>("name"));
         //TODO: ADD subwayline and busstop route.

@@ -1,5 +1,6 @@
 package hotcupsofjava.transitsystemmanager.screens.UserScreen;
 
+import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
@@ -16,7 +17,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,7 +27,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UserStartScreen implements Initializable {
+public class UserStartScreen extends AnchorPane {
 
     public Button editBtn;
     public Button addCardBtn;
@@ -34,21 +37,30 @@ public class UserStartScreen implements Initializable {
     public TableColumn cardNameCol;
     public TableColumn cardBalanceCol;
     public TableView cardsTable;
-    public User user;
-    public UserManager userManager;
+    private User user;
+    private UserManager userManager;
+    private RouteManager routeManager;
 
-//    public UserStartScreen(User user){
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserStartScreen.fxml"));
-//        fxmlLoader.setRoot(this);
-//        fxmlLoader.setController(this);
-//        this.user = user;
-//        this.nameText.setText(this.user.getName());
-//        this.emailText.setText(this.user.getEmail());
-//        initializeTable();
-//        setCardTable();
-//    }
+    public UserStartScreen(User user, UserManager userManager, RouteManager routeManager){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserStartScreen.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+            this.userManager = userManager;
+            this.user = user;
+            this.routeManager =routeManager;
+            this.nameText.setText(this.user.getName());
+            this.emailText.setText(this.user.getEmail());
+            initializeTable();
+            setCardTable();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 
-    public void initialize(URL location, ResourceBundle resources){
+    public void initializeTable(){
         cardIDCol.setCellValueFactory(new PropertyValueFactory<Card,String>("id"));
         cardNameCol.setCellValueFactory(new PropertyValueFactory<Card,String>("cardName"));
         cardBalanceCol.setCellValueFactory(new PropertyValueFactory<Card,Double>("balance"));
@@ -88,18 +100,15 @@ public class UserStartScreen implements Initializable {
     public void openCard(ActionEvent actionEvent) {
         try {
             Card card = (Card) cardsTable.getSelectionModel().getSelectedItem();
-            Parent cardScreen = FXMLLoader.load(getClass().getResource("CardScreen.fxml"));
-            Scene cardScene = new Scene(cardScreen);
-            //Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Stage stage = new Stage();
-            stage.setScene(cardScene);
-            stage.show();
+            Stage cardScreen = new Stage();
+            CardScreen cardScreenController = new CardScreen(card,userManager,routeManager);
+            cardScreen.initModality(Modality.WINDOW_MODAL);
+            cardScreen.setTitle("User Screen");
+            cardScreen.setScene(new Scene(cardScreenController));
+            cardScreen.show();
         }
         catch (NullPointerException e){
-
-        }
-        catch (IOException e){
-
+            System.out.println("");
         }
     }
 }
