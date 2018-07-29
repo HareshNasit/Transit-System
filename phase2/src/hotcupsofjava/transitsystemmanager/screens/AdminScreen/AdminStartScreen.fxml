@@ -6,7 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.VBox" id="adminScreenVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.VBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane prefHeight="409.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -14,8 +14,8 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="600.0">
                      <children>
-                        <Button layoutX="183.0" layoutY="66.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="142.0" text="Start Day" />
-                        <Button layoutX="183.0" layoutY="151.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="141.0" text="End Day" />
+                        <Button fx:id="startDayBtn" layoutX="183.0" layoutY="66.0" mnemonicParsing="false" onAction="#startDay" prefHeight="59.0" prefWidth="142.0" text="Start Day" />
+                        <Button fx:id="endDayBtn" layoutX="183.0" layoutY="151.0" mnemonicParsing="false" onAction="#endDay" prefHeight="62.0" prefWidth="141.0" text="End Day" />
                      </children>
                   </AnchorPane>
             </content>

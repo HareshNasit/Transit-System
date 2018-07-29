@@ -3,7 +3,10 @@ package hotcupsofjava.transitsystemmanager;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Logger {
     private static String day;
@@ -13,7 +16,11 @@ public class Logger {
     private static int stopsVisited;
     private static long revenue;
     private static long trueValue;
+    private static String startTime;
 
+    public static String getStartTime(){
+        return startTime;
+    }
     public static void log(String logString) {
         if (!active) throw new RuntimeException("Attempted logging when non-active day");
         logs.add(logString);
@@ -34,18 +41,24 @@ public class Logger {
         Logger.trueValue += trueValue;
     }
 
-    static void startDay(String day) {
+    public static void startDay(String day) {
         if (active) throw new RuntimeException("New day started before previous day ended.");
-        Logger.day = day;
+
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        Logger.day = formatter.format(date);
         active = true;
         logs = new ArrayList<>();
         stats = new ArrayList<>();
         stopsVisited = 0;
         revenue = 0;
         trueValue = 0;
+        Calendar cal = Calendar.getInstance();
+        // int mins = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
+        startTime = cal.get(Calendar.HOUR) + ":"+ cal.get(Calendar.MINUTE);
     }
 
-    static void endDay() {
+    public static void endDay() {
         if (!active) throw new RuntimeException("Day ended before day started.");
         new File("logs/").mkdirs();
         try {
