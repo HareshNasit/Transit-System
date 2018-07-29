@@ -10,7 +10,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
@@ -19,9 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 public class CardScreen extends VBox {
 
@@ -61,6 +58,8 @@ public class CardScreen extends VBox {
             fxmlLoader.load();
             initializeStops();
             this.card = card;
+            cardName.setText(card.getCardName());
+            cardID.setText(card.getId());
             this.routeManager = routeManager;
             this.userManager = userManager;
             setStationTable();
@@ -90,6 +89,7 @@ public class CardScreen extends VBox {
         stops.addAll(routeManager.getStops().values());
         busStopTable.setItems(stops);
     }
+
     public void addBalance(ActionEvent actionEvent) {
         if(card.isSuspended()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
