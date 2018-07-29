@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="cardScreenVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.VBox" fx:id="cardScreenVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane prefHeight="407.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -81,7 +81,7 @@
                             <TableColumn fx:id="subwayLineCol" minWidth="0.0" prefWidth="96.0" text="Line" />
                           </columns>
                         </TableView>
-                        <TableView fx:id="busStopTable" layoutX="330.0" layoutY="69.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="busStopTable" layoutX="383.0" layoutY="69.0" prefHeight="200.0" prefWidth="200.0">
                           <columns>
                             <TableColumn fx:id="BusStopNameCol" prefWidth="110.0" text="Stop Name" />
                             <TableColumn fx:id="BusRouteCol" prefWidth="89.0" text="Route" />
@@ -92,15 +92,16 @@
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Text layoutX="330.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bus Stops:">
+                        <Text layoutX="379.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bus Stops:">
                            <font>
                               <Font size="17.0" />
                            </font>
                         </Text>
-                        <Button fx:id="tapOnSubwayBtn" layoutX="17.0" layoutY="278.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="85.0" text="Tap On" />
-                        <Button fx:id="tapOffSubwayBtn" layoutX="139.0" layoutY="278.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="93.0" text="Tap Off" />
-                        <Button fx:id="tapOnBusBtn" layoutX="331.0" layoutY="278.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="84.0" text="Tap On" />
-                        <Button fx:id="tapOffBusBtn" layoutX="436.0" layoutY="278.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="94.0" text="Tap Off" />
+                        <Button fx:id="tapOnSubwayBtn" layoutX="17.0" layoutY="278.0" mnemonicParsing="false" onAction="#tapOnSubway" prefHeight="51.0" prefWidth="85.0" text="Tap On" />
+                        <Button fx:id="tapOffSubwayBtn" layoutX="139.0" layoutY="278.0" mnemonicParsing="false" onAction="#tapOffSubway" prefHeight="52.0" prefWidth="93.0" text="Tap Off" />
+                        <Button fx:id="tapOnBusBtn" layoutX="380.0" layoutY="278.0" mnemonicParsing="false" onAction="#tapOnBus" prefHeight="52.0" prefWidth="84.0" text="Tap On" />
+                        <Button fx:id="tapOffBusBtn" layoutX="483.0" layoutY="278.0" mnemonicParsing="false" onAction="#tapOffBus" prefHeight="52.0" prefWidth="94.0" text="Tap Off" />
+                        <Button fx:id="specialBtn" layoutX="252.0" layoutY="290.0" mnemonicParsing="false" onAction="#accelerateTime" prefHeight="21.0" prefWidth="112.0" text="Special TapOff" />
                      </children>
                   </AnchorPane>
             </content>

@@ -134,11 +134,11 @@ public class MainSystem extends Application {
 
             // stopId name
             while (fileRead != null) {
-                String[] tokenize = extractArgs(fileRead);
-
-                // only given one argument
-                if (tokenize == null) throw new RuntimeException("Invalid format for stop: " + fileRead);
-                else routeManager.addStop(tokenize[0], tokenize[1]);
+                String[] details = fileRead.split("\\|");
+                String stopId = details[0];
+                String stopName = details[1];
+                String routeId = details[2];
+                routeManager.addStop(stopId,stopName,routeId);
 
                 fileRead = br.readLine();
             }

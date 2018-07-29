@@ -42,6 +42,11 @@ public class RouteManager {
         stops.put(stop.getId(), stop);
     }
 
+    public void addStop(String id, String name, String routeId){
+        BusStop stop = new BusStop(id, name);
+        stops.put(stop.getId(), stop);
+    }
+
     /**
      * Creates a Station and adds it in the transitNetwork, where id is unique of both
      * BusStops and Stations and name is initialized.

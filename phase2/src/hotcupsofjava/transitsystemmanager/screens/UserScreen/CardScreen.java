@@ -18,6 +18,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Optional;
 
 public class CardScreen extends VBox {
@@ -45,6 +46,11 @@ public class CardScreen extends VBox {
     public Button add10Btn;
     public Button add20Btn;
     public Button add50Btn;
+    public Button tapOnSubwayBtn;
+    public Button tapOffSubwayBtn;
+    public Button tapOnBusBtn;
+    public Button tapOffBusBtn;
+    public Button specialBtn;
     private RouteManager routeManager;
     private UserManager userManager;
     private Card card;
@@ -225,6 +231,63 @@ public class CardScreen extends VBox {
                 tab3resultLbl.setTextFill(Color.valueOf("Green"));
                 updateBalance();
             }
+        }
+    }
+
+    public void tapOnSubway(ActionEvent actionEvent) {
+        try{
+            Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
+            Calendar cal = Calendar.getInstance();
+            long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
+            card.tapOn(minutes,station);
+        }
+        catch (NullPointerException e){
+            System.out.println("");
+        }
+    }
+
+    public void tapOffSubway(ActionEvent actionEvent) {
+        try{
+            Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
+            Calendar cal = Calendar.getInstance();
+            long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
+            card.tapOff(minutes,station);
+        }
+        catch (NullPointerException e){
+            System.out.println("");
+        }
+    }
+
+    public void tapOnBus(ActionEvent actionEvent) {
+        try{
+            BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
+            Calendar cal = Calendar.getInstance();
+            long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
+            card.tapOn(minutes,busStop,routeManager.getRoute(busStop.getRouteID()));
+        }
+        catch (NullPointerException e){
+            System.out.println("");
+        }
+    }
+
+    public void tapOffBus(ActionEvent actionEvent) {
+        try{
+            BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
+            Calendar cal = Calendar.getInstance();
+            long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
+            card.tapOff(minutes,busStop,routeManager.getRoute(busStop.getRouteID()));
+        }
+        catch (NullPointerException e){
+            System.out.println("");
+        }
+    }
+
+    public void accelerateTime(ActionEvent actionEvent) {
+        try{
+
+        }
+        catch (NullPointerException e){
+            System.out.println("");
         }
     }
 }

@@ -5,6 +5,14 @@ package hotcupsofjava.transitsystemmanager.objects.transitobjects;
  * @version 1.0
  */
 public class BusStop extends Stop {
+
+    private String routeId;
+
+    public BusStop(String id, String name, String routeId){
+        super(name,id);
+        this.routeId = routeId;
+    }
+
     /**
      * The constructor of the BusStop that initializes the unique id and the name of the BusStop.
      * The id must be unique to all Stops, including BusStops and Stations, but the name may be
@@ -48,5 +56,9 @@ public class BusStop extends Stop {
      */
     Station getConnectedStation() {
         return (Station) this.getConnectedStop();
+    }
+
+    public String getRouteID(){
+        return routeId;
     }
 }
