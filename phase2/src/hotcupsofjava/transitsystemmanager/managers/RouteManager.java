@@ -43,7 +43,7 @@ public class RouteManager {
     }
 
     public void addStop(String id, String name, String routeId){
-        BusStop stop = new BusStop(id, name);
+        BusStop stop = new BusStop(id, name,routeId);
         stops.put(stop.getId(), stop);
     }
 

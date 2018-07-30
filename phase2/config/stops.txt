@@ -1,10 +1,10 @@
-STO1|Weston Rd|R1
-STO2|Arrow Rd|R1
-STO3|Signet Dr|R1
-STO4|Norfinch Dr|R1
-STO5|Jane St|R1
-STO6|Driftwood Ave|R1
-STO7|Sentinel Rd|R1
-STO8|Keele St|R1
-STO9|Finch West|R1
-STO10|Alness St|R1
+STO1 Weston Rd
+STO2 Arrow Rd
+STO3 Signet Dr
+STO4 Norfinch Dr
+STO5 Jane St
+STO6 Driftwood Ave
+STO7 Sentinel Rd
+STO8 Keele St
+STO9 Finch West
+STO10 Alness St
