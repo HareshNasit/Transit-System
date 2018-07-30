@@ -7,6 +7,7 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.TapSubway;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,6 +54,7 @@ public class CardScreen extends VBox {
     public Button tapOnBusBtn;
     public Button tapOffBusBtn;
     public Button specialBtn;
+    public TextArea tripsText;
     private RouteManager routeManager;
     private UserManager userManager;
     private Card card;
@@ -96,6 +98,11 @@ public class CardScreen extends VBox {
         ObservableList<BusStop> stops = FXCollections.observableArrayList();
         stops.addAll(routeManager.getStops().values());
         busStopTable.setItems(stops);
+    }
+
+    public void updateTrips(){
+        Trip[] trips = card.getTrips();
+        tripsText.setText(trips[0].toString());
     }
 
     public void addBalance(ActionEvent actionEvent) {
@@ -257,6 +264,7 @@ public class CardScreen extends VBox {
             //card.tapOff(minutes,station);
             TapSubway.getInstance().tapOff(minutes,(Stop) station,card);
             updateBalance();
+            updateTrips();
         }
         catch (NullPointerException e){
             System.out.println("");

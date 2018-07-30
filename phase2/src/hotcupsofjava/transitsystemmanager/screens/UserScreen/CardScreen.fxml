@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="javafx.scene.layout.VBox" fx:id="cardScreenVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="cardScreenVBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane prefHeight="407.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -17,22 +17,9 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <BarChart layoutX="342.0" layoutY="122.0" prefHeight="189.0" prefWidth="244.0">
-                          <xAxis>
-                            <CategoryAxis side="BOTTOM" />
-                          </xAxis>
-                          <yAxis>
-                            <NumberAxis side="LEFT" />
-                          </yAxis>
-                        </BarChart>
                         <Text layoutX="26.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recent Trips:">
                            <font>
                               <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="374.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Spending:">
-                           <font>
-                              <Font size="17.0" />
                            </font>
                         </Text>
                         <Text layoutX="26.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Name:">
@@ -67,6 +54,7 @@
                         </Text>
                         <Button fx:id="suspendCardBtn" layoutX="342.0" layoutY="60.0" mnemonicParsing="false" onAction="#suspendCard" text="Suspend Card" />
                         <Button fx:id="removeCardBtn" layoutX="482.0" layoutY="60.0" mnemonicParsing="false" onAction="#removeCard" text="Remove Card" />
+                        <TextArea fx:id="tripsText" layoutX="21.0" layoutY="140.0" prefHeight="222.0" prefWidth="496.0" />
                      </children>
                   </AnchorPane>
             </content>
