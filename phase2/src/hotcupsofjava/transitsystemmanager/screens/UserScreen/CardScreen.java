@@ -4,6 +4,8 @@ import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.TapSubway;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 import javafx.collections.FXCollections;
@@ -239,7 +241,8 @@ public class CardScreen extends VBox {
             Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
             Calendar cal = Calendar.getInstance();
             long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
-            card.tapOn(minutes,station);
+            //card.tapOn(minutes,station);
+            TapSubway.getInstance().tapOn(minutes,(Stop) station,card);
         }
         catch (NullPointerException e){
             System.out.println("");
@@ -251,7 +254,9 @@ public class CardScreen extends VBox {
             Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
             Calendar cal = Calendar.getInstance();
             long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
-            card.tapOff(minutes,station);
+            //card.tapOff(minutes,station);
+            TapSubway.getInstance().tapOff(minutes,(Stop) station,card);
+            updateBalance();
         }
         catch (NullPointerException e){
             System.out.println("");
@@ -264,6 +269,7 @@ public class CardScreen extends VBox {
             Calendar cal = Calendar.getInstance();
             long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
             card.tapOn(minutes,busStop,routeManager.getRoute(busStop.getRouteID()));
+            updateBalance();
         }
         catch (NullPointerException e){
             System.out.println("");

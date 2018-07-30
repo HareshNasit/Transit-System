@@ -88,7 +88,7 @@ public class Card extends TransitSystemObject {
         totalFines += amount;
     }
 
-    private void newTrip(Trip trip) {
+    public void newTrip(Trip trip) {
         if (!suspended) {
             Trip previousTrip = getCurrentTrip();
             if (previousTrip != null) {
