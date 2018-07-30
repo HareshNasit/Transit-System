@@ -29,6 +29,7 @@ public class Route extends TransitSystemObject {
     public Route(String id, ArrayList<BusStop> stops) {
         super(id);
         this.route = stops;
+        addRouteToBusStops();
     }
 
     /**
@@ -76,6 +77,12 @@ public class Route extends TransitSystemObject {
         int start = route.indexOf(initialStop);
         int end = route.indexOf(finalStop);
         return Math.abs(end - start);
+    }
+
+    public void addRouteToBusStops(){
+        for(BusStop busStop: route){
+            busStop.addToRoutes(this);
+        }
     }
 
 }

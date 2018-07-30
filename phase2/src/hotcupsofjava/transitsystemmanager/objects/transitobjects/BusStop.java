@@ -1,5 +1,7 @@
 package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
+import java.util.ArrayList;
+
 /**
  * @author
  * @version 1.0
@@ -7,10 +9,12 @@ package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 public class BusStop extends Stop {
 
     private String routeId;
+    private ArrayList<Route> routes; // All the routes that this busStop is connected to.
 
     public BusStop(String id, String name, String routeId){
         super(name,id);
         this.routeId = routeId;
+        this.routes = new ArrayList<>();
     }
 
     /**
@@ -24,6 +28,7 @@ public class BusStop extends Stop {
      */
     public BusStop(String id, String name) {
         super(id, name);
+        this.routes = new ArrayList<>();
     }
 
     /**
@@ -60,5 +65,18 @@ public class BusStop extends Stop {
 
     public String getRouteID(){
         return routeId;
+    }
+
+    public void addToRoutes(Route route){
+        routes.add(route);
+    }
+
+    public boolean hasRoute(String routeId){
+        for(Route route: routes){
+            if(route.getId().equals(routeId)){
+                return true;
+            }
+        }
+        return false;
     }
 }

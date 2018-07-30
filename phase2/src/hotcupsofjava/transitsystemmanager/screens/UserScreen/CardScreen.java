@@ -38,10 +38,8 @@ public class CardScreen extends VBox {
     public Tab tab3;
     public Button tapOffBtn;
     public Button tapOnBtn;
-    public TableColumn subwayLineCol;
     public TableView busStopTable;
     public TableColumn BusStopNameCol;
-    public TableColumn BusRouteCol;
     public Tab tab2;
     public Tab tab1;
     public Button addAmountBtn;
@@ -85,7 +83,6 @@ public class CardScreen extends VBox {
     public void initializeStops() {
         subwayNameCol.setCellValueFactory(new PropertyValueFactory<Station,String>("name"));
         BusStopNameCol.setCellValueFactory(new PropertyValueFactory<BusStop,String>("name"));
-        //TODO: ADD subwayline and busstop route.
     }
 
     public void setStationTable(){
@@ -274,10 +271,23 @@ public class CardScreen extends VBox {
     public void tapOnBus(ActionEvent actionEvent) {
         try{
             BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
-            Calendar cal = Calendar.getInstance();
-            long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
-            card.tapOn(minutes,busStop,routeManager.getRoute(busStop.getRouteID()));
-            updateBalance();
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Enter Route");
+            dialog.setContentText("Enter the route id you want to travel on");
+            Optional<String> result = dialog.showAndWait();
+            if(result.isPresent() && busStop.hasRoute(result.get())) {
+                Calendar cal = Calendar.getInstance();
+                long minutes = cal.get(Calendar.HOUR) * 60 + cal.get(Calendar.MINUTE);
+                card.tapOn(minutes, busStop, routeManager.getRoute(result.get()));
+                updateBalance();
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText("Wrong Route");
+                alert.setContentText("Warning! Please enter a correct route");
+                alert.showAndWait();
+            }
         }
         catch (NullPointerException e){
             System.out.println("");
@@ -287,9 +297,22 @@ public class CardScreen extends VBox {
     public void tapOffBus(ActionEvent actionEvent) {
         try{
             BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
-            Calendar cal = Calendar.getInstance();
-            long minutes = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
-            card.tapOff(minutes,busStop,routeManager.getRoute(busStop.getRouteID()));
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Add new Card");
+            dialog.setContentText("Enter card details e.g(card number|card name)");
+            Optional<String> result = dialog.showAndWait();
+            if(result.isPresent() && busStop.hasRoute(result.get())) {
+                Calendar cal = Calendar.getInstance();
+                long minutes = cal.get(Calendar.HOUR) * 60 + cal.get(Calendar.MINUTE);
+                card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText("Wrong Route");
+                alert.setContentText("Warning! Please enter a correct route");
+                alert.showAndWait();
+            }
         }
         catch (NullPointerException e){
             System.out.println("");
@@ -298,7 +321,6 @@ public class CardScreen extends VBox {
 
     public void accelerateTime(ActionEvent actionEvent) {
         try{
-
         }
         catch (NullPointerException e){
             System.out.println("");
