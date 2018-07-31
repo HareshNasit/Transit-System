@@ -203,16 +203,18 @@ public class Trip {
      * @return toString representation
      */
     public String toString() {
+        String time = "[" + initialTime/60 + ":" + initialTime%60 + "]";
         StringBuilder details = new StringBuilder();
         details.append("Trip Details\n");
         details.append("==================\n");
-        details.append("Started at:  ").append(initialTime);
+        details.append("Started at:  ").append(time);
         details.append("\nActive:      ").append(!tripEnded);
         details.append(String.format("\nCost:        $%.2f", tripValue));
         details.append("\n\nLocation History:\n==================\n");
         for (TripLocation location : locations) {
-            details.append(String.format("[%d] %s ",
-                    location.getTimestamp(), (location.isTapOn()) ? "tap on " : "tap off "));
+            String locationTime = location.getTimestamp()/60 + ":" + location.getTimestamp()%60;
+            details.append(String.format("[%s] %s ",
+                    locationTime, (location.isTapOn()) ? "tap on " : "tap off "));
             if (location.isBusStop()) {
                 details.append(String.format("on bus at stop %s on route %s",
                         location.getStop().getName(), location.getRoute().getId()));
