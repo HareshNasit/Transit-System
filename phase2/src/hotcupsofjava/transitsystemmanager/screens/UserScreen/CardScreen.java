@@ -70,10 +70,10 @@ public class CardScreen extends VBox {
             cardID.setText(card.getId());
             this.routeManager = routeManager;
             this.userManager = userManager;
+            tripsText.setEditable(false);
             setStationTable();
             setStopsTable();
             updateBalance();
-
         }
         catch (IOException e){
             throw new RuntimeException();
