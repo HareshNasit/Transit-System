@@ -316,8 +316,8 @@ public class CardScreen extends VBox {
         try{
             BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
             TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Add new Card");
-            dialog.setContentText("Enter card details e.g(card number|card name)");
+            dialog.setTitle("Enter Route");
+            dialog.setContentText("Enter the route id you travelled on");
             Optional<String> result = dialog.showAndWait();
             if(result.isPresent() && busStop.hasRoute(result.get())) {
                 Calendar cal = Calendar.getInstance();
@@ -340,6 +340,36 @@ public class CardScreen extends VBox {
 
     public void accelerateTime(ActionEvent actionEvent) {
         try{
+            BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
+            Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
+            if(busStop == null && station ==null){
+                System.out.println();
+            }
+            else if(busStop==null){
+                Calendar cal = Calendar.getInstance();
+                long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
+                TapSubway.getInstance().tapOff(minutes,station,card);
+                updateTrips();
+            }
+            else if(station==null){
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Enter Route");
+                dialog.setContentText("Enter the route id you travelled on");
+                Optional<String> result = dialog.showAndWait();
+                if(result.isPresent() && busStop.hasRoute(result.get())) {
+                    Calendar cal = Calendar.getInstance();
+                    long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
+                    card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
+                    updateTrips();
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning Dialog");
+                    alert.setHeaderText("Wrong Route");
+                    alert.setContentText("Warning! Please enter a correct route");
+                    alert.showAndWait();
+                }
+            }
         }
         catch (NullPointerException e){
             System.out.println("");
