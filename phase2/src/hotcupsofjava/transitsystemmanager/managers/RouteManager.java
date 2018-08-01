@@ -4,6 +4,7 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +12,17 @@ import java.util.HashMap;
  * @author
  * @version 1.0
  */
-public class RouteManager {
+public class RouteManager implements Serializable {
+    private static RouteManager instance;
+
+    public static RouteManager getInstance() {
+        return instance;
+    }
+
+    public static void setInstance(RouteManager m) {
+        instance = m;
+    }
+
     private HashMap<String, BusStop> stops;
     private HashMap<String, Route> routes;
     private HashMap<String, Station> stations;
