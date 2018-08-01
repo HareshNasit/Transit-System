@@ -6,7 +6,7 @@ import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
  * @author
  * @version 1.0
  */
-public abstract class Stop extends TransitSystemObject {
+public class Stop extends TransitSystemObject {
 
     private String name;
     private Stop connectedStop;
