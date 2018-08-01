@@ -4,9 +4,20 @@ import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class UserManager {
+public class UserManager implements Serializable {
+    private static UserManager instance;
+
+    public static UserManager getInstance() {
+        return instance;
+    }
+    
+    public static void setInstance(UserManager m) {
+        instance = m;
+    }
+
     private HashMap<String, User> users;
     private HashMap<String, Card> cards;
 
