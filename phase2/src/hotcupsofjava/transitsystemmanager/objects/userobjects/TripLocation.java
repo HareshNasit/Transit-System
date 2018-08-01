@@ -5,7 +5,9 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 
-public class TripLocation {
+import java.io.Serializable;
+
+public class TripLocation implements Serializable {
     // true: tap on, false: tap off
     private boolean tappingOn;
     private Stop stop;

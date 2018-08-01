@@ -24,6 +24,7 @@ public class UserManager implements Serializable {
     public UserManager() {
         users = new HashMap<>();
         cards = new HashMap<>();
+        UserManager.setInstance(this);
     }
 
     public double calculateRevenue() {

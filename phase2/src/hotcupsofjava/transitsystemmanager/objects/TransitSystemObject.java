@@ -3,7 +3,9 @@ package hotcupsofjava.transitsystemmanager.objects;
 
 import hotcupsofjava.transitsystemmanager.managers.IDManager;
 
-public abstract class TransitSystemObject {
+import java.io.Serializable;
+
+public abstract class TransitSystemObject implements Serializable {
     private static IDManager idManager = null;
 
     public static void setIdManager(IDManager m) {

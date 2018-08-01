@@ -6,13 +6,14 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 import hotcupsofjava.transitsystemmanager.Logger;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * @author
  * @version 1.0
  */
-public class Trip {
+public class Trip implements Serializable {
     private ArrayList<TripLocation> locations;
     private Station lastSubwayTap = null;
 

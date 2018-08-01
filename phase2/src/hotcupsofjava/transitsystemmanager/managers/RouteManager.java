@@ -39,6 +39,7 @@ public class RouteManager implements Serializable {
         stops = new HashMap<>();
         routes = new HashMap<>();
         stations = new HashMap<>();
+        RouteManager.setInstance(this);
     }
 
     /**

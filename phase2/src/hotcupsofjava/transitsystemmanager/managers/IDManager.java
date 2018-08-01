@@ -18,6 +18,7 @@ public class IDManager implements Serializable {
 
     public IDManager() {
         ids = new HashMap<>();
+        IDManager.setInstance(this);
     }
 
     public String addId(String id) {

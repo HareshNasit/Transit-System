@@ -13,14 +13,13 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MainSystem extends Application {
+    private String instanceName;
 
     public static void main(String[] args) {
         launch(args);
@@ -28,17 +27,78 @@ public class MainSystem extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        IDManager idManager = new IDManager();
-        TransitSystemObject.setIdManager(idManager);
-        UserManager userManager = new UserManager();
-        RouteManager routeManager = new RouteManager();
+        instanceName = "TTC";
+        IDManager idManager;
+        UserManager userManager;
+        RouteManager routeManager;
 
-        openInitialScreens(userManager,routeManager);
-        readBusStops(routeManager);
-        readStations(routeManager);
-        readRoutes(routeManager);
-        readUsers(userManager);
-        readInitialCards(userManager);
+        // attempt to load existing system
+        try {
+            String baseFilePath = String.format("instances/%s/", instanceName);
+
+            FileInputStream idFileIn = new FileInputStream(baseFilePath + "IDManager.ser");
+            ObjectInputStream idObjIn = new ObjectInputStream(idFileIn);
+            idManager = (IDManager) idObjIn.readObject();
+            TransitSystemObject.setIdManager(idManager);
+            IDManager.setInstance(idManager);
+            idObjIn.close();
+
+            FileInputStream routeFileIn = new FileInputStream(baseFilePath + "RouteManager.ser");
+            ObjectInputStream routeObjIn = new ObjectInputStream(routeFileIn);
+            routeManager = (RouteManager) routeObjIn.readObject();
+            RouteManager.setInstance(routeManager);
+            routeObjIn.close();
+
+            FileInputStream userFileIn = new FileInputStream(baseFilePath + "UserManager.ser");
+            ObjectInputStream userObjIn = new ObjectInputStream(userFileIn);
+            userManager = (UserManager) userObjIn.readObject();
+            UserManager.setInstance(userManager);
+            userObjIn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            // New system
+            idManager = new IDManager();
+            TransitSystemObject.setIdManager(idManager);
+            userManager = new UserManager();
+            routeManager = new RouteManager();
+            readBusStops(routeManager);
+            readStations(routeManager);
+            readRoutes(routeManager);
+            readUsers(userManager);
+            readInitialCards(userManager);
+        }
+
+        openInitialScreens(userManager, routeManager);
+    }
+
+    @Override
+    public void stop() {
+        try {
+            String baseFilePath = String.format("instances/%s/", instanceName);
+            // Create directory
+            new File(baseFilePath).mkdirs();
+
+            FileOutputStream idFileOut = new FileOutputStream(baseFilePath + "IDManager.ser");
+            ObjectOutputStream idObjOut = new ObjectOutputStream(idFileOut);
+            idObjOut.writeObject(IDManager.getInstance());
+            idObjOut.flush();
+            idObjOut.close();
+
+            FileOutputStream routeFileOut = new FileOutputStream(baseFilePath + "RouteManager.ser");
+            ObjectOutputStream routeObjOut = new ObjectOutputStream(routeFileOut);
+            routeObjOut.writeObject(RouteManager.getInstance());
+            routeObjOut.flush();
+            routeObjOut.close();
+
+            FileOutputStream userFileOut = new FileOutputStream(baseFilePath + "UserManager.ser");
+            ObjectOutputStream userObjOut = new ObjectOutputStream(userFileOut);
+            userObjOut.writeObject(UserManager.getInstance());
+            userObjOut.flush();
+            userObjOut.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 
     private void openInitialScreens(UserManager userManager, RouteManager routeManager){
