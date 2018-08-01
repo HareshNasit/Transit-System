@@ -2,10 +2,7 @@ package hotcupsofjava.transitsystemmanager.screens.UserScreen;
 
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
-import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
-import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
-import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
-import hotcupsofjava.transitsystemmanager.objects.transitobjects.TapSubway;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.*;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
@@ -295,7 +292,8 @@ public class CardScreen extends VBox {
             if(result.isPresent() && busStop.hasRoute(result.get())) {
                 Calendar cal = Calendar.getInstance();
                 long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
-                card.tapOn(minutes, busStop, routeManager.getRoute(result.get()));
+                //card.tapOn(minutes, busStop, routeManager.getRoute(result.get()));
+                TapBus.getInstance().tapOn(minutes,busStop,card,routeManager.getRoute(result.get()));
                 updateBalance();
                 updateTrips();
             }
@@ -322,7 +320,8 @@ public class CardScreen extends VBox {
             if(result.isPresent() && busStop.hasRoute(result.get())) {
                 Calendar cal = Calendar.getInstance();
                 long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
-                card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
+                //card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
+                TapBus.getInstance().tapOff(minutes,busStop,card,routeManager.getRoute(result.get()));
                 updateTrips();
             }
             else {
