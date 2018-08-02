@@ -6,6 +6,7 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.*;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
+import hotcupsofjava.transitsystemmanager.screens.ModelController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Optional;
 
-public class CardScreen extends VBox {
+public class CardScreen extends VBox implements ModelController{
 
     public Text cardName;
     public Text cardID;
@@ -63,11 +64,13 @@ public class CardScreen extends VBox {
             fxmlLoader.load();
             initializeStops();
             this.card = card;
+            card.setController(this);
             cardName.setText(card.getCardName());
             cardID.setText(card.getId());
             this.routeManager = routeManager;
             this.userManager = userManager;
             tripsText.setEditable(false);
+
             setStationTable();
             setStopsTable();
             updateBalance();
@@ -137,6 +140,7 @@ public class CardScreen extends VBox {
                     updateBalance();
                     tab3resultLbl.setText("Balance of " + amount + " added successfully");
                     tab3resultLbl.setTextFill(Color.valueOf("Green"));
+                    updateBalanceUserScreen();
                 } catch (RuntimeException e) {
                     tab3resultLbl.setText("Please enter a valid amount");
                     tab3resultLbl.setTextFill(Color.valueOf("Red"));
@@ -159,6 +163,7 @@ public class CardScreen extends VBox {
             if (result.isPresent() && userManager.hasCard(result.get())) {
                 userManager.getCard(result.get()).addBalance(card.getBalance());
                 card.getUser().suspendCard(card);
+                updateBalanceUserScreen();
             }
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -174,6 +179,7 @@ public class CardScreen extends VBox {
             alert.showAndWait();
             if (alert.getResult() == ButtonType.YES) {
                 card.getUser().suspendCard(card);
+                updateBalanceUserScreen();
             }
         }
     }
@@ -186,6 +192,7 @@ public class CardScreen extends VBox {
         if (alert.getResult() == ButtonType.YES) {
             User user = card.getUser();
             userManager.removeCard(card, user);
+            user.getController().updateScreen();
             Stage stage = (Stage) removeCardBtn.getScene().getWindow();
             stage.close();
         }
@@ -208,6 +215,7 @@ public class CardScreen extends VBox {
                 tab3resultLbl.setText("Balance of " + 10 + " added successfully");
                 tab3resultLbl.setTextFill(Color.valueOf("Green"));
                 updateBalance();
+                updateBalanceUserScreen();
             }
         }
     }
@@ -229,6 +237,7 @@ public class CardScreen extends VBox {
                 tab3resultLbl.setText("Balance of " + 20 + " added successfully");
                 tab3resultLbl.setTextFill(Color.valueOf("Green"));
                 updateBalance();
+                updateBalanceUserScreen();
             }
         }
     }
@@ -250,6 +259,7 @@ public class CardScreen extends VBox {
                 tab3resultLbl.setText("Balance of " + 50 + " added successfully");
                 tab3resultLbl.setTextFill(Color.valueOf("Green"));
                 updateBalance();
+                updateBalanceUserScreen();
             }
         }
     }
@@ -261,6 +271,7 @@ public class CardScreen extends VBox {
             long minutes = cal.get(Calendar.HOUR_OF_DAY)*60 + cal.get(Calendar.MINUTE);
             //card.tapOn(minutes,station);
             TapSubway.getInstance().tapOn(minutes,(Stop) station,card);
+            updateBalanceUserScreen();
         }
         catch (NullPointerException e){
             System.out.println("");
@@ -276,6 +287,7 @@ public class CardScreen extends VBox {
             TapSubway.getInstance().tapOff(minutes,(Stop) station,card);
             updateBalance();
             updateTrips();
+            updateBalanceUserScreen();
         }
         catch (NullPointerException e){
             System.out.println("");
@@ -296,6 +308,7 @@ public class CardScreen extends VBox {
                 TapBus.getInstance().tapOn(minutes,busStop,card,routeManager.getRoute(result.get()));
                 updateBalance();
                 updateTrips();
+                updateBalanceUserScreen();
             }
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -323,6 +336,7 @@ public class CardScreen extends VBox {
                 //card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
                 TapBus.getInstance().tapOff(minutes,busStop,card,routeManager.getRoute(result.get()));
                 updateTrips();
+                updateBalanceUserScreen();
             }
             else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -358,8 +372,9 @@ public class CardScreen extends VBox {
                 if(result.isPresent() && busStop.hasRoute(result.get())) {
                     Calendar cal = Calendar.getInstance();
                     long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
-                    card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
+                    TapBus.getInstance().tapOff(minutes,busStop,card,routeManager.getRoute(result.get()));
                     updateTrips();
+                    updateBalanceUserScreen();
                 }
                 else {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -373,5 +388,16 @@ public class CardScreen extends VBox {
         catch (NullPointerException e){
             System.out.println("");
         }
+    }
+
+    public void updateScreen(){
+        updateTrips();
+        updateBalance();
+        setStopsTable();
+        setStationTable();
+    }
+
+    private void updateBalanceUserScreen(){
+        card.getUser().getController().updateScreen();
     }
 }
