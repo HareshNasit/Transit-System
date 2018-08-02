@@ -1,12 +1,13 @@
 package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
+import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.TripLocation;
 
-public class Tap {
+class Tap {
 
-    public boolean tapOnHandler(Card card, long timestamp, Stop stop) {
+    boolean tapOnHandler(Card card, long timestamp, Stop stop) {
         Trip trip = card.getCurrentTrip();
         boolean disconnectedTrip = false;
         if (trip != null) {
@@ -14,6 +15,7 @@ public class Tap {
             // of $6 and end the previous trip as it is now invalid.
             TripLocation lastLocation = trip.getLastLocation();
             if (lastLocation.isTapOn() && lastLocation.isStation()) {
+                Logger.log("Illegally tried to tap on at with out tapping off");
                 card.chargeFine(6);
                 trip.endTrip();
             }
@@ -29,7 +31,7 @@ public class Tap {
      * @param stop transit system stop
      * @return true if there was abnormal tapping, false otherwise
      */
-    public boolean tapOffHandler(Stop stop,Card card) {
+    boolean tapOffHandler(Stop stop,Card card) {
         Trip trip = card.getCurrentTrip();
         boolean isStation = stop instanceof Station;
         boolean chargeStation = false;
