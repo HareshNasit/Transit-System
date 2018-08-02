@@ -155,31 +155,40 @@ public class CardScreen extends VBox implements ModelController{
     }
 
     public void suspendCard(ActionEvent actionEvent) {
-        if(card.getBalance() >0 && card.getUser().getCards().size() > 1) {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Suspend Card");
-            dialog.setContentText("Enter the card number you want to transfer this card's balance to");
-            Optional<String> result = dialog.showAndWait();
-            if (result.isPresent() && userManager.hasCard(result.get())) {
-                userManager.getCard(result.get()).addBalance(card.getBalance());
-                card.getUser().suspendCard(card);
-                updateBalanceUserScreen();
-            }
-            else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText("You do not have any card with such a card id");
-                alert.setContentText("Please select a card with valid id");
-                alert.showAndWait();
-            }
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is already suspended");
+            alert.showAndWait();
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to suspend this card?",
-                    ButtonType.YES, ButtonType.CANCEL);
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.YES) {
-                card.getUser().suspendCard(card);
-                updateBalanceUserScreen();
+            if (card.getBalance() > 0 && card.getUser().getCards().size() > 1) {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Suspend Card");
+                dialog.setContentText("Enter the card number you want to transfer this card's balance to");
+                Optional<String> result = dialog.showAndWait();
+                if (result.isPresent() && userManager.hasCard(result.get())) {
+                    userManager.getCard(result.get()).addBalance(card.getBalance());
+                    card.getUser().suspendCard(card);
+                    updateBalanceUserScreen();
+                }
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning Dialog");
+                    alert.setHeaderText("You do not have any card with such a card id");
+                    alert.setContentText("Please select a card with valid id");
+                    alert.showAndWait();
+                }
+            }
+            else {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to suspend this card?",
+                        ButtonType.YES, ButtonType.CANCEL);
+                alert.showAndWait();
+                if (alert.getResult() == ButtonType.YES) {
+                    card.getUser().suspendCard(card);
+                    updateBalanceUserScreen();
+                }
             }
         }
     }
@@ -265,128 +274,163 @@ public class CardScreen extends VBox implements ModelController{
     }
 
     public void tapOnSubway(ActionEvent actionEvent) {
-        try{
-            Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
-            Calendar cal = Calendar.getInstance();
-            long minutes = cal.get(Calendar.HOUR_OF_DAY)*60 + cal.get(Calendar.MINUTE);
-            //card.tapOn(minutes,station);
-            TapSubway.getInstance().tapOn(minutes,(Stop) station,card);
-            updateBalanceUserScreen();
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
         }
-        catch (NullPointerException e){
-            System.out.println("");
+        else {
+            try {
+                Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
+                Calendar cal = Calendar.getInstance();
+                long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
+                //card.tapOn(minutes,station);
+                TapSubway.getInstance().tapOn(minutes, (Stop) station, card);
+                updateBalanceUserScreen();
+            } catch (NullPointerException e) {
+                System.out.println("");
+            }
         }
     }
 
     public void tapOffSubway(ActionEvent actionEvent) {
-        try{
-            Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
-            Calendar cal = Calendar.getInstance();
-            long minutes = cal.get(Calendar.HOUR_OF_DAY)*60 + cal.get(Calendar.MINUTE);
-            //card.tapOff(minutes,station);
-            TapSubway.getInstance().tapOff(minutes,(Stop) station,card);
-            updateBalance();
-            updateTrips();
-            updateBalanceUserScreen();
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
         }
-        catch (NullPointerException e){
-            System.out.println("");
+        else {
+            try {
+                Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
+                Calendar cal = Calendar.getInstance();
+                long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
+                //card.tapOff(minutes,station);
+                TapSubway.getInstance().tapOff(minutes, (Stop) station, card);
+                updateBalance();
+                updateTrips();
+                updateBalanceUserScreen();
+            } catch (NullPointerException e) {
+                System.out.println("");
+            }
         }
     }
 
     public void tapOnBus(ActionEvent actionEvent) {
-        try{
-            BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Enter Route");
-            dialog.setContentText("Enter the route id you want to travel on");
-            Optional<String> result = dialog.showAndWait();
-            if(result.isPresent() && busStop.hasRoute(result.get())) {
-                Calendar cal = Calendar.getInstance();
-                long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
-                //card.tapOn(minutes, busStop, routeManager.getRoute(result.get()));
-                TapBus.getInstance().tapOn(minutes,busStop,card,routeManager.getRoute(result.get()));
-                updateBalance();
-                updateTrips();
-                updateBalanceUserScreen();
-            }
-            else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText("Wrong Route");
-                alert.setContentText("Warning! Please enter a correct route");
-                alert.showAndWait();
-            }
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
         }
-        catch (NullPointerException e){
-            System.out.println("");
-        }
-    }
-
-    public void tapOffBus(ActionEvent actionEvent) {
-        try{
-            BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Enter Route");
-            dialog.setContentText("Enter the route id you travelled on");
-            Optional<String> result = dialog.showAndWait();
-            if(result.isPresent() && busStop.hasRoute(result.get())) {
-                Calendar cal = Calendar.getInstance();
-                long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
-                //card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
-                TapBus.getInstance().tapOff(minutes,busStop,card,routeManager.getRoute(result.get()));
-                updateTrips();
-                updateBalanceUserScreen();
-            }
-            else {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Warning Dialog");
-                alert.setHeaderText("Wrong Route");
-                alert.setContentText("Warning! Please enter a correct route");
-                alert.showAndWait();
-            }
-        }
-        catch (NullPointerException e){
-            System.out.println("");
-        }
-    }
-
-    public void accelerateTime(ActionEvent actionEvent) {
-        try{
-            BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
-            Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
-            if(busStop == null && station ==null){
-                System.out.println();
-            }
-            else if(busStop==null){
-                Calendar cal = Calendar.getInstance();
-                long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
-                TapSubway.getInstance().tapOff(minutes,station,card);
-                updateTrips();
-            }
-            else if(station==null){
+        else {
+            try {
+                BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
                 TextInputDialog dialog = new TextInputDialog();
                 dialog.setTitle("Enter Route");
-                dialog.setContentText("Enter the route id you travelled on");
+                dialog.setContentText("Enter the route id you want to travel on");
                 Optional<String> result = dialog.showAndWait();
-                if(result.isPresent() && busStop.hasRoute(result.get())) {
+                if (result.isPresent() && busStop.hasRoute(result.get())) {
                     Calendar cal = Calendar.getInstance();
-                    long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
-                    TapBus.getInstance().tapOff(minutes,busStop,card,routeManager.getRoute(result.get()));
+                    long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
+                    //card.tapOn(minutes, busStop, routeManager.getRoute(result.get()));
+                    TapBus.getInstance().tapOn(minutes, busStop, card, routeManager.getRoute(result.get()));
+                    updateBalance();
                     updateTrips();
                     updateBalanceUserScreen();
-                }
-                else {
+                } else {
                     Alert alert = new Alert(Alert.AlertType.WARNING);
                     alert.setTitle("Warning Dialog");
                     alert.setHeaderText("Wrong Route");
                     alert.setContentText("Warning! Please enter a correct route");
                     alert.showAndWait();
                 }
+            } catch (NullPointerException e) {
+                System.out.println("");
             }
         }
-        catch (NullPointerException e){
-            System.out.println("");
+    }
+
+    public void tapOffBus(ActionEvent actionEvent) {
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else {
+            try {
+                BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("Enter Route");
+                dialog.setContentText("Enter the route id you travelled on");
+                Optional<String> result = dialog.showAndWait();
+                if (result.isPresent() && busStop.hasRoute(result.get())) {
+                    Calendar cal = Calendar.getInstance();
+                    long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
+                    //card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
+                    TapBus.getInstance().tapOff(minutes, busStop, card, routeManager.getRoute(result.get()));
+                    updateTrips();
+                    updateBalanceUserScreen();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Warning Dialog");
+                    alert.setHeaderText("Wrong Route");
+                    alert.setContentText("Warning! Please enter a correct route");
+                    alert.showAndWait();
+                }
+            } catch (NullPointerException e) {
+                System.out.println("");
+            }
+        }
+    }
+
+    public void accelerateTime(ActionEvent actionEvent) {
+        if(card.isSuspended()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Suspended Card");
+            alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else {
+            try {
+                BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
+                Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
+                if (busStop == null && station == null) {
+                    System.out.println();
+                } else if (busStop == null) {
+                    Calendar cal = Calendar.getInstance();
+                    long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
+                    TapSubway.getInstance().tapOff(minutes, station, card);
+                    updateTrips();
+                } else if (station == null) {
+                    TextInputDialog dialog = new TextInputDialog();
+                    dialog.setTitle("Enter Route");
+                    dialog.setContentText("Enter the route id you travelled on");
+                    Optional<String> result = dialog.showAndWait();
+                    if (result.isPresent() && busStop.hasRoute(result.get())) {
+                        Calendar cal = Calendar.getInstance();
+                        long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
+                        TapBus.getInstance().tapOff(minutes, busStop, card, routeManager.getRoute(result.get()));
+                        updateTrips();
+                        updateBalanceUserScreen();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Warning Dialog");
+                        alert.setHeaderText("Wrong Route");
+                        alert.setContentText("Warning! Please enter a correct route");
+                        alert.showAndWait();
+                    }
+                }
+            } catch (NullPointerException e) {
+                System.out.println("");
+            }
         }
     }
 
