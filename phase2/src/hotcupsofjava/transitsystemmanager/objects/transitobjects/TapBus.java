@@ -31,6 +31,9 @@ public class TapBus extends Tap{
 
     public void tapOff(long timestamp, Stop busStop, Card card, Route route){
         boolean abnormalTap = tapOffHandler(busStop,card);
+        if(abnormalTap){
+            Logger.log("Illegally tried to tap off at" + busStop.getName() + "on route" + route.getId());
+        }
         Logger.log(String.format("%s tapped off at bus stop %s on route %s at %d",
                 card.toString(), busStop.getName(), route.getId(), timestamp));
         card.getCurrentTrip().addLocation(timestamp, false, (BusStop) busStop, route, abnormalTap);
