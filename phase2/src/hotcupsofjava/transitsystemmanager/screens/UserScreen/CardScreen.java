@@ -395,6 +395,8 @@ public class CardScreen extends VBox implements ModelController{
         updateBalance();
         setStopsTable();
         setStationTable();
+        subwayTable.refresh();
+        busStopTable.refresh();
     }
 
     private void updateBalanceUserScreen(){

@@ -21,7 +21,7 @@ public class TapBus extends Tap{
             if (!continousTrip) card.newTrip(new Trip(timestamp, (BusStop) busStop, route));
             else card.getCurrentTrip().addLocation(timestamp, true, (BusStop) busStop, route, false);
             Logger.log(String.format("%s tapped on at bus stop %s on route %s at %d",
-                    toString(), busStop.getName(), route.getId(), timestamp));
+                    card.toString(), busStop.getName(), route.getId(), timestamp));
             card.charge(2);
         } else {
             Logger.log(String.format("%s failed to tap on at bus stop %s on route %s at %d",

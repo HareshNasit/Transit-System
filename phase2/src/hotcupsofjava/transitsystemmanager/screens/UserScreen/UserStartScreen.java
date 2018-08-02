@@ -109,7 +109,6 @@ public class UserStartScreen extends AnchorPane implements ModelController{
             cardScreen.setTitle("Card Screen");
             cardScreen.setScene(new Scene(cardScreenController));
             cardScreen.show();
-            setCardTable();
         }
         catch (NullPointerException e){
             System.out.println("");
@@ -119,5 +118,6 @@ public class UserStartScreen extends AnchorPane implements ModelController{
     public void updateScreen(){
         initializeTable();
         setCardTable();
+        cardsTable.refresh();
     }
 }
