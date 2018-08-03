@@ -29,8 +29,11 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="508.0" layoutY="50.0" mnemonicParsing="false" text="Refresh" />
-                        <TextArea layoutX="14.0" layoutY="22.0" prefHeight="276.0" prefWidth="460.0" />
+                     	<Button fx:id="genLogBtn" layoutX="500.0" layoutY="20.0" mnemonicParsing="false" text="Generate log" prefWidth="85.0" onAction="#generateLog" />
+                        <Button fx:id="refreshBtn" layoutX="500.0" layoutY="50.0" mnemonicParsing="false" text="Refresh list" prefWidth="85.0"  onAction="#refreshLogs" />
+                        <Button fx:id="readLogBtn" layoutX="500.0" layoutY="80.0" mnemonicParsing="false" text="Read log" prefWidth="85.0"  onAction="#readLog" />
+                        <TextArea fx:id="logArea" layoutX="14.0" layoutY="20.0" prefHeight="276.0" prefWidth="460.0" />
+                        <ComboBox fx:id="logCbx" layoutX="500.0" layoutY="110" prefWidth="85.0" />
                      </children>
                   </AnchorPane>
               </content>
