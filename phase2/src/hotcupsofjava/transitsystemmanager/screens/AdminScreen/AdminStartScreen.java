@@ -5,6 +5,7 @@ import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 
@@ -32,9 +33,28 @@ public class AdminStartScreen extends VBox{
     }
 
     public void startDay(javafx.event.ActionEvent actionEvent) {
-        Logger.startDay("1");
+        if(!Logger.isActive()) {
+            Logger.startDay();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("System On");
+            alert.setContentText("Warning! The system is already active");
+            alert.showAndWait();
+        }
     }
 
     public void endDay(javafx.event.ActionEvent actionEvent) {
+        if(Logger.isActive()) {
+            Logger.endDay();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("System Off");
+            alert.setContentText("Warning! The system is already not active");
+            alert.showAndWait();
+        }
     }
 }
