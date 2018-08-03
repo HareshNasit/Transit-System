@@ -60,6 +60,7 @@ public class AdminStartScreen extends VBox{
         }
     }
 
+    
     public void endDay(javafx.event.ActionEvent actionEvent) {
         if(Logger.isActive()) {
             Logger.endDay();

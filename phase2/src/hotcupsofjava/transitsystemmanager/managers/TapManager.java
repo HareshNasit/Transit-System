@@ -9,7 +9,9 @@ import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.TripLocation;
 
-public class TapManager {
+import java.io.Serializable;
+
+public class TapManager implements Serializable{
     private static TapManager instance;
 
     public static TapManager getInstance() {
