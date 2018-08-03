@@ -1,4 +1,4 @@
-package hotcupsofjava.transitsystemmanager;
+package hotcupsofjava.transitsystemmanager.screens.TransitSystemScreen;
 
 import hotcupsofjava.transitsystemmanager.managers.IDManager;
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
@@ -6,57 +6,31 @@ import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
-import hotcupsofjava.transitsystemmanager.screens.AdminScreen.AdminStartScreen;
-import hotcupsofjava.transitsystemmanager.screens.UserScreen.UserLoginScreen;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainSystem extends Application {
-    private String instanceName;
+public class TransitScreen {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+    public Button createSystemBtn;
+    public Button loadSystemBtn;
 
-    @Override
-    public void start(Stage primaryStage) {
-        instanceName = "TTC";
-        IDManager idManager;
-        UserManager userManager;
-        RouteManager routeManager;
-
-        // attempt to load existing system
-        try {
-            String baseFilePath = String.format("instances/%s/", instanceName);
-
-            FileInputStream idFileIn = new FileInputStream(baseFilePath + "IDManager.ser");
-            ObjectInputStream idObjIn = new ObjectInputStream(idFileIn);
-            idManager = (IDManager) idObjIn.readObject();
-            TransitSystemObject.setIdManager(idManager);
-            IDManager.setInstance(idManager);
-            idObjIn.close();
-
-            FileInputStream routeFileIn = new FileInputStream(baseFilePath + "RouteManager.ser");
-            ObjectInputStream routeObjIn = new ObjectInputStream(routeFileIn);
-            routeManager = (RouteManager) routeObjIn.readObject();
-            RouteManager.setInstance(routeManager);
-            routeObjIn.close();
-
-            FileInputStream userFileIn = new FileInputStream(baseFilePath + "UserManager.ser");
-            ObjectInputStream userObjIn = new ObjectInputStream(userFileIn);
-            userManager = (UserManager) userObjIn.readObject();
-            UserManager.setInstance(userManager);
-            userObjIn.close();
-        } catch (Exception e) {
-            //System.out.println(String.format("There was no existing system at the path %s", baseFilePath));
-            // New system
+    public void createSystem(ActionEvent actionEvent) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Add new Card");
+        dialog.setContentText("Enter card details e.g(card number|card name)");
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent()){
+            IDManager idManager;
+            UserManager userManager;
+            RouteManager routeManager;
             idManager = new IDManager();
             TransitSystemObject.setIdManager(idManager);
             userManager = new UserManager();
@@ -67,57 +41,51 @@ public class MainSystem extends Application {
             readUsers(userManager);
             readInitialCards(userManager);
         }
-
-        openInitialScreens(userManager, routeManager);
     }
 
-    @Override
-    public void stop() {
-        try {
-            String baseFilePath = String.format("instances/%s/", instanceName);
-            // Create directory
-            new File(baseFilePath).mkdirs();
+    public void loadSystem(ActionEvent actionEvent) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Add new Card");
+        dialog.setContentText("Enter card details e.g(card number|card name)");
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent()){
+            IDManager idManager;
+            UserManager userManager;
+            RouteManager routeManager;
 
-            FileOutputStream idFileOut = new FileOutputStream(baseFilePath + "IDManager.ser");
-            ObjectOutputStream idObjOut = new ObjectOutputStream(idFileOut);
-            idObjOut.writeObject(IDManager.getInstance());
-            idObjOut.flush();
-            idObjOut.close();
+            // attempt to load existing system
+            try {
+                String baseFilePath = String.format("instances/%s/", result.get());
 
-            FileOutputStream routeFileOut = new FileOutputStream(baseFilePath + "RouteManager.ser");
-            ObjectOutputStream routeObjOut = new ObjectOutputStream(routeFileOut);
-            routeObjOut.writeObject(RouteManager.getInstance());
-            routeObjOut.flush();
-            routeObjOut.close();
+                FileInputStream idFileIn = new FileInputStream(baseFilePath + "IDManager.ser");
+                ObjectInputStream idObjIn = new ObjectInputStream(idFileIn);
+                idManager = (IDManager) idObjIn.readObject();
+                TransitSystemObject.setIdManager(idManager);
+                IDManager.setInstance(idManager);
+                idObjIn.close();
 
-            FileOutputStream userFileOut = new FileOutputStream(baseFilePath + "UserManager.ser");
-            ObjectOutputStream userObjOut = new ObjectOutputStream(userFileOut);
-            userObjOut.writeObject(UserManager.getInstance());
-            userObjOut.flush();
-            userObjOut.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
+                FileInputStream routeFileIn = new FileInputStream(baseFilePath + "RouteManager.ser");
+                ObjectInputStream routeObjIn = new ObjectInputStream(routeFileIn);
+                routeManager = (RouteManager) routeObjIn.readObject();
+                RouteManager.setInstance(routeManager);
+                routeObjIn.close();
+
+                FileInputStream userFileIn = new FileInputStream(baseFilePath + "UserManager.ser");
+                ObjectInputStream userObjIn = new ObjectInputStream(userFileIn);
+                userManager = (UserManager) userObjIn.readObject();
+                UserManager.setInstance(userManager);
+                userObjIn.close();
+            }
+            catch (Exception e){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning Dialog");
+                alert.setHeaderText("No System");
+                alert.setContentText("Warning! No such system found");
+                alert.showAndWait();
+            }
         }
     }
 
-    private void openInitialScreens(UserManager userManager, RouteManager routeManager){
-
-        Stage loginWindow = new Stage();
-        UserLoginScreen loginController = new UserLoginScreen(userManager,routeManager);
-        loginWindow.initModality(Modality.WINDOW_MODAL);
-        loginWindow.setTitle("Login Screen");
-        loginWindow.setScene(new Scene(loginController));
-        loginWindow.show();
-
-        Stage adminWindow = new Stage();
-        AdminStartScreen adminController = new AdminStartScreen(userManager,routeManager);
-        adminWindow.initModality(Modality.WINDOW_MODAL);
-        adminWindow.setTitle("Admin Screen");
-        adminWindow.setScene(new Scene(adminController));
-        adminWindow.show();
-
-    }
 
     private void readInitialCards(UserManager userManager){
         try{
