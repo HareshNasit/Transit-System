@@ -1,11 +1,15 @@
-package hotcupsofjava.transitsystemmanager.objects.transitobjects;
+package hotcupsofjava.transitsystemmanager.managers;
 
 import hotcupsofjava.transitsystemmanager.Logger;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.TripLocation;
 
-class TapManager {
+public class TapManager {
     private static TapManager instance;
 
     public static TapManager getInstance() {
@@ -16,10 +20,10 @@ class TapManager {
         instance = i;
     }
 
-    private int busCost;
-    private int subwayCost;
+    private double busCost;
+    private double subwayCost;
 
-    public TapManager(int busCost, int subwayCost) {
+    public TapManager(double busCost, double subwayCost) {
         this.busCost = busCost;
         this.subwayCost = subwayCost;
         TapManager.setInstance(this);
@@ -33,15 +37,15 @@ class TapManager {
         this.subwayCost = cost;
     }
 
-    public void getBusCost() {
+    public double getBusCost() {
         return busCost;
     }
 
-    public void getSubwayCost() {
+    public double getSubwayCost() {
         return subwayCost;
     }
 
-    boolean tapOnHandler(Card card, long timestamp, Stop stop) {
+    private boolean tapOnHandler(Card card, long timestamp, Stop stop) {
         Trip trip = card.getCurrentTrip();
         boolean disconnectedTrip = false;
         if (trip != null) {
@@ -65,7 +69,7 @@ class TapManager {
      * @param stop transit system stop
      * @return true if there was abnormal tapping, false otherwise
      */
-    boolean tapOffHandler(Stop stop,Card card) {
+    private boolean tapOffHandler(Stop stop,Card card) {
         Trip trip = card.getCurrentTrip();
         boolean isStation = stop instanceof Station;
         boolean chargeStation = false;
@@ -94,7 +98,7 @@ class TapManager {
             else card.getCurrentTrip().addLocation(timestamp, true, (BusStop) busStop, route, false);
             Logger.log(String.format("%s tapped on at bus stop %s on route %s at %d",
                     card.toString(), busStop.getName(), route.getId(), timestamp));
-            card.charge(cost);
+            card.charge(busCost);
         } else {
             Logger.log(String.format("%s failed to tap on at bus stop %s on route %s at %d",
                     card.toString(), busStop.getName(), route.getId(), timestamp));
@@ -135,7 +139,7 @@ class TapManager {
             Logger.log(String.format("%s tapped off illegally at subway station %s at %d",
                     card.toString(), station.getName(), timestamp));
         } else {
-            card.charge(.5 * ((Station)station).getDistance(card.getCurrentTrip().getLastSubwayTap()));
+            card.charge(subwayCost * ((Station)station).getDistance(card.getCurrentTrip().getLastSubwayTap()));
             card.getCurrentTrip().addLocation(timestamp, false, (Station) station, chargedFine);
             if (timestamp - card.getCurrentTrip().getInitialTime() > 120) {
                 card.getCurrentTrip().endTrip();

@@ -20,11 +20,13 @@ public class UserManager implements Serializable {
 
     private HashMap<String, User> users;
     private HashMap<String, Card> cards;
+    private TapManager tapManager;
 
-    public UserManager() {
+    public UserManager(double busCost, double subwayCost) {
         users = new HashMap<>();
         cards = new HashMap<>();
         UserManager.setInstance(this);
+        tapManager = new TapManager(busCost,subwayCost);
     }
 
     public double calculateRevenue() {
@@ -83,5 +85,9 @@ public class UserManager implements Serializable {
             }
         }
         return false;
+    }
+
+    public TapManager getTapManager() {
+        return tapManager;
     }
 }

@@ -33,7 +33,7 @@ public class TransitScreen {
             RouteManager routeManager;
             idManager = new IDManager();
             TransitSystemObject.setIdManager(idManager);
-            userManager = new UserManager();
+            userManager = new UserManager(2,0.5); //TODO:CHANGE
             routeManager = new RouteManager();
             readBusStops(routeManager);
             readStations(routeManager);

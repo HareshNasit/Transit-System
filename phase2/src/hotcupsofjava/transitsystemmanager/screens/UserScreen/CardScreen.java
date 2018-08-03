@@ -287,7 +287,8 @@ public class CardScreen extends VBox implements ModelController{
                 Calendar cal = Calendar.getInstance();
                 long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
                 //card.tapOn(minutes,station);
-                TapSubway.getInstance().tapOn(minutes, (Stop) station, card);
+                //TapSubway.getInstance().tapOn(minutes, (Stop) station, card);
+                userManager.getTapManager().tapOn(minutes, (Stop) station, card);
                 updateBalanceUserScreen();
             } catch (NullPointerException e) {
                 System.out.println("");
@@ -309,7 +310,7 @@ public class CardScreen extends VBox implements ModelController{
                 Calendar cal = Calendar.getInstance();
                 long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
                 //card.tapOff(minutes,station);
-                TapSubway.getInstance().tapOff(minutes, (Stop) station, card);
+                userManager.getTapManager().tapOff(minutes, (Stop) station, card);
                 updateBalance();
                 updateTrips();
                 updateBalanceUserScreen();
@@ -338,7 +339,7 @@ public class CardScreen extends VBox implements ModelController{
                     Calendar cal = Calendar.getInstance();
                     long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
                     //card.tapOn(minutes, busStop, routeManager.getRoute(result.get()));
-                    TapBus.getInstance().tapOn(minutes, busStop, card, routeManager.getRoute(result.get()));
+                    userManager.getTapManager().tapOn(minutes, busStop, card, routeManager.getRoute(result.get()));
                     updateBalance();
                     updateTrips();
                     updateBalanceUserScreen();
@@ -374,7 +375,7 @@ public class CardScreen extends VBox implements ModelController{
                     Calendar cal = Calendar.getInstance();
                     long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE);
                     //card.tapOff(minutes, busStop, routeManager.getRoute(result.get()));
-                    TapBus.getInstance().tapOff(minutes, busStop, card, routeManager.getRoute(result.get()));
+                    userManager.getTapManager().tapOff(minutes, busStop, card, routeManager.getRoute(result.get()));
                     updateTrips();
                     updateBalanceUserScreen();
                 } else {
@@ -407,7 +408,7 @@ public class CardScreen extends VBox implements ModelController{
                 } else if (busStop == null) {
                     Calendar cal = Calendar.getInstance();
                     long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
-                    TapSubway.getInstance().tapOff(minutes, station, card);
+                    userManager.getTapManager().tapOff(minutes, station, card);
                     updateTrips();
                 } else if (station == null) {
                     TextInputDialog dialog = new TextInputDialog();
@@ -417,7 +418,7 @@ public class CardScreen extends VBox implements ModelController{
                     if (result.isPresent() && busStop.hasRoute(result.get())) {
                         Calendar cal = Calendar.getInstance();
                         long minutes = cal.get(Calendar.HOUR_OF_DAY) * 60 + cal.get(Calendar.MINUTE) + 121;
-                        TapBus.getInstance().tapOff(minutes, busStop, card, routeManager.getRoute(result.get()));
+                        userManager.getTapManager().tapOff(minutes, busStop, card, routeManager.getRoute(result.get()));
                         updateTrips();
                         updateBalanceUserScreen();
                     } else {

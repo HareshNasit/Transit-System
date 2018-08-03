@@ -59,7 +59,7 @@ public class MainSystem extends Application {
             // New system
             idManager = new IDManager();
             TransitSystemObject.setIdManager(idManager);
-            userManager = new UserManager();
+            userManager = new UserManager(2,0.5);
             routeManager = new RouteManager();
             readBusStops(routeManager);
             readStations(routeManager);
