@@ -57,34 +57,37 @@ public class Logger {
         // int mins = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
         startTime = cal.get(Calendar.HOUR) + ":"+ cal.get(Calendar.MINUTE);
     }
+    
+    public static void generateLog() {
+      if (!active) throw new RuntimeException("Day ended before day started.");
+      new File("logs/").mkdirs();
+      try {
+          PrintWriter writer = new PrintWriter("logs/Day_" + day + ".txt");
+          writer.write("Day: " + day + "\n");
+          writer.write("==================\n");
+
+          for (String line : logs) {
+              writer.write(line + "\n");
+          }
+
+          writer.write("==================\n\n\n");
+          writer.write("Day " + day + "'s aggregated statistics:\n");
+          writer.write("Stops visited:       " + stopsVisited + "\n");
+          writer.write("Revenue collected:   " + revenue + "\n");
+          writer.write("True Value of Trips: " + trueValue + "\n");
+
+          for (String line : stats) {
+              writer.write(line + "\n");
+          }
+
+          writer.close();
+      } catch (FileNotFoundException e) {
+          System.out.println("Failed to write log file: " + e.getMessage());
+      }
+    }
 
     public static void endDay() {
-        if (!active) throw new RuntimeException("Day ended before day started.");
-        new File("logs/").mkdirs();
-        try {
-            PrintWriter writer = new PrintWriter("logs/Day_" + day + ".txt");
-            writer.write("Day: " + day + "\n");
-            writer.write("==================\n");
-
-            for (String line : logs) {
-                writer.write(line + "\n");
-            }
-
-            writer.write("==================\n\n\n");
-            writer.write("Day " + day + "'s aggregated statistics:\n");
-            writer.write("Stops visited:       " + stopsVisited + "\n");
-            writer.write("Revenue collected:   " + revenue + "\n");
-            writer.write("True Value of Trips: " + trueValue + "\n");
-
-            for (String line : stats) {
-                writer.write(line + "\n");
-            }
-
-            writer.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Failed to write log file: " + e.getMessage());
-        }
-
+        generateLog();
         active = false;
     }
 
