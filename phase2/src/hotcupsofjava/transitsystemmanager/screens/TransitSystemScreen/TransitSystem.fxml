@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hotcupsofjava.transitsystemmanager.screens.TransitSystemScreen.TransitScreen">
+<fx:root type="javafx.scene.layout.AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="createSystemBtn" layoutX="141.0" layoutY="99.0" mnemonicParsing="false" onAction="#createSystem" prefHeight="79.0" prefWidth="279.0" text="Create new System" />
       <Text layoutX="195.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transit System" wrappingWidth="196.9521484375">
@@ -18,4 +18,4 @@
       </Text>
       <Button fx:id="loadSystemBtn" layoutX="141.0" layoutY="219.0" mnemonicParsing="false" onAction="#loadSystem" prefHeight="79.0" prefWidth="279.0" text="Load a System" />
    </children>
-</AnchorPane>
+</fx:root>

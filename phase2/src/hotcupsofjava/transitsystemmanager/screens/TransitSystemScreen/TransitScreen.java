@@ -1,15 +1,23 @@
 package hotcupsofjava.transitsystemmanager.screens.TransitSystemScreen;
 
+import hotcupsofjava.transitsystemmanager.MainSystem;
 import hotcupsofjava.transitsystemmanager.managers.IDManager;
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
+import hotcupsofjava.transitsystemmanager.screens.AdminScreen.AdminStartScreen;
+import hotcupsofjava.transitsystemmanager.screens.UserScreen.UserLoginScreen;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,15 +25,26 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class TransitScreen {
+public class TransitScreen extends AnchorPane{
 
     public Button createSystemBtn;
     public Button loadSystemBtn;
+    public TransitScreen(){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("TransitSystem.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        }
+        catch (IOException e){
+            System.out.println("");
+        }
+    }
 
     public void createSystem(ActionEvent actionEvent) {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Add new Card");
-        dialog.setContentText("Enter card details e.g(card number|card name)");
+        dialog.setTitle("Create System");
+        dialog.setContentText("Enter the name of the system");
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent()){
             IDManager idManager;
@@ -40,13 +59,23 @@ public class TransitScreen {
             readRoutes(routeManager);
             readUsers(userManager);
             readInitialCards(userManager);
+            MainSystem.setInstanceName(result.get());
+            System.out.println(result.get());
+            openInitialScreens(userManager, routeManager);
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("No System");
+            alert.setContentText("Warning! Please enter a valid name");
+            alert.showAndWait();
         }
     }
 
     public void loadSystem(ActionEvent actionEvent) {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Add new Card");
-        dialog.setContentText("Enter card details e.g(card number|card name)");
+        dialog.setTitle("Load System");
+        dialog.setContentText("Enter the system name");
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent()){
             IDManager idManager;
@@ -75,6 +104,7 @@ public class TransitScreen {
                 userManager = (UserManager) userObjIn.readObject();
                 UserManager.setInstance(userManager);
                 userObjIn.close();
+                openInitialScreens(userManager, routeManager);
             }
             catch (Exception e){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -86,6 +116,23 @@ public class TransitScreen {
         }
     }
 
+    private void openInitialScreens(UserManager userManager, RouteManager routeManager){
+
+        Stage loginWindow = new Stage();
+        UserLoginScreen loginController = new UserLoginScreen(userManager,routeManager);
+        loginWindow.initModality(Modality.WINDOW_MODAL);
+        loginWindow.setTitle("Login Screen");
+        loginWindow.setScene(new Scene(loginController));
+        loginWindow.show();
+
+        Stage adminWindow = new Stage();
+        AdminStartScreen adminController = new AdminStartScreen(userManager,routeManager);
+        adminWindow.initModality(Modality.WINDOW_MODAL);
+        adminWindow.setTitle("Admin Screen");
+        adminWindow.setScene(new Scene(adminController));
+        adminWindow.show();
+
+    }
 
     private void readInitialCards(UserManager userManager){
         try{
