@@ -55,7 +55,7 @@ public class MainSystem extends Application {
             UserManager.setInstance(userManager);
             userObjIn.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(String.format("There was no existing system at the path %s", baseFilePath));
             // New system
             idManager = new IDManager();
             TransitSystemObject.setIdManager(idManager);
