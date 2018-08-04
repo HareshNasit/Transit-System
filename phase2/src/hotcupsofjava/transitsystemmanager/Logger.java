@@ -94,4 +94,16 @@ public class Logger {
     public static boolean isActive() {
         return active;
     }
+
+    public static int getStopsVisited() {
+        return stopsVisited;
+    }
+
+    public static long getRevenue() {
+        return revenue;
+    }
+
+    public static long getTrueValue() {
+        return trueValue;
+    }
 }
