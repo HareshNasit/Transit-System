@@ -88,7 +88,8 @@ public class RouteManager implements Serializable {
      * @param connectedBusStop  the connected BusStop that is adjacent to this Station
      */
     public void addStation(String id, String name, BusStop connectedBusStop) {
-        Station station = new Station(id, name, connectedBusStop, stationCount++);
+        Station station = new Station(id, name, connectedBusStop);
+        stationCount++;
         if (lastStation == null) {
             lastStation = station;
         } else {
