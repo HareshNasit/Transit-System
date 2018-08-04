@@ -67,7 +67,8 @@ public class RouteManager implements Serializable {
      * @param name  the name of the created Station
      */
     public void addStation(String id, String name) {
-        Station station = new Station(id, name, stationCount++);
+        Station station = new Station(id, name);
+        stationCount++;
         if (lastStation == null) {
             lastStation = station;
         } else {
@@ -184,5 +185,9 @@ public class RouteManager implements Serializable {
 
     public HashMap<String, BusStop> getStops() {
         return stops;
+    }
+
+    public int getStationCount(){
+        return stationCount;
     }
 }
