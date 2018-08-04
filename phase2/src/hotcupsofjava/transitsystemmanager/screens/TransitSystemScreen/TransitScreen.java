@@ -60,7 +60,6 @@ public class TransitScreen extends AnchorPane{
             readUsers(userManager);
             readInitialCards(userManager);
             MainSystem.setInstanceName(result.get());
-            System.out.println(result.get());
             openInitialScreens(userManager, routeManager);
         }
         else {
@@ -85,7 +84,6 @@ public class TransitScreen extends AnchorPane{
             // attempt to load existing system
             try {
                 String baseFilePath = String.format("instances/%s/", result.get());
-
                 FileInputStream idFileIn = new FileInputStream(baseFilePath + "IDManager.ser");
                 ObjectInputStream idObjIn = new ObjectInputStream(idFileIn);
                 idManager = (IDManager) idObjIn.readObject();
@@ -105,6 +103,7 @@ public class TransitScreen extends AnchorPane{
                 UserManager.setInstance(userManager);
                 userObjIn.close();
                 openInitialScreens(userManager, routeManager);
+                MainSystem.setInstanceName(result.get());
             }
             catch (Exception e){
                 Alert alert = new Alert(Alert.AlertType.WARNING);

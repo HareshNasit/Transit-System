@@ -1,5 +1,7 @@
 package hotcupsofjava.transitsystemmanager.objects.transitobjects;
 
+import hotcupsofjava.transitsystemmanager.managers.RouteManager;
+
 import java.util.Queue;
 
 import java.util.ArrayList;
@@ -12,7 +14,6 @@ import java.util.LinkedList;
 public class Station extends Stop {
 
     private ArrayList<Station> connectingStations;
-    private static int stationCount;
 
     /**
      * The constructor of the Station that initializes the unique id and the name of the Station.
@@ -21,13 +22,11 @@ public class Station extends Stop {
      *
      * @param id           the identification of the stop that is unique that cannot be changed
      * @param name         the name of the station
-     * @param stationCount the total number of stations in the transit network
      * @see Stop
      */
-    public Station(String id, String name, int stationCount) {
+    public Station(String id, String name) {
         super(id, name);
         this.connectingStations = new ArrayList<>();
-        this.stationCount = stationCount;
     }
 
     /**
@@ -40,7 +39,7 @@ public class Station extends Stop {
      * @param connectingBusStop the BusStop that this Station is connected to
      * @see Stop
      */
-    public Station(String id, String name, BusStop connectingBusStop, int stationCount) {
+    public Station(String id, String name, BusStop connectingBusStop) {
         super(id, name);
         this.connectingStations = new ArrayList<>();
         this.connectStop(connectingBusStop);
@@ -135,7 +134,7 @@ public class Station extends Stop {
         queue.add(this);
         queue.add(null);
 
-        while (currentNode != lastStop && depth < stationCount) {
+        while (currentNode != lastStop && depth < RouteManager.getInstance().getStationCount()) {
             currentNode = queue.remove();
             if (currentNode == null) {
                 depth++;

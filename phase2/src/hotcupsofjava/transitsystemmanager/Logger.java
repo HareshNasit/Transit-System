@@ -41,7 +41,7 @@ public class Logger {
         Logger.trueValue += trueValue;
     }
 
-    public static void startDay(String day) {
+    public static void startDay() {
         if (active) throw new RuntimeException("New day started before previous day ended.");
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -90,5 +90,21 @@ public class Logger {
     public static void endDay() {
         generateLog();
         active = false;
+    }
+
+    public static boolean isActive() {
+        return active;
+    }
+
+    public static int getStopsVisited() {
+        return stopsVisited;
+    }
+
+    public static long getRevenue() {
+        return revenue;
+    }
+
+    public static long getTrueValue() {
+        return trueValue;
     }
 }

@@ -7,17 +7,29 @@ import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
-import java.awt.event.ActionEvent;
+import javafx.event.ActionEvent;
+import javafx.scene.text.Text;
+
 import java.io.IOException;
 import java.util.Scanner;
 import java.io.File;
 
 public class AdminStartScreen extends VBox{
 
+    public Button stopsVisitedBtn;
+    public Button revenueCollectedBtn;
+    public Button finesBtn;
+    public Button trueValueBtn;
+    public Button statsBtn;
+    public Text stopsText;
+    public Text revenueText;
+    public Text finesText;
+    public Text trueValueText;
     private UserManager userManager;
     private RouteManager routeManager;
     public Button startDayBtn;
@@ -44,13 +56,33 @@ public class AdminStartScreen extends VBox{
         }
         logCbx.setEditable(false);
         logArea.setEditable(false);
+        updateTransitInformation();
     }
 
     public void startDay(javafx.event.ActionEvent actionEvent) {
-        Logger.startDay("1");
+        if(!Logger.isActive()) {
+            Logger.startDay();
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("System On");
+            alert.setContentText("Warning! The system is already active");
+            alert.showAndWait();
+        }
     }
 
     public void endDay(javafx.event.ActionEvent actionEvent) {
+        if(Logger.isActive()) {
+            Logger.endDay();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("System Off");
+            alert.setContentText("Warning! The system is already not active");
+            alert.showAndWait();
+        }
     }
     
     public void generateLog() {
@@ -84,5 +116,13 @@ public class AdminStartScreen extends VBox{
       }
       logArea.setText(output.toString());
     }
-    
+
+    public void updateTransitInformation(){
+        revenueText.setText(String.valueOf(userManager.calculateRevenue()));
+        finesText.setText(String.valueOf(userManager.calculateFines()));
+    }
+
+    public void generateStopStats(ActionEvent actionEvent) {
+    }
+
 }
