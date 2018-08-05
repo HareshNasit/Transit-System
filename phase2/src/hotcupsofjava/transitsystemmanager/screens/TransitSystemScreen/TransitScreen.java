@@ -61,6 +61,8 @@ public class TransitScreen extends AnchorPane{
             readInitialCards(userManager);
             MainSystem.setInstanceName(result.get());
             openInitialScreens(userManager, routeManager);
+            Stage stage = (Stage) createSystemBtn.getScene().getWindow();
+            stage.close();
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -104,6 +106,8 @@ public class TransitScreen extends AnchorPane{
                 userObjIn.close();
                 openInitialScreens(userManager, routeManager);
                 MainSystem.setInstanceName(result.get());
+                Stage stage = (Stage) loadSystemBtn.getScene().getWindow();
+                stage.close();
             }
             catch (Exception e){
                 Alert alert = new Alert(Alert.AlertType.WARNING);

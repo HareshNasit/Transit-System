@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root fx:id="userLoginScreenVBox" prefHeight="326.0" prefWidth="498.0" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.AnchorPane" fx:id="userLoginScreenVBox" prefHeight="326.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="61.0" layoutY="87.0" prefHeight="48.0" prefWidth="108.0" text="Name:">
          <font>
@@ -28,5 +28,7 @@
       </Text>
       <Button fx:id="loginBtn" layoutX="223.0" layoutY="217.0" mnemonicParsing="false" onAction="#checkLogin" text="Login" />
       <Label fx:id="resultLabel" layoutX="184.0" layoutY="177.0" prefHeight="17.0" prefWidth="154.0" />
+      <Text layoutX="33.0" layoutY="270.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not a User?" />
+      <Button fx:id="signUpBtn" layoutX="40.0" layoutY="274.0" mnemonicParsing="false" onAction="#createNewUser" text="Sign Up" />
    </children>
 </fx:root>
