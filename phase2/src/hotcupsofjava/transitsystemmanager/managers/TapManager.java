@@ -85,8 +85,10 @@ public class TapManager implements Serializable{
         }
         if (chargeStation) {
             card.chargeFine(6);
+            stop.addFine(6);
         } else if (chargeBus) {
-            card.charge(2);
+            stop.addFine(2);
+            card.chargeFine(2);
         }
 
         return chargeBus || chargeStation;
@@ -94,13 +96,15 @@ public class TapManager implements Serializable{
 
     // Bus tapping
     public void tapOn(long timestamp, Stop busStop, Card card, Route route){
-        boolean continousTrip = tapOnHandler(card,timestamp, busStop);
+        boolean continuousTrip = tapOnHandler(card,timestamp, busStop);
         if (card.getBalance() > 0 && !card.isSuspended()) {
-            if (!continousTrip) card.newTrip(new Trip(timestamp, (BusStop) busStop, route));
+            if (!continuousTrip) card.newTrip(new Trip(timestamp, (BusStop) busStop, route));
             else card.getCurrentTrip().addLocation(timestamp, true, (BusStop) busStop, route, false);
             Logger.log(String.format("%s tapped on at bus stop %s on route %s at %d",
                     card.toString(), busStop.getName(), route.getId(), timestamp));
             card.charge(busCost);
+            busStop.addTap();
+            busStop.addRevenue(busCost);
         } else {
             Logger.log(String.format("%s failed to tap on at bus stop %s on route %s at %d",
                     card.toString(), busStop.getName(), route.getId(), timestamp));
@@ -112,6 +116,7 @@ public class TapManager implements Serializable{
         if (abnormalTap) {
             Logger.log("Illegally tried to tap off at" + busStop.getName() + "on route" + route.getId());
         }
+        busStop.addTap();
         Logger.log(String.format("%s tapped off at bus stop %s on route %s at %d",
                 card.toString(), busStop.getName(), route.getId(), timestamp));
         card.getCurrentTrip().addLocation(timestamp, false, (BusStop) busStop, route, abnormalTap);
@@ -125,6 +130,7 @@ public class TapManager implements Serializable{
             else card.getCurrentTrip().addLocation(timestamp, true,(Station) station, false);
             Logger.log(String.format("%s tapped on at subway station %s at %d",
                     card.toString(), station.getName(), timestamp));
+            station.addTap();
         } else {
             Logger.log(String.format("%s failed to tap on at subway station %s at %d",
                     card.toString(), station.getName(), timestamp));
@@ -141,11 +147,14 @@ public class TapManager implements Serializable{
             Logger.log(String.format("%s tapped off illegally at subway station %s at %d",
                     card.toString(), station.getName(), timestamp));
         } else {
-            card.charge(subwayCost * ((Station)station).getDistance(card.getCurrentTrip().getLastSubwayTap()));
+            double cost = subwayCost * ((Station)station).getDistance(card.getCurrentTrip().getLastSubwayTap());
+            card.charge(cost);
+            station.addRevenue(cost);
             card.getCurrentTrip().addLocation(timestamp, false, (Station) station, chargedFine);
             if (timestamp - card.getCurrentTrip().getInitialTime() > 120) {
                 card.getCurrentTrip().endTrip();
             }
+            station.addTap();
             Logger.log(String.format("%s tapped off at subway station %s at %d",
                     card.toString(), station.getName(), timestamp));
         }

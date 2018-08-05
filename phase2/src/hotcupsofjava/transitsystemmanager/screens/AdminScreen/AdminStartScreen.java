@@ -3,17 +3,23 @@ package hotcupsofjava.transitsystemmanager.screens.AdminScreen;
 import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
+import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
+import hotcupsofjava.transitsystemmanager.screens.UserScreen.CardScreen;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -30,6 +36,9 @@ public class AdminStartScreen extends VBox{
     public Text revenueText;
     public Text finesText;
     public Text trueValueText;
+    public Label statsLabel;
+    public TableView tab4StopTable;
+    public TableColumn stopNameCol;
     private UserManager userManager;
     private RouteManager routeManager;
     public Button startDayBtn;
@@ -57,8 +66,21 @@ public class AdminStartScreen extends VBox{
         logCbx.setEditable(false);
         logArea.setEditable(false);
         updateTransitInformation();
+        initializeStopTable();
+        setStopsTable();
     }
 
+
+    private void initializeStopTable(){
+        stopNameCol.setCellValueFactory(new PropertyValueFactory<Stop,String>("name"));
+    }
+
+    private void setStopsTable(){
+        ObservableList<Stop> stops = FXCollections.observableArrayList();
+        stops.addAll(routeManager.getStations().values());
+        stops.addAll(routeManager.getStops().values());
+        tab4StopTable.setItems(stops);
+    }
     public void startDay(javafx.event.ActionEvent actionEvent) {
         if(!Logger.isActive()) {
             Logger.startDay();
@@ -126,6 +148,21 @@ public class AdminStartScreen extends VBox{
     }
 
     public void generateStopStats(ActionEvent actionEvent) {
+        try {
+            Stop stop = (Stop) tab4StopTable.getSelectionModel().getSelectedItem();
+            setStopStats(stop);
+        }
+        catch (NullPointerException e){
+            System.out.println("");
+        }
+    }
+
+    private void setStopStats(Stop stop){
+        String details = stop.getName() + "'s details:" + "\n";
+        details = details+ "Total taps: " + stop.getTaps() + "\n";
+        details = details + "Total revenue:" + stop.getRevenueAtStop() + "\n";
+        details = details + "Total fine Value: " + stop.getFineValue() + "\n";
+        statsLabel.setText(details);
     }
 
     public void refreshTab2Info(ActionEvent actionEvent) {

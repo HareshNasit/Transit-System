@@ -10,6 +10,9 @@ public class Stop extends TransitSystemObject {
 
     private String name;
     private Stop connectedStop;
+    private int taps;
+    private double revenueAtStop;
+    private int fineValue;
 
     /**
      * Constructor for abstract Stop.
@@ -22,6 +25,9 @@ public class Stop extends TransitSystemObject {
         super(id);
         this.name = name;
         this.connectedStop = null;
+        this.taps = 0;
+        this.revenueAtStop = 0;
+        this.fineValue = 0;
     }
 
     /**
@@ -67,5 +73,29 @@ public class Stop extends TransitSystemObject {
      */
     public Stop getConnectedStop() {
         return connectedStop;
+    }
+
+    public void addTap(){
+        taps += 1;
+    }
+
+    public int getTaps(){
+        return taps;
+    }
+
+    public void addRevenue(double value){
+        revenueAtStop += value;
+    }
+
+    public double getRevenueAtStop(){
+        return revenueAtStop;
+    }
+
+    public void addFine(int value){
+        fineValue += value;
+    }
+
+    public int getFineValue(){
+        return fineValue;
     }
 }
