@@ -1,5 +1,7 @@
 package hotcupsofjava.transitsystemmanager.objects.userobjects;
 
+import hotcupsofjava.transitsystemmanager.managers.RouteManager;
+import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
@@ -99,6 +101,7 @@ public class Card extends TransitSystemObject {
             trips[2] = trips[1];
             trips[1] = trips[0];
             trips[0] = trip;
+            UserManager.getInstance().addTrip(trip);
         }
     }
 

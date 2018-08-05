@@ -75,6 +75,7 @@ public class AdminStartScreen extends VBox{
     public void endDay(javafx.event.ActionEvent actionEvent) {
         if(Logger.isActive()) {
             Logger.endDay();
+            updateTransitInformation();
         }
         else{
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -120,9 +121,14 @@ public class AdminStartScreen extends VBox{
     public void updateTransitInformation(){
         revenueText.setText(String.valueOf(userManager.calculateRevenue()));
         finesText.setText(String.valueOf(userManager.calculateFines()));
+        stopsText.setText(String.valueOf(userManager.calculateDistanceTravelled()));
+        trueValueText.setText(String.valueOf(userManager.calculateTrueRevenue()));
     }
 
     public void generateStopStats(ActionEvent actionEvent) {
     }
 
+    public void refreshTab2Info(ActionEvent actionEvent) {
+        updateTransitInformation();
+    }
 }

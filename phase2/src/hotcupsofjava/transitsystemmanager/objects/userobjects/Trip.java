@@ -225,4 +225,8 @@ public class Trip implements Serializable {
         }
         return details.toString();
     }
+
+    public int getDistanceTravelled() {
+        return distanceTravelled;
+    }
 }

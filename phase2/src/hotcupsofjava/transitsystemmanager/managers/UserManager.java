@@ -2,9 +2,11 @@ package hotcupsofjava.transitsystemmanager.managers;
 
 import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
+import hotcupsofjava.transitsystemmanager.objects.userobjects.Trip;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserManager implements Serializable {
@@ -21,12 +23,18 @@ public class UserManager implements Serializable {
     private HashMap<String, User> users;
     private HashMap<String, Card> cards;
     private TapManager tapManager;
+    private ArrayList<Trip> trips;
 
     public UserManager(double busCost, double subwayCost) {
         users = new HashMap<>();
         cards = new HashMap<>();
         UserManager.setInstance(this);
         tapManager = new TapManager(busCost,subwayCost);
+        trips = new ArrayList<>();
+    }
+
+    public void addTrip(Trip trip){
+        trips.add(trip);
     }
 
     public double calculateRevenue() {
@@ -34,7 +42,7 @@ public class UserManager implements Serializable {
         for (Card card : cards.values()) {
             revenue += card.getTotalSpending();
         }
-        Logger.logRevenue(revenue,0);
+        Logger.logRevenue(revenue,calculateTrueRevenue());
         return revenue;
     }
 
@@ -44,6 +52,22 @@ public class UserManager implements Serializable {
             fines += card.getTotalFines();
         }
         return fines;
+    }
+
+    public int calculateDistanceTravelled(){
+        int distance=0;
+        for(Trip trip: trips){
+            distance += trip.getDistanceTravelled();
+        }
+        return distance;
+    }
+
+    public double calculateTrueRevenue(){
+        double value = 0;
+        for(Trip trip: trips){
+            value += trip.getTrueValue();
+        }
+        return value;
     }
 
     public void addUser(String id, String name, String email) {

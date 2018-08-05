@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="javafx.scene.layout.VBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TabPane prefHeight="409.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -25,22 +25,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Text fx:id="stopsText" layoutX="259.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="82.0">
+                        <Text fx:id="stopsText" layoutX="260.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="65.0">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="revenueText" layoutX="292.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="72.21875">
+                        <Text fx:id="revenueText" layoutX="256.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="72.21875">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="finesText" layoutX="266.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="125.0">
+                        <Text fx:id="finesText" layoutX="234.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="52.0">
                            <font>
                               <Font size="25.0" />
                            </font>
                         </Text>
-                        <Text fx:id="trueValueText" layoutX="264.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="128.0">
+                        <Text fx:id="trueValueText" layoutX="249.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="62.0">
                            <font>
                               <Font size="25.0" />
                            </font>
@@ -65,6 +65,7 @@
                               <Font size="20.0" />
                            </font>
                         </Text>
+                        <Button fx:id="tab3RefreshBtn" layoutX="452.0" layoutY="49.0" mnemonicParsing="false" onAction="#refreshTab2Info" text="Refresh" />
                      </children></AnchorPane>
             </content>
           </Tab>
