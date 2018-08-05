@@ -114,4 +114,8 @@ public class UserManager implements Serializable {
     public TapManager getTapManager() {
         return tapManager;
     }
+
+    public HashMap<String, User> getUsers(){
+        return users;
+    }
 }

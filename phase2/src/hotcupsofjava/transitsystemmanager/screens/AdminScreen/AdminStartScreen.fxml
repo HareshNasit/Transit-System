@@ -91,14 +91,15 @@
                             <TableColumn fx:id="stopNameCol" prefWidth="157.0" text="Stop" />
                           </columns>
                         </TableView>
-                        <TableView layoutX="380.0" layoutY="14.0" prefHeight="200.0" prefWidth="200.0">
+                        <TableView fx:id="userTable" layoutX="380.0" layoutY="14.0" prefHeight="200.0" prefWidth="179.0">
                           <columns>
-                            <TableColumn prefWidth="96.0" text="C1" />
-                            <TableColumn prefWidth="103.0" text="C2" />
+                            <TableColumn fx:id="userNameCol" prefWidth="178.0" text="User" />
                           </columns>
                         </TableView>
-                        <Button fx:id="statsBtn" layoutX="179.0" layoutY="101.0" mnemonicParsing="false" onAction="#generateStopStats" text="Stats" />
+                        <Button fx:id="statsBtn" layoutX="179.0" layoutY="101.0" mnemonicParsing="false" onAction="#generateStopStats" text="Stop Statistics" />
                         <Label fx:id="statsLabel" layoutX="14.0" layoutY="240.0" prefHeight="105.0" prefWidth="161.0" />
+                        <Button fx:id="userStatsBtn" layoutX="263.0" layoutY="39.0" mnemonicParsing="false" onAction="#userStatistics" text="User Statistics" />
+                        <Label fx:id="userStatsLabel" layoutX="380.0" layoutY="240.0" prefHeight="96.0" prefWidth="181.0" />
                      </children>
                   </AnchorPane>
               </content>

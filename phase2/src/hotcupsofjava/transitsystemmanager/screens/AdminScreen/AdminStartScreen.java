@@ -39,6 +39,10 @@ public class AdminStartScreen extends VBox{
     public Label statsLabel;
     public TableView tab4StopTable;
     public TableColumn stopNameCol;
+    public TableView userTable;
+    public Button userStatsBtn;
+    public TableColumn userNameCol;
+    public Label userStatsLabel;
     private UserManager userManager;
     private RouteManager routeManager;
     public Button startDayBtn;
@@ -66,13 +70,15 @@ public class AdminStartScreen extends VBox{
         logCbx.setEditable(false);
         logArea.setEditable(false);
         updateTransitInformation();
-        initializeStopTable();
+        initializeTables();
         setStopsTable();
+        setUsersTable();
     }
 
 
-    private void initializeStopTable(){
+    private void initializeTables(){
         stopNameCol.setCellValueFactory(new PropertyValueFactory<Stop,String>("name"));
+        userNameCol.setCellValueFactory(new PropertyValueFactory<User, String>("name"));
     }
 
     private void setStopsTable(){
@@ -80,6 +86,12 @@ public class AdminStartScreen extends VBox{
         stops.addAll(routeManager.getStations().values());
         stops.addAll(routeManager.getStops().values());
         tab4StopTable.setItems(stops);
+    }
+
+    private void setUsersTable(){
+        ObservableList<User> users = FXCollections.observableArrayList();
+        users.addAll(userManager.getUsers().values());
+        userTable.setItems(users);
     }
     public void startDay(javafx.event.ActionEvent actionEvent) {
         if(!Logger.isActive()) {
@@ -165,7 +177,32 @@ public class AdminStartScreen extends VBox{
         statsLabel.setText(details);
     }
 
+    private void setUserStats(User user){
+        String details = user.getName() + "'s details:" + "\n";
+        int spending = 0;
+        int fines = 0;
+        for(Card card: user.getCards()){
+            spending += card.getTotalSpending();
+            fines += card.getTotalFines();
+        }
+        details = details + "Total spending: " + spending + "\n";
+        details = details + "Total fines: " + fines;
+        userStatsLabel.setText(details);
+
+
+    }
+
     public void refreshTab2Info(ActionEvent actionEvent) {
         updateTransitInformation();
+    }
+
+    public void userStatistics(ActionEvent actionEvent) {
+        try {
+            User user = (User) userTable.getSelectionModel().getSelectedItem();
+            setUserStats(user);
+        }
+        catch (NullPointerException e){
+            System.out.println("");
+        }
     }
 }
