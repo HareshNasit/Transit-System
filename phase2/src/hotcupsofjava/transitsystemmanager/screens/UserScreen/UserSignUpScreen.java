@@ -1,6 +1,5 @@
 package hotcupsofjava.transitsystemmanager.screens.UserScreen;
 
-import hotcupsofjava.transitsystemmanager.managers.IDManager;
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import javafx.event.ActionEvent;
@@ -23,9 +22,9 @@ public class UserSignUpScreen extends AnchorPane{
     public TextField emailTextField;
     public TextField passwordTextField;
     public Button createUserBtn;
+    public Label checkLabel;
     private UserManager userManager;
     private RouteManager routeManager;
-    private Label checkLabel; //TODO handle nullPointer
 
     public UserSignUpScreen(UserManager userManager, RouteManager routeManager) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("UserSignUpScreen.fxml"));

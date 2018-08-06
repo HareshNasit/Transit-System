@@ -50,6 +50,7 @@ public class CardScreen extends VBox {
     public Button tapOffBusBtn;
     public Button specialBtn;
     public TextArea tripsText;
+    public Button refreshBtn;
     private RouteManager routeManager;
     private UserManager userManager;
     private Card card;
@@ -419,7 +420,7 @@ public class CardScreen extends VBox {
         }
     }
 
-    public void updateScreen(){
+    private void updateScreen(){
         updateTrips();
         updateBalance();
         setStopsTable();
@@ -428,4 +429,7 @@ public class CardScreen extends VBox {
         busStopTable.refresh();
     }
 
+    public void refreshScreen(ActionEvent actionEvent) {
+        updateScreen();
+    }
 }

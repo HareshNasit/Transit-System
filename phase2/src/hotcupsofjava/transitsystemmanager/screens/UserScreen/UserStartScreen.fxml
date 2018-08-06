@@ -31,7 +31,7 @@
             <Font size="17.0" />
          </font></Text>
       <Button fx:id="editBtn" layoutX="194.0" layoutY="29.0" mnemonicParsing="false" onAction="#changeName" text="Edit" />
-      <Button fx:id="addCardBtn" layoutX="469.0" layoutY="58.0" mnemonicParsing="false" onAction="#addNewCard" text="Add new Card" />
+      <Button fx:id="addCardBtn" layoutX="451.0" layoutY="137.0" mnemonicParsing="false" onAction="#addNewCard" text="Add new Card" />
       <Text fx:id="nameText" layoutX="84.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="97.21875">
          <font>
             <Font size="17.0" />
@@ -41,5 +41,6 @@
             <Font size="17.0" />
          </font></Text>
       <Button layoutX="469.0" layoutY="256.0" mnemonicParsing="false" onAction="#openCard" prefHeight="76.0" prefWidth="105.0" text="Open Card" />
+      <Button fx:id="refreshBtn" layoutX="492.0" layoutY="28.0" mnemonicParsing="false" onAction="#refreshScreen" text="Refresh" />
    </children>
 </fx:root>
