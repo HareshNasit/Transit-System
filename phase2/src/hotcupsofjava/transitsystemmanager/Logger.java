@@ -18,13 +18,13 @@ public class Logger {
     private static long trueValue;
     private static String startTime;
 
-    public static String getStartTime(){
+    public static String getStartTime() {
         return startTime;
     }
+
     public static void log(String logString) {
         if (!active) throw new RuntimeException("Attempted logging when non-active day");
         logs.add(logString);
-        System.out.println(logString);
     }
 
     public static void logStats(String statString) {
@@ -54,37 +54,36 @@ public class Logger {
         revenue = 0;
         trueValue = 0;
         Calendar cal = Calendar.getInstance();
-        // int mins = cal.get(Calendar.HOUR)*60 + cal.get(Calendar.MINUTE);
-        startTime = cal.get(Calendar.HOUR) + ":"+ cal.get(Calendar.MINUTE);
+        startTime = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE);
     }
-    
+
     public static void generateLog() {
-      if (!active) throw new RuntimeException("Day ended before day started.");
-      new File("logs/").mkdirs();
-      try {
-          day = day.replaceAll("/", "-");
-          PrintWriter writer = new PrintWriter("logs/Day_" + day + ".txt");
-          writer.write("Day: " + day + "\n");
-          writer.write("==================\n");
+        if (!active) throw new RuntimeException("Day ended before day started.");
+        new File("logs/").mkdirs();
+        try {
+            day = day.replaceAll("/", "-");
+            PrintWriter writer = new PrintWriter("logs/Day_" + day + ".txt");
+            writer.write("Day: " + day + "\n");
+            writer.write("==================\n");
 
-          for (String line : logs) {
-              writer.write(line + "\n");
-          }
+            for (String line : logs) {
+                writer.write(line + "\n");
+            }
 
-          writer.write("==================\n\n\n");
-          writer.write("Day " + day + "'s aggregated statistics:\n");
-          writer.write("Stops visited:       " + stopsVisited + "\n");
-          writer.write("Revenue collected:   " + revenue + "\n");
-          writer.write("True Value of Trips: " + trueValue + "\n");
+            writer.write("==================\n\n\n");
+            writer.write("Day " + day + "'s aggregated statistics:\n");
+            writer.write("Stops visited:       " + stopsVisited + "\n");
+            writer.write("Revenue collected:   " + revenue + "\n");
+            writer.write("True Value of Trips: " + trueValue + "\n");
 
-          for (String line : stats) {
-              writer.write(line + "\n");
-          }
+            for (String line : stats) {
+                writer.write(line + "\n");
+            }
 
-          writer.close();
-      } catch (FileNotFoundException e) {
-          System.out.println("Failed to write log file: " + e.getMessage());
-      }
+            writer.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Failed to write log file: " + e.getMessage());
+        }
     }
 
     public static void endDay() {
@@ -94,17 +93,5 @@ public class Logger {
 
     public static boolean isActive() {
         return active;
-    }
-
-    public static int getStopsVisited() {
-        return stopsVisited;
-    }
-
-    public static long getRevenue() {
-        return revenue;
-    }
-
-    public static long getTrueValue() {
-        return trueValue;
     }
 }

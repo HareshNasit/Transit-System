@@ -69,7 +69,6 @@ public class Trip implements Serializable {
             card.setBalance(card.getBalance() - amount);
             card.setTotalSpending(card.getTotalSpending() + amount);
         }
-        System.out.println(amount);
     }
 
     /**

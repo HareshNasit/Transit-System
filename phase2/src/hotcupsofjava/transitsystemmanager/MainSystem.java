@@ -41,7 +41,6 @@ public class MainSystem extends Application {
         if(!(instanceName == null)) {
             try {
                 String baseFilePath = String.format("instances/%s/", instanceName);
-                System.out.println(instanceName);
                 // Create directory
                 new File(baseFilePath).mkdirs();
 
