@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * @author
  * @version 1.0
  */
 public class Station extends Stop {
@@ -20,8 +19,8 @@ public class Station extends Stop {
      * The id must be unique to all Stops, including BusStops and Stations, but the name may be
      * shared.
      *
-     * @param id           the identification of the stop that is unique that cannot be changed
-     * @param name         the name of the station
+     * @param id   the identification of the stop that is unique that cannot be changed
+     * @param name the name of the station
      * @see Stop
      */
     public Station(String id, String name) {

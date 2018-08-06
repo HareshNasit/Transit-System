@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author
  * @version 1.0
  */
 public class RouteManager implements Serializable {
@@ -51,11 +50,6 @@ public class RouteManager implements Serializable {
      */
     public void addStop(String id, String name) {
         BusStop stop = new BusStop(id, name);
-        stops.put(stop.getId(), stop);
-    }
-
-    public void addStop(String id, String name, String routeId){
-        BusStop stop = new BusStop(id, name,routeId);
         stops.put(stop.getId(), stop);
     }
 

@@ -8,11 +8,11 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 import java.io.Serializable;
 
 public class TripLocation implements Serializable {
-    // true: tap on, false: tap off
-    private boolean tappingOn;
-    private Stop stop;
-    private Route route;
-    private long timestamp;
+
+    private boolean tappingOn; // true: tap on, false: tap off
+    private Stop stop; // The stop this location is at.
+    private Route route; // The route this stop is on.
+    private long timestamp; // The time the tap was made.
 
     /**
      * The constructor for TripLocation that tracks the Location of the tap within a Trip.
@@ -58,6 +58,7 @@ public class TripLocation implements Serializable {
 
     /**
      * Return Stop for this TripLocation
+     *
      * @return Stop
      */
     public Stop getStop() {
@@ -65,15 +66,8 @@ public class TripLocation implements Serializable {
     }
 
     /**
-     * Return true if the TripLocation has a Route
-     * @return true if has Route, false otherwise.
-     */
-    public boolean hasRoute() {
-        return route != null;
-    }
-
-    /**
      * Return Route that is attributed with this TripLocation
+     *
      * @return Route of this TripLocation
      */
     public Route getRoute() {
@@ -82,6 +76,7 @@ public class TripLocation implements Serializable {
 
     /**
      * Return long of the timestamp of this TripLocation
+     *
      * @return long of timestamp of this TripLocation
      */
     public long getTimestamp() {
@@ -90,6 +85,7 @@ public class TripLocation implements Serializable {
 
     /**
      * Return true if the TripLocation is at BusStop, false otherwise
+     *
      * @return true if BusStop, false otherwise
      */
     public boolean isBusStop() {
@@ -98,6 +94,7 @@ public class TripLocation implements Serializable {
 
     /**
      * Return true if the TripLocation is at Station, false otherwise
+     *
      * @return true if Station, false otherwise
      */
     public boolean isStation() {

@@ -11,19 +11,29 @@ import hotcupsofjava.transitsystemmanager.objects.userobjects.TripLocation;
 
 import java.io.Serializable;
 
-public class TapManager implements Serializable{
-    private static TapManager instance;
+public class TapManager implements Serializable {
 
+    private static TapManager instance; // The instance of tap manager.
+    private double busCost; // The charge for the bus rides.
+    private double subwayCost; // The charge for the subway rides.
+
+    /**
+     * Return the tap manager.
+     *
+     * @return tap manager.
+     */
     public static TapManager getInstance() {
         return instance;
     }
 
+    /**
+     * Set the tap manager for the system.
+     *
+     * @param i The tap manager to be set.
+     */
     public static void setInstance(TapManager i) {
         instance = i;
     }
-
-    private double busCost;
-    private double subwayCost;
 
     public TapManager(double busCost, double subwayCost) {
         this.busCost = busCost;
@@ -31,22 +41,50 @@ public class TapManager implements Serializable{
         TapManager.setInstance(this);
     }
 
+    /**
+     * Updates the cost for bus rides.
+     *
+     * @param cost The cost to be set.
+     */
     public void updateBusCost(int cost) {
         this.busCost = cost;
     }
 
+    /**
+     * Updates the cost for subway rides
+     *
+     * @param cost The cost to be set
+     */
     public void updateSubwayCost(int cost) {
         this.subwayCost = cost;
     }
 
+    /**
+     * Returns the cost for bus rides.
+     *
+     * @return busCost
+     */
     public double getBusCost() {
         return busCost;
     }
 
+    /**
+     * Returns the cost for subway rides.
+     *
+     * @return subwayCost.
+     */
     public double getSubwayCost() {
         return subwayCost;
     }
 
+    /**
+     * Handles the way a tap was made at a stop
+     *
+     * @param card      The card which was used to tap
+     * @param timestamp The time at which the tap was made.
+     * @param stop      The stop at which the tap was made.
+     * @return Whether the tap was legal or no
+     */
     private boolean tapOnHandler(Card card, long timestamp, Stop stop) {
         Trip trip = card.getCurrentTrip();
         boolean disconnectedTrip = false;
@@ -69,9 +107,10 @@ public class TapManager implements Serializable{
      * General things that need to be done for tap off.
      *
      * @param stop transit system stop
+     * @param card The card used for tapping
      * @return true if there was abnormal tapping, false otherwise
      */
-    private boolean tapOffHandler(Stop stop,Card card) {
+    private boolean tapOffHandler(Stop stop, Card card) {
         Trip trip = card.getCurrentTrip();
         boolean isStation = stop instanceof Station;
         boolean chargeStation = false;
@@ -94,9 +133,16 @@ public class TapManager implements Serializable{
         return chargeBus || chargeStation;
     }
 
-    // Bus tapping
-    public void tapOn(long timestamp, Stop busStop, Card card, Route route){
-        boolean continuousTrip = tapOnHandler(card,timestamp, busStop);
+    /**
+     * Tap On method at a bus stop
+     *
+     * @param timestamp The time at which the tap was made
+     * @param busStop   The busStop at which the tap was made.
+     * @param card      The card used to make the tap.
+     * @param route     The route the user was travelling on.
+     */
+    public void tapOn(long timestamp, Stop busStop, Card card, Route route) {
+        boolean continuousTrip = tapOnHandler(card, timestamp, busStop);
         if (card.getBalance() > 0 && !card.isSuspended()) {
             if (!continuousTrip) card.newTrip(new Trip(timestamp, (BusStop) busStop, route));
             else card.getCurrentTrip().addLocation(timestamp, true, (BusStop) busStop, route, false);
@@ -111,8 +157,16 @@ public class TapManager implements Serializable{
         }
     }
 
-    public void tapOff(long timestamp, Stop busStop, Card card, Route route){
-        boolean abnormalTap = tapOffHandler(busStop,card);
+    /**
+     * Tap Off method at a bus stop
+     *
+     * @param timestamp The time at which the tap was made.
+     * @param busStop   The bus stop at which the tap was made.
+     * @param card      The card which tapped at the stop
+     * @param route     The route the user was travelling on.
+     */
+    public void tapOff(long timestamp, Stop busStop, Card card, Route route) {
+        boolean abnormalTap = tapOffHandler(busStop, card);
         if (abnormalTap) {
             Logger.log("Illegally tried to tap off at" + busStop.getName() + "on route" + route.getId());
         }
@@ -122,12 +176,18 @@ public class TapManager implements Serializable{
         card.getCurrentTrip().addLocation(timestamp, false, (BusStop) busStop, route, abnormalTap);
     }
 
-    // Subway tapping
+    /**
+     * Tap On method at a subway stop
+     *
+     * @param timestamp The time at which the tap was made.
+     * @param station   The station at which the tap was made.
+     * @param card      The card with which the tap was made.
+     */
     public void tapOn(long timestamp, Stop station, Card card) {
-        boolean continuousTrip = tapOnHandler(card,timestamp, station);
+        boolean continuousTrip = tapOnHandler(card, timestamp, station);
         if (card.getBalance() > 0 && !card.isSuspended()) {
             if (!continuousTrip) card.newTrip(new Trip(timestamp, (Station) station));
-            else card.getCurrentTrip().addLocation(timestamp, true,(Station) station, false);
+            else card.getCurrentTrip().addLocation(timestamp, true, (Station) station, false);
             Logger.log(String.format("%s tapped on at subway station %s at %d",
                     card.toString(), station.getName(), timestamp));
             station.addTap();
@@ -137,17 +197,24 @@ public class TapManager implements Serializable{
         }
     }
 
+    /**
+     * Tap Off method at a subway station
+     *
+     * @param timestamp The time at which the tap was made.
+     * @param station   The station at which the tap was made.
+     * @param card      The card which tapped at the station.
+     */
     public void tapOff(long timestamp, Stop station, Card card) {
-        boolean chargedFine = tapOffHandler(station,card);
+        boolean chargedFine = tapOffHandler(station, card);
         if (chargedFine) {
             if (card.getCurrentTrip() != null) {
-                card.getCurrentTrip().addLocation(timestamp, false,(Station) station, chargedFine);
+                card.getCurrentTrip().addLocation(timestamp, false, (Station) station, chargedFine);
                 card.getCurrentTrip().endTrip();
             }
             Logger.log(String.format("%s tapped off illegally at subway station %s at %d",
                     card.toString(), station.getName(), timestamp));
         } else {
-            double cost = subwayCost * ((Station)station).getDistance(card.getCurrentTrip().getLastSubwayTap());
+            double cost = subwayCost * ((Station) station).getDistance(card.getCurrentTrip().getLastSubwayTap());
             card.charge(cost);
             station.addRevenue(cost);
             card.getCurrentTrip().addLocation(timestamp, false, (Station) station, chargedFine);

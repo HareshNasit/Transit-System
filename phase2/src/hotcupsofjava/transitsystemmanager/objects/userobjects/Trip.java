@@ -10,20 +10,19 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * @author
  * @version 1.0
  */
 public class Trip implements Serializable {
-    private ArrayList<TripLocation> locations;
-    private Station lastSubwayTap = null;
+    private ArrayList<TripLocation> locations; // The locations this trip has been on.
+    private Station lastSubwayTap = null; // The lastSubwayTap
 
-    private int distanceTravelled;
-    private boolean tripEnded;
+    private int distanceTravelled; // The distance travelled in this trip.
+    private boolean tripEnded; // The trip has ended.
 
-    private long initialTime;
+    private long initialTime; // The initial time of this trip.
 
-    private double tripValue;
-    private double trueValue = 0;
+    private double tripValue; // The cost of this trip.
+    private double trueValue = 0; // The original cost of this trip.
 
     /**
      * The constructor for Trip to track Card Trips
@@ -42,9 +41,8 @@ public class Trip implements Serializable {
     }
 
     /**
-     *
-     * @param timestamp
-     * @param initialStation
+     * @param timestamp      The time when this trip started.
+     * @param initialStation The initial station this trip began at.
      */
     public Trip(long timestamp, Station initialStation) {
         locations = new ArrayList<>();
@@ -67,13 +65,16 @@ public class Trip implements Serializable {
         if (tripValue > 6) {
             tripValue = 6;
         }
-        if(tripValue<6){
-            card.setBalance(card.getBalance()-amount);
-            card.setTotalSpending(card.getTotalSpending()+amount);
+        if (tripValue < 6) {
+            card.setBalance(card.getBalance() - amount);
+            card.setTotalSpending(card.getTotalSpending() + amount);
         }
         System.out.println(amount);
     }
 
+    /**
+     * Ends this trip.
+     */
     public void endTrip() {
         tripEnded = true;
         Logger.logStops(distanceTravelled);
@@ -117,6 +118,7 @@ public class Trip implements Serializable {
 
     /**
      * Returns last Route that the Trip was on
+     *
      * @return last Route that Trip was on
      */
     public Route getLastRoute() {
@@ -125,6 +127,7 @@ public class Trip implements Serializable {
 
     /**
      * Returns true if the last Tap was a TapOn function
+     *
      * @return true if last Tap was tapOn, false otherwise
      */
     public boolean lastWasTapOn() {
@@ -133,7 +136,8 @@ public class Trip implements Serializable {
 
     /**
      * Returns last TripLocation of this Trip
-     * @return
+     *
+     * @return The last location of this trip before it ended.
      */
     public TripLocation getLastLocation() {
         return locations.get(locations.size() - 1);
@@ -150,6 +154,7 @@ public class Trip implements Serializable {
 
     /**
      * Return double of the true value of the Trip, the amount the Trip costs total
+     *
      * @return Return double of the true value of the Trip
      */
     public double getTrueValue() {
@@ -167,6 +172,7 @@ public class Trip implements Serializable {
 
     /**
      * Adds additional TripLocation on this Trip
+     *
      * @param timestamp the time that the tap was
      * @param tappingOn whether it was tap on or tap off
      * @param stop      the stop location that the tap was located
@@ -200,11 +206,10 @@ public class Trip implements Serializable {
      * Returns the toString representation of this Trip. This shows the Taps, Locations of tap
      * , routes taken, the value of the Trip, the timeStamps.
      *
-     *
      * @return toString representation
      */
     public String toString() {
-        String time = "[" + initialTime/60 + ":" + initialTime%60 + "]";
+        String time = "[" + initialTime / 60 + ":" + initialTime % 60 + "]";
         StringBuilder details = new StringBuilder();
         details.append("Trip Details\n");
         details.append("==================\n");
@@ -213,7 +218,7 @@ public class Trip implements Serializable {
         details.append(String.format("\nCost:        $%.2f", tripValue));
         details.append("\n\nLocation History:\n==================\n");
         for (TripLocation location : locations) {
-            String locationTime = location.getTimestamp()/60 + ":" + location.getTimestamp()%60;
+            String locationTime = location.getTimestamp() / 60 + ":" + location.getTimestamp() % 60;
             details.append(String.format("[%s] %s ",
                     locationTime, (location.isTapOn()) ? "tap on " : "tap off "));
             if (location.isBusStop()) {
@@ -226,6 +231,11 @@ public class Trip implements Serializable {
         return details.toString();
     }
 
+    /**
+     * Return the total distance travelled in this trip.
+     *
+     * @return distanceTravelled in this trip.
+     */
     public int getDistanceTravelled() {
         return distanceTravelled;
     }

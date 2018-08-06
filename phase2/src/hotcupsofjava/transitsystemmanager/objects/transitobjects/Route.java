@@ -5,16 +5,15 @@ import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
 import java.util.ArrayList;
 
 /**
- * @author
  * @version 1.0
  */
 public class Route extends TransitSystemObject {
-    private ArrayList<BusStop> route;
+    private ArrayList<BusStop> route; // The list of BusStops in this route.
 
     /**
      * Creates a Route with an id that can be connected to BusStops.
      *
-     * @param id an id that specifies which route this is
+     * @param id an id that specifies which route this is.
      */
     public Route(String id) {
         super(id);
@@ -51,16 +50,6 @@ public class Route extends TransitSystemObject {
         this.route.addAll(index, stops);
     }
 
-    /**
-     * Returns true if the stop is a stop that is connected in this Route.
-     *
-     * @param stop a BusStop
-     * @return true if stop is connected in this Route
-     */
-    public boolean contains(BusStop stop) {
-        return route.contains(stop);
-    }
-
     public boolean containsBoth(BusStop stop1, BusStop stop2) {
         return route.contains(stop1) && route.contains(stop2);
     }
@@ -79,8 +68,11 @@ public class Route extends TransitSystemObject {
         return Math.abs(end - start);
     }
 
-    public void addRouteToBusStops(){
-        for(BusStop busStop: route){
+    /**
+     * Add this route to the busStop.
+     */
+    private void addRouteToBusStops() {
+        for (BusStop busStop : route) {
             busStop.addToRoutes(this);
         }
     }
