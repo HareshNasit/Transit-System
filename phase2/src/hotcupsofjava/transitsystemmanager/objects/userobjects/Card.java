@@ -8,7 +8,6 @@ import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Route;
 import hotcupsofjava.transitsystemmanager.Logger;
-import hotcupsofjava.transitsystemmanager.screens.ModelController;
 
 public class Card extends TransitSystemObject {
 
@@ -17,7 +16,6 @@ public class Card extends TransitSystemObject {
     private boolean suspended;
     private double totalSpending;
     private double totalFines;
-    private ModelController controller;
 
     private User user;
 
@@ -121,11 +119,4 @@ public class Card extends TransitSystemObject {
         return "Card " + this.getId() + " owned by user " + user.getName();
     }
 
-    public void setController(ModelController controller){
-        this.controller = controller;
-    }
-
-    public ModelController getController() {
-        return controller;
-    }
 }

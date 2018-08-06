@@ -4,7 +4,6 @@ import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
-import hotcupsofjava.transitsystemmanager.screens.ModelController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,7 +27,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UserStartScreen extends AnchorPane implements ModelController{
+public class UserStartScreen extends AnchorPane{
 
     public Button editBtn;
     public Button addCardBtn;
@@ -50,7 +49,6 @@ public class UserStartScreen extends AnchorPane implements ModelController{
             fxmlLoader.load();
             this.userManager = userManager;
             this.user = user;
-            this.user.setController(this);
 
             this.routeManager =routeManager;
             this.nameText.setText(this.user.getName());

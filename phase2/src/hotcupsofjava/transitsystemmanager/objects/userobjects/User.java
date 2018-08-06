@@ -3,7 +3,6 @@ package hotcupsofjava.transitsystemmanager.objects.userobjects;
 
 import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.objects.TransitSystemObject;
-import hotcupsofjava.transitsystemmanager.screens.ModelController;
 
 import java.util.ArrayList;
 
@@ -11,7 +10,6 @@ public class User extends TransitSystemObject {
     private String name;
     private String email;
     private ArrayList<Card> cards;
-    private ModelController controller;
 
     public User(String id, String name, String email) {
         super(id);
@@ -73,11 +71,4 @@ public class User extends TransitSystemObject {
         name = newName;
     }
 
-    public ModelController getController() {
-        return controller;
-    }
-
-    public void setController(ModelController controller) {
-        this.controller = controller;
-    }
 }
