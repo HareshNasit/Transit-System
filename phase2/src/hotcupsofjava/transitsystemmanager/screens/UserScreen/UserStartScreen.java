@@ -82,7 +82,7 @@ public class UserStartScreen extends AnchorPane{
         dialog.setTitle("Add new Card");
         dialog.setContentText("Enter card details e.g(card number|card name)");
         Optional<String> result = dialog.showAndWait();
-        if(result.isPresent()){
+        if(result.isPresent() && !(result.get().isEmpty())){
             String input = result.get();
             String[] splitInput = input.split("\\|");
             userManager.addCard(user,splitInput[0]);
