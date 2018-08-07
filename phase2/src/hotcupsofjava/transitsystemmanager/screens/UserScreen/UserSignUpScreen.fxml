@@ -16,7 +16,7 @@
       </Text>
       <Text layoutX="12.0" layoutY="137.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" />
       <Text layoutX="14.0" layoutY="188.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" />
-      <Text layoutX="12.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" />
+      <Text layoutX="12.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User ID:" />
       <TextField fx:id="nameTextField" layoutX="76.0" layoutY="119.0" prefHeight="27.0" prefWidth="160.0" />
       <TextField fx:id="emailTextField" layoutX="76.0" layoutY="170.0" prefHeight="27.0" prefWidth="160.0" />
       <TextField fx:id="passwordTextField" layoutX="77.0" layoutY="220.0" />

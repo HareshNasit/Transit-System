@@ -1,5 +1,6 @@
 package hotcupsofjava.transitsystemmanager.screens.UserScreen;
 
+import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.*;
@@ -98,7 +99,10 @@ public class CardScreen extends VBox {
 
     public void updateTrips(){
         Trip[] trips = card.getTrips();
-        if(trips[1]==null) {
+        if(trips[0] == null){
+            tripsText.setText("");
+        }
+        else if(trips[1]==null) {
             StringBuilder details = new StringBuilder("");
             details.append(trips[0].toString());
             tripsText.setText(details.toString());
@@ -276,6 +280,13 @@ public class CardScreen extends VBox {
             alert.setContentText("Warning! This card is suspended");
             alert.showAndWait();
         }
+        else if(!Logger.isActive()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Non Active Day");
+            alert.setContentText("Warning! The system is not active at the moment");
+            alert.showAndWait();
+        }
         else {
             try {
                 Station station = (Station) subwayTable.getSelectionModel().getSelectedItem();
@@ -294,6 +305,13 @@ public class CardScreen extends VBox {
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Suspended Card");
             alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else if(!Logger.isActive()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Non Active Day");
+            alert.setContentText("Warning! The system is not active at the moment");
             alert.showAndWait();
         }
         else {
@@ -316,6 +334,13 @@ public class CardScreen extends VBox {
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Suspended Card");
             alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else if(!Logger.isActive()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Non Active Day");
+            alert.setContentText("Warning! The system is not active at the moment");
             alert.showAndWait();
         }
         else {
@@ -352,6 +377,13 @@ public class CardScreen extends VBox {
             alert.setContentText("Warning! This card is suspended");
             alert.showAndWait();
         }
+        else if(!Logger.isActive()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Non Active Day");
+            alert.setContentText("Warning! The system is not active at the moment");
+            alert.showAndWait();
+        }
         else {
             try {
                 BusStop busStop = (BusStop) busStopTable.getSelectionModel().getSelectedItem();
@@ -383,6 +415,13 @@ public class CardScreen extends VBox {
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Suspended Card");
             alert.setContentText("Warning! This card is suspended");
+            alert.showAndWait();
+        }
+        else if(!Logger.isActive()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Non Active Day");
+            alert.setContentText("Warning! The system is not active at the moment");
             alert.showAndWait();
         }
         else {
