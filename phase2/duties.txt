@@ -3,3 +3,10 @@ Haresh Nasit:
 - TransitSystemScreen package
 - UserScreen package
 - Connecting the screens together.
+
+Richard Gan:
+- Serialization of the system
+- Tap processing
+- Configuration file parsing to start system
+- Managers package
+
