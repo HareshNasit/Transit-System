@@ -3,25 +3,20 @@ package hotcupsofjava.transitsystemmanager.screens.AdminScreen;
 import hotcupsofjava.transitsystemmanager.Logger;
 import hotcupsofjava.transitsystemmanager.managers.RouteManager;
 import hotcupsofjava.transitsystemmanager.managers.UserManager;
-import hotcupsofjava.transitsystemmanager.objects.transitobjects.BusStop;
-import hotcupsofjava.transitsystemmanager.objects.transitobjects.Station;
 import hotcupsofjava.transitsystemmanager.objects.transitobjects.Stop;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.Card;
 import hotcupsofjava.transitsystemmanager.objects.userobjects.User;
-import hotcupsofjava.transitsystemmanager.screens.UserScreen.CardScreen;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Scanner;
 import java.io.File;
 
@@ -43,6 +38,8 @@ public class AdminStartScreen extends VBox{
     public Button userStatsBtn;
     public TableColumn userNameCol;
     public Label userStatsLabel;
+    public Button changeBusCostBtn;
+    public Button changeSubwayCostBtn;
     private UserManager userManager;
     private RouteManager routeManager;
     public Button startDayBtn;
@@ -203,6 +200,41 @@ public class AdminStartScreen extends VBox{
         }
         catch (NullPointerException e){
             System.out.println("");
+        }
+    }
+
+    public void changeBusCost(ActionEvent actionEvent) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Change Bus Ride Cost");
+        dialog.setContentText("Enter the new amount to be set");
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent() && !(result.get().isEmpty())){
+            userManager.getTapManager().updateBusCost(Integer.valueOf(result.get()));
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Improper Value");
+            alert.setContentText("Warning! Please enter a proper value");
+            alert.showAndWait();
+        }
+    }
+
+    public void changeSubwayCost(ActionEvent actionEvent) {
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Change Subway Ride Cost");
+        dialog.setContentText("Enter the new amount to be set");
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent() && !(result.get().isEmpty())){
+            userManager.getTapManager().updateSubwayCost(Integer.valueOf(result.get()));
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Improper Value");
+            alert.setContentText("Warning! Please enter a proper value");
+            alert.showAndWait();
         }
     }
 }
