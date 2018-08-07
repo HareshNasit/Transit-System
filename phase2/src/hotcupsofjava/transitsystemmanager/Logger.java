@@ -41,6 +41,10 @@ public class Logger {
         Logger.trueValue += trueValue;
     }
 
+    public static void logLoadingCard(String statString){
+        logs.add(statString);
+    }
+
     public static void startDay() {
         if (active) throw new RuntimeException("New day started before previous day ended.");
 

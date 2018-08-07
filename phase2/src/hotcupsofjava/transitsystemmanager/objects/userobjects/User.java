@@ -81,10 +81,10 @@ public class User extends TransitSystemObject {
     public boolean loadCard(Card card, int value) {
         if (!card.isSuspended()) {
             card.addBalance(value);
-            Logger.log("Successfully added $" + value + " to the " + card.toString());
+            Logger.logLoadingCard("Successfully added $" + value + " to the " + card.toString());
             return true;
         }
-        Logger.log("Failed to load $" + value + " to the " + card.toString());
+        Logger.logLoadingCard("Failed to load $" + value + " to the " + card.toString());
         return false;
     }
 
