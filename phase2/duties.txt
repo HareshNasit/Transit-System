@@ -10,3 +10,7 @@ Richard Gan:
 - Configuration file parsing to start system
 - Managers package
 
+Josh Gelua:
+- Bug Fixing
+- Configuration of Cost customization
+- Detail editing of tap function

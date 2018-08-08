@@ -210,7 +210,7 @@ public class AdminStartScreen extends VBox{
         dialog.setContentText("Enter the new amount to be set");
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent() && !(result.get().isEmpty())){
-            userManager.getTapManager().updateBusCost(Integer.valueOf(result.get()));
+            userManager.getTapManager().updateBusCost(Double.parseDouble(result.get()));
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -228,7 +228,7 @@ public class AdminStartScreen extends VBox{
         dialog.setContentText("Enter the new amount to be set");
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent() && !(result.get().isEmpty())){
-            userManager.getTapManager().updateSubwayCost(Integer.valueOf(result.get()));
+            userManager.getTapManager().updateSubwayCost(Double.parseDouble(result.get()));
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
