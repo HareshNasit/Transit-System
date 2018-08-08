@@ -82,12 +82,21 @@ public class UserStartScreen extends AnchorPane{
         dialog.setTitle("Add new Card");
         dialog.setContentText("Enter card details e.g(card number|card name)");
         Optional<String> result = dialog.showAndWait();
-        if(result.isPresent() && !(result.get().isEmpty())){
-            String input = result.get();
-            String[] splitInput = input.split("\\|");
-            userManager.addCard(user,splitInput[0]);
-            userManager.getCard(splitInput[0]).setCardName(splitInput[1]);
-            setCardTable();
+        if(result.isPresent() && !(result.get().isEmpty()) && result.get().contains("|")){
+        	try {
+	            String input = result.get();
+	            System.out.println(result.get());
+	            String[] splitInput = input.split("\\|");
+	            userManager.addCard(user,splitInput[0]);
+	            userManager.getCard(splitInput[0]).setCardName(splitInput[1]);
+	            setCardTable();
+        	} catch (Exception e) {
+	        	Alert alert = new Alert(Alert.AlertType.WARNING);
+	            alert.setTitle("Warning Dialog");
+	            alert.setHeaderText("Incomplete information");
+	            alert.setContentText("Sorry, there was a problem creating your card. Please try again.");
+	            alert.showAndWait();
+	        }
         }
     }
 
