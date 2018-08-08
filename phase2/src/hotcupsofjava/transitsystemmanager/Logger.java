@@ -62,8 +62,8 @@ public class Logger {
     }
 
     public static void generateLog() {
-        if (!active) throw new RuntimeException("Day ended before day started.");
         new File("logs/").mkdirs();
+        if (!active) return;
         try {
             day = day.replaceAll("/", "-");
             PrintWriter writer = new PrintWriter("logs/Day_" + day + ".txt");

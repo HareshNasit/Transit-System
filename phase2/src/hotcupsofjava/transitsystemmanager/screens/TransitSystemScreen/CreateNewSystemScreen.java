@@ -48,7 +48,7 @@ public class CreateNewSystemScreen extends AnchorPane{
     public void createNewSystem(ActionEvent actionEvent) {
         boolean checkDetails = !nameSystemLbl.getText().isEmpty() && !busRideLbl.getText().isEmpty() &&
                 !subwayRideLbl.getText().isEmpty();
-        if(checkDetails){
+        try{
             IDManager idManager;
             UserManager userManager;
             RouteManager routeManager;
@@ -67,7 +67,7 @@ public class CreateNewSystemScreen extends AnchorPane{
             Stage stage = (Stage) createSystemBtn.getScene().getWindow();
             stage.close();
         }
-        else {
+        catch(Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Incomplete information");

@@ -14,3 +14,7 @@ Josh Gelua:
 - Bug Fixing
 - Configuration of Cost customization
 - Detail editing of tap function
+
+Kara Perrin:
+- Bug fixing
+- Logging functionality

@@ -209,10 +209,10 @@ public class AdminStartScreen extends VBox{
         dialog.setTitle("Change Bus Ride Cost");
         dialog.setContentText("Enter the new amount to be set");
         Optional<String> result = dialog.showAndWait();
-        if(result.isPresent() && !(result.get().isEmpty())){
+        try{
             userManager.getTapManager().updateBusCost(Double.parseDouble(result.get()));
         }
-        else {
+        catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Improper Value");
@@ -227,10 +227,10 @@ public class AdminStartScreen extends VBox{
         dialog.setTitle("Change Subway Ride Cost");
         dialog.setContentText("Enter the new amount to be set");
         Optional<String> result = dialog.showAndWait();
-        if(result.isPresent() && !(result.get().isEmpty())){
+        try {
             userManager.getTapManager().updateSubwayCost(Double.parseDouble(result.get()));
         }
-        else {
+        catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Improper Value");
@@ -243,10 +243,10 @@ public class AdminStartScreen extends VBox{
         dialog.setTitle("Change Trip Cap Cost");
         dialog.setContentText("Enter the new amount to be set");
         Optional<String> result = dialog.showAndWait();
-        if(result.isPresent() && !(result.get().isEmpty())){
+        try{
             userManager.getTapManager().updateTripCap(Double.parseDouble(result.get()));
         }
-        else {
+        catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning Dialog");
             alert.setHeaderText("Improper Value");
