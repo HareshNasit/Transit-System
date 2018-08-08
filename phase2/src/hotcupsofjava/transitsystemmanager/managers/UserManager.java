@@ -142,10 +142,11 @@ public class UserManager implements Serializable {
      * @param user   The user who is adding the new card.
      * @param cardId The id of the card to be added.
      */
-    public void addCard(User user, String cardId) {
+    public Card addCard(User user, String cardId) {
         Card card = new Card(cardId, user);
         user.addCard(card);
         cards.put(card.getId(), card);
+        return card;
     }
 
     /**
