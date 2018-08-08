@@ -127,11 +127,11 @@ public class AdminStartScreen extends VBox{
       File[] contents = logFolder.listFiles();
       
       ObservableList<String> fileNames = FXCollections.observableArrayList();
-      
-      for (File f : contents) {
-        fileNames.add(f.getName());
+      if (contents != null) {
+	      for (File f : contents) {
+	        fileNames.add(f.getName());
+	      }
       }
-      
       logCbx.setItems(fileNames);
     }
     
