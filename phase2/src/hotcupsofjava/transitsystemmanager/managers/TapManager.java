@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class TapManager implements Serializable {
 
     private static TapManager instance; // The instance of tap manager.
-    private double busCost; // The charge for the bus rides.
-    private double subwayCost; // The charge for the subway rides.
-
+    private double busCost = 0; // The charge for the bus rides.
+    private double subwayCost = 0; // The charge for the subway rides.
+    private double tripCap = 6; // The tripCap for the trips
     /**
      * Return the tap manager.
      *
@@ -35,18 +35,26 @@ public class TapManager implements Serializable {
         instance = i;
     }
 
-    public TapManager(double busCost, double subwayCost) {
-        this.busCost = busCost;
-        this.subwayCost = subwayCost;
+    public TapManager() {
         TapManager.setInstance(this);
     }
-
+    /**
+     * Set the trip cap for the system.
+     *
+     * @param tripCap The trip cap to be set.
+     */
+    public void updateTripCap(int tripCap){
+        this.tripCap = tripCap;
+    }
+    public double getTripCap(int tripCap){
+        return this.tripCap;
+    }
     /**
      * Updates the cost for bus rides.
      *
      * @param cost The cost to be set.
      */
-    public void updateBusCost(int cost) {
+    public void updateBusCost(double cost) {
         this.busCost = cost;
     }
 
@@ -55,7 +63,7 @@ public class TapManager implements Serializable {
      *
      * @param cost The cost to be set
      */
-    public void updateSubwayCost(int cost) {
+    public void updateSubwayCost(double cost) {
         this.subwayCost = cost;
     }
 
@@ -90,11 +98,11 @@ public class TapManager implements Serializable {
         boolean disconnectedTrip = false;
         if (trip != null) {
             // if the last location was a tap on and a station, charge fine
-            // of $6 and end the previous trip as it is now invalid.
+            // of the tripCap and end the previous trip as it is now invalid.
             TripLocation lastLocation = trip.getLastLocation();
             if (lastLocation.isTapOn() && lastLocation.isStation()) {
                 Logger.log("Illegally tried to tap on at with out tapping off");
-                card.chargeFine(6);
+                card.chargeFine(tripCap);
                 trip.endTrip();
             }
             disconnectedTrip = trip.getLastStop() != stop && trip.getLastStop().getConnectedStop() != stop;
@@ -123,11 +131,11 @@ public class TapManager implements Serializable {
             chargeBus = true;
         }
         if (chargeStation) {
-            card.chargeFine(6);
-            stop.addFine(6);
+            card.chargeFine(tripCap);
+            stop.addFine(tripCap);
         } else if (chargeBus) {
-            stop.addFine(2);
-            card.chargeFine(2);
+            stop.addFine(busCost);
+            card.chargeFine(busCost);
         }
 
         return chargeBus || chargeStation;
@@ -148,7 +156,7 @@ public class TapManager implements Serializable {
             else card.getCurrentTrip().addLocation(timestamp, true, (BusStop) busStop, route, false);
             Logger.log(String.format("%s tapped on at bus stop %s on route %s at %d",
                     card.toString(), busStop.getName(), route.getId(), timestamp));
-            card.charge(busCost);
+            card.charge(busCost, tripCap);
             busStop.addTap();
             busStop.addRevenue(busCost);
         } else {
@@ -215,7 +223,7 @@ public class TapManager implements Serializable {
                     card.toString(), station.getName(), timestamp));
         } else {
             double cost = subwayCost * ((Station) station).getDistance(card.getCurrentTrip().getLastSubwayTap());
-            card.charge(cost);
+            card.charge(cost, tripCap);
             station.addRevenue(cost);
             card.getCurrentTrip().addLocation(timestamp, false, (Station) station, chargedFine);
             if (timestamp - card.getCurrentTrip().getInitialTime() > 120) {

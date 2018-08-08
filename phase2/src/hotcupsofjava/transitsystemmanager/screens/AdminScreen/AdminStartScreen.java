@@ -40,6 +40,7 @@ public class AdminStartScreen extends VBox{
     public Label userStatsLabel;
     public Button changeBusCostBtn;
     public Button changeSubwayCostBtn;
+    public Button changeTripCapBtn;
     private UserManager userManager;
     private RouteManager routeManager;
     public Button startDayBtn;
@@ -228,6 +229,22 @@ public class AdminStartScreen extends VBox{
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent() && !(result.get().isEmpty())){
             userManager.getTapManager().updateSubwayCost(Integer.valueOf(result.get()));
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning Dialog");
+            alert.setHeaderText("Improper Value");
+            alert.setContentText("Warning! Please enter a proper value");
+            alert.showAndWait();
+        }
+    }
+    public void changeTripCap(ActionEvent actionEvent) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Change Trip Cap Cost");
+        dialog.setContentText("Enter the new amount to be set");
+        Optional<String> result = dialog.showAndWait();
+        if(result.isPresent() && !(result.get().isEmpty())){
+            userManager.getTapManager().updateTripCap(Integer.valueOf(result.get()));
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);

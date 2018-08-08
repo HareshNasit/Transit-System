@@ -59,13 +59,13 @@ public class Trip implements Serializable {
      *
      * @param amount The amount charge added onto this Trip.
      */
-    public void charge(double amount, Card card) {
+    public void charge(double amount, Card card, double tripCap) {
         tripValue += amount;
         trueValue += amount;
-        if (tripValue > 6) {
-            tripValue = 6;
+        if (tripValue > tripCap) {
+            tripValue = tripCap;
         }
-        if (tripValue < 6) {
+        if (tripValue < tripCap) {
             card.setBalance(card.getBalance() - amount);
             card.setTotalSpending(card.getTotalSpending() + amount);
         }

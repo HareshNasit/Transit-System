@@ -113,7 +113,7 @@ public class Stop extends TransitSystemObject {
     /**
      * Increases the fine at this stop
      */
-    public void addFine(int value) {
+    public void addFine(double value) {
         fineValue += value;
     }
 

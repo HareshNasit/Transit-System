@@ -130,9 +130,9 @@ public class Card extends TransitSystemObject {
     /**
      * @param amount The amount to be charged when this card is used for travelling.
      */
-    public void charge(double amount) {
+    public void charge(double amount, double tripCap) {
         if (!suspended && getBalance() > 0) {
-            trips[0].charge(amount, this);
+            trips[0].charge(amount, this, tripCap);
         }
     }
 

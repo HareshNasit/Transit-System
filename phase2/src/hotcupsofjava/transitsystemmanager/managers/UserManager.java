@@ -16,7 +16,6 @@ public class UserManager implements Serializable {
     private HashMap<String, Card> cards; // The cards in the system.
     private TapManager tapManager; // The tap manager.
     private ArrayList<Trip> trips; // The overall trips made during the simulation.
-
     /**
      * Returns the user manager.
      *
@@ -45,8 +44,11 @@ public class UserManager implements Serializable {
         users = new HashMap<>();
         cards = new HashMap<>();
         UserManager.setInstance(this);
-        tapManager = new TapManager(busCost, subwayCost);
+        tapManager = new TapManager();
         trips = new ArrayList<>();
+        tapManager.updateBusCost(busCost);
+        tapManager.updateSubwayCost(subwayCost);
+
     }
 
     /**
