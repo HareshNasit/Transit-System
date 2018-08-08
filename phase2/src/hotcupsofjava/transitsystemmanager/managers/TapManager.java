@@ -43,10 +43,10 @@ public class TapManager implements Serializable {
      *
      * @param tripCap The trip cap to be set.
      */
-    public void updateTripCap(int tripCap){
+    public void updateTripCap(double tripCap){
         this.tripCap = tripCap;
     }
-    public double getTripCap(int tripCap){
+    public double getTripCap(double tripCap){
         return this.tripCap;
     }
     /**

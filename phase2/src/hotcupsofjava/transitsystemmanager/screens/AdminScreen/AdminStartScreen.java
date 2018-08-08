@@ -244,7 +244,7 @@ public class AdminStartScreen extends VBox{
         dialog.setContentText("Enter the new amount to be set");
         Optional<String> result = dialog.showAndWait();
         if(result.isPresent() && !(result.get().isEmpty())){
-            userManager.getTapManager().updateTripCap(Integer.valueOf(result.get()));
+            userManager.getTapManager().updateTripCap(Double.parseDouble(result.get()));
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
